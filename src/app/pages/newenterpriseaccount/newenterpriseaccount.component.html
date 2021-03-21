@@ -1,0 +1,50 @@
+<div class="signupouterdiv">
+
+
+    <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" (click)="goToHome()" class="navigatebutton">
+            <img class="logo" src="assets/images/logo.svg">
+            <div class="title">react</div>
+        </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" style="height: calc(100vh - 60px);overflow-y: scroll !important;">
+        <div fxLayout="column" class="signupinnerdiv">
+            <div fxLayoutAlign="center center">
+                <span class="header-title">Sign in to your React Account</span>
+            </div>
+
+            <div class="enterpriseinfocontainer">
+                  
+                    
+                <div fxLayout="row" fxLayoutAlign="space-evenly start" class="enterprise-container">
+                    <div fxLayout="column"  class="signup-content">
+                        <h5 class="barcode">Sign In using your Mobile Phone</h5>
+                        <span class="innertext">Step 1 : Open React app on your mobile phone.</span>
+                        <span class="innertext">Step 2 : Tap Menu button and select Scan QR Code.</span>
+                            <span class="innertext">Step 3 : Scan the QR Code on the right with your phone.</span>
+                        
+                    </div>
+                    <qrcode class="qrcode" [qrdata]="myAngularxQrCode" [level]="'M'" size= {{canvassize}} ></qrcode>
+                </div>
+                <div class="footer">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <p class="confirm-text">Don't have a React Account?</p>
+                    <a class="newaccount">Sign Up for a new React Account with our React Mobile App</a>
+                </div>
+           
+                <div class='actionsbutton'  fxLayoutAlign="center center">
+
+                    <div fxLayout="row" fxFlex="28" fxFlex.md="34" fxFlex.sm="54"> 
+                        <img src="assets/images/appstore.svg" class="appstoreimage" (click)="goToAppstore()"   fxLayoutAlign="start"/>
+                           
+                    </div>
+                    <div fxLayout="row"> 
+                    <img src="assets/images/playstore.svg" class="appstoreimage" (click)="goToPlaystore()" fxLayoutAlign="start"/>
+                    </div>
+                   
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

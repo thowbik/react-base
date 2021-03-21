@@ -1,0 +1,71 @@
+.login-container {
+    background: linear-gradient(103.5deg, #2979FF 0%, #24CDE4 100%);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+   
+}
+.outerdiv {  
+    padding-bottom: 10px;
+    height: 100vh;
+}
+// .e-link{
+//     font-size:12px;
+// }
+.innerdiv {
+    background-color: white;
+    padding: 16px;
+    white-space:normal;
+    border-radius: 10px;
+    //margin-bottom: 35%;
+    height: 460px !important;
+    width:300px !important;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert {
+    padding: 5px 0px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+  .signup {
+    text-decoration :underline !important;
+    background-color: transparent !important;
+    text-transform :none !important;
+    color: #000000 !important;
+    font-size:12px;
+  }
+
+  .signin{
+    text-decoration :none !important;
+    text-transform :none !important;
+    height: 40px;
+    background-color: #2979FF !important;
+    border-color: transparent;
+    color: #fff !important;
+    width: 100%;
+    border-radius: 5px;
+
+  }
+
+  .e-float-input:not(.e-input-group), .e-float-input.e-control-wrapper:not(.e-input-group) {
+    display: inline-block;
+    height: 70px;
+}
+.labelname {
+  color: black !important;
+}
+.login-container {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+.login-input {
+    outline-style: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important; 
+    padding: 6px !important;
+}

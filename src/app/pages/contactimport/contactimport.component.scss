@@ -1,0 +1,200 @@
+
+.import-page-title{
+    margin: auto;
+}
+.contact-page{
+    background-color: #ffffff;
+    height: 100vh;
+}
+
+.here-class{
+    text-decoration: underline;
+    color: #2979FF;
+}
+
+.import-content {
+    padding: 45px 24px 45px;
+}
+
+
+input.file {
+	position: relative;
+	text-align: right;
+    //-moz-opacity:0 ;
+    cursor: pointer;
+    width: 309px;
+    z-index: 2;
+    height: 30px;
+}
+// input[type="file"] {
+//     opacity: 0;
+// }
+.img-files
+{
+    min-width: 250px; 
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #e0e0e0;
+}
+.img-files:focus {
+    border: 0.5px solid #2979FF !important;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+.save-import{
+    padding-left: 97px;
+}
+.upload-files{
+    margin-bottom: auto;
+    margin-top: auto;
+}
+div.fileinputs {
+    position: relative;
+    margin-left: 18px;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 1px;
+	left: 0px;
+    z-index: 1;
+    cursor: pointer;
+    //background: #FFFFFF;
+    box-sizing: border-box;
+}
+.file-name{
+    padding-top: 7px;
+}
+.file-inputs {
+    height: 24px;
+    width: 198px;
+    padding-top: 2px;
+    border: 1px solid #333333;
+}
+
+
+.header-actions-button.import-btn{
+    background: #FFFFFF !important;
+    border: 2px solid #2979FF !important;
+    box-sizing: border-box !important;
+    color: #2979FF;
+    max-height: 26px;
+    width: 73px;
+    padding: 3px 12px 3px !important;
+
+}
+
+.fakefile.btn-primary{
+    
+}
+span.dot-import {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+button.btn-primary.choose-files{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 10px;
+    position: absolute;
+    width: 50%;
+    height: 28px;
+    cursor: pointer;
+    line-height: 24px;
+    border: 1px solid #333333;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+span.text-file,p.download-text{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+button.header-actions-button.choosefile {
+    height: 28.5px !important;
+    font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px 0px 0px 10px !important;
+  //  margin-top: 16px !important;
+    color:rgba(0, 0, 0, 0.87);
+}
+button.header-actions-button.choosefile:hover  {
+    background: #FFFFFF !important;
+    border: 0.5px solid transparent !important;
+    box-shadow: 1px 2px 3px rgba(51, 51, 51, 0.5) !important;
+    
+}
+.upload-div {
+    margin-bottom: 0px !important;
+}
+// i.directionicon {
+//     border: 1px solid #333333;
+//     border-width: 0 2px 2px 0;
+//     display: inline-block;
+//     padding: 3px;
+//     margin-left: 5px;
+//     margin-right: 5px;
+// }
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.fileContainer [type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+/* Example stylistic flourishes */
+
+.fileContainer {
+    background: red;
+    border-radius: .5em;
+    float: left;
+    padding: .5em;
+}
+
+.fileContainer [type=file] {
+    cursor: pointer;
+    
+     background: #FFFFFF !important;
+     border: 0.5px solid transparent !important;
+     box-shadow: 1px 2px 3px rgba(51, 51, 51, 0.5) !important;
+}
+.fileContainer:hover {   
+    background: #FFFFFF !important;
+    border: 0.5px solid transparent !important;
+    box-shadow: 1px 2px 3px rgba(51, 51, 51, 0.5) !important;    
+}
+.close-icon {
+    width: 14px !important;
+    height: 14px !important;
+    padding-left: 10px;
+    cursor: pointer;
+  }
+  .filename-style
+  {
+    place-content: center flex-start;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    color: #2979FF;
+    line-height: 14px;
+  }
+
+

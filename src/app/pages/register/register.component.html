@@ -1,0 +1,81 @@
+<div fxLayout="column" fxLayoutAlign="center center" >
+    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+        <form name="form" [formGroup]="registerForm"  novalidate>
+         <div class="header-actions-layout">
+         
+          <div fxLayout="row"  >
+                  <span class="contact-title" fxLayoutAlign="start center" fxFlex="80">Enterprise Sign Up</span>
+                  <button ejs-button ejs-button id="submitbutton" [disabled]="!registerForm.valid" class="header-actions-button"  fxLayoutAlign="center" fxLayoutGap="10px" fxFlex="5" type="submit"  (click)="save()">SignUp</button>
+                  <button ejs-button class="header-actions-button" fxLayoutAlign="center" fxFlex="5"  id="targetButton"  [routerLink]="'/login'">Cancel</button>
+          </div>
+      </div>
+      <div  class="e-card" fxLayoutGap="10px" id="basic">
+         
+          <div class="e-card-content"  fxLayoutGap="20px" fxLayout="column" fxLayoutAlign="space-around start" >
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label" >Personal Mobile Number:</label>
+                    <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                        <input type='text' numbersOnly formControlName="mobileNumber" minlength="10" maxlength="10" required />
+                        <div *ngIf="registerForm.controls.mobileNumber.errors && (registerForm.controls.mobileNumber.dirty || registerForm.controls.mobileNumber.touched)">
+                            <span class="errors" *ngIf="registerForm.controls.mobileNumber.errors?.required">Mobile Number is required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px" >
+                    <label class="contact-label"  >Email:</label> 
+                    <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                        <input  class="email-address"  type="email" formControlName="emailAddress"  required />
+                        <div *ngIf="registerForm.controls.emailAddress.errors && (registerForm.controls.emailAddress.dirty || registerForm.controls.emailAddress.touched)"
+                        class="alert alert-danger">
+                            <span class="errors" *ngIf="registerForm.controls.emailAddress.errors?.required">Valid Emailid is required</span>
+                            <span class="errors" *ngIf="registerForm.controls.emailAddress.errors?.email">Emailid is invalid</span>
+                        </div>
+                    </div>   
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                        <label class="contact-label" >Name:</label> 
+                        <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                            <input  class="username"  type="text"  formControlName="firstName" required />
+                            <div *ngIf="registerForm.controls.firstName.errors && (registerForm.controls.firstName.dirty || registerForm.controls.firstName.touched)">
+                                <span class="errors" *ngIf="registerForm.controls.firstName.errors?.required">First Name  is required</span>
+                            </div>
+                        </div>
+                        <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                            <input  class="username"  type="text"  formControlName="lastName" required />
+                            <div *ngIf="registerForm.controls.lastName.errors && (registerForm.controls.lastName.dirty || registerForm.controls.lastName.touched)">
+                                <span class="errors" *ngIf="registerForm.controls.lastName.errors?.required">Last Name  is required</span>
+                            </div>
+                        </div>     
+                </div>
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Date of Birth:</label>  
+                    <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                        <ejs-datepicker #ejDatePicker class="date-contact" formControlName="dateOfBirth" name="datepicker" [placeholder]='' required>
+                        </ejs-datepicker>
+                        <div *ngIf="registerForm.controls.dateOfBirth.errors && (registerForm.controls.dateOfBirth.dirty || registerForm.controls.dateOfBirth.touched)"
+                        class="alert alert-danger">
+                            <span class="errors" *ngIf="registerForm.controls.dateOfBirth.errors?.required">Date of Birth is required</span>
+                        </div>
+                    </div> 
+                    
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label" >Gender:</label>
+                    <div class="contact-input" fxLayout="row" fxLayoutGap="5px">
+                            <ejs-radiobutton  label="Male" formControlName="genderType" value="male"  name="small" required></ejs-radiobutton>
+                            <ejs-radiobutton label="Female"  name="small" formControlName="genderType" value="female" required></ejs-radiobutton>
+                            <div *ngIf="registerForm.controls.genderType.errors && (registerForm.controls.genderType.dirty || registerForm.controls.genderType.touched)"
+                            class="alert alert-danger">
+                                <span class="errors" *ngIf="registerForm.controls.genderType.errors?.required">Gender is required</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    </div>
+</div>

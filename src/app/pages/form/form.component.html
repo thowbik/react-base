@@ -1,0 +1,184 @@
+<div class="forms-page page-container">
+  <div class="header-actions-layout">
+    <div fxLayout="row" class="header-dashboard">
+      <div class="page-title" fxFlex="50%">
+        <p>Form/Untitled</p>
+      </div>
+     
+    </div>
+    <button ejs-button class="header-actions-button" routerLink="/forms">
+      <span>
+        <i class="left"></i>
+      </span>Back</button>
+    <button ejs-button class="header-actions-button">Send</button>
+    <button ejs-button class="header-actions-button">Save</button>
+    <button ejs-button class="header-actions-button">Preview</button>
+    <button ejs-button class="header-actions-button">Add Response</button>
+    <button ejs-button class="header-actions-button">Delete</button>
+    <button ejs-button class="header-actions-button">Add Label</button>
+    <button ejs-button class="header-actions-button">More</button>
+
+    <div class="header-untitled">
+      Untitled
+    </div>
+  </div>
+  <div class="tab-actions-layout">
+    <div class="tab-button-layout" fxLayout="row">
+      <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+        <button ejs-button class="tab-button" routerLink="/form" routerLinkActive="tabbuttonactive">Form</button>
+        <button ejs-button class="tab-button" routerLink="/responses" routerLinkActive="tabbuttonactive">Responses(73)</button>
+        <button ejs-button class="tab-button temp-disabled" routerLink="/route2" routerLinkActive="tabbuttonactive">Insights</button>
+        <button ejs-button class="tab-button temp-disabled" routerLink="/route3" routerLinkActive="tabbuttonactive">Responders</button>
+        <button ejs-button class="tab-button temp-disabled" routerLink="/route4" routerLinkActive="tabbuttonactive">Correct Answer</button>
+        <button ejs-button class="tab-button" routerLink="/formoptions" routerLinkActive="tabbuttonactive">Form Options</button>
+      </div>
+    </div>
+  </div>
+  <div class="labels-layout">
+    <div tabindex="0" class="e-card">
+      <div class="e-card-content" fxLayoutGap="10px" fxLayout="row">
+        <div fxLayoutGap="10px" fxLayout="column">
+          <div class="e-card-content form-data">
+            <p>1.Please choose the model of your car from the following.</p>
+          </div>
+          <div class="e-card-content form-data1">
+            <button class="dropdownbutton">
+              <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="e-card-content form-btn">
+            <button class="add-newquestions">
+              <i class="fa fa-plus-circle" fxLayoutAlign="space-around center" aria-hidden="true"></i>
+              <!-- <p fxLayoutAlign="space-around center">Click here to add a new question.</p> -->
+              <button ejs-button class="header-actions-button" (click)="addQuestion($event)">Click here to add a new question.</button>
+            </button>
+          </div>
+          <!-- <ejs-tab class="tabs-layout" #element id="element" fxFlex="60" [animation]='animation'>
+
+          <e-tabitems>
+            <e-tabitem [header]='headerText[0]' id="users1" class="tabheader">
+              <ng-template #content>
+               
+              </ng-template>
+            </e-tabitem>
+            <e-tabitem [header]='headerText[1]' id="users1" class="tabheader">
+              <ng-template #content>
+                <div class="e-card-content" fxLayoutGap="20px">
+
+                </div>
+              </ng-template>
+            </e-tabitem>
+
+            <e-tabitem [header]='headerText[2]'>
+              <ng-template #content>
+                <div class="e-card-content" fxLayoutGap="20px">
+
+                </div>
+              </ng-template>
+            </e-tabitem>
+            <e-tabitem [header]='headerText[3]'>
+              <ng-template #content>
+                <div class="e-card-content" fxLayoutGap="20px">
+
+                </div>
+              </ng-template>
+            </e-tabitem>
+            <e-tabitem [header]='headerText[4]'>
+              <ng-template #content>
+                <div class="e-card-content" fxLayoutGap="20px">
+                </div>
+              </ng-template>
+            </e-tabitem>
+            <e-tabitem [header]='headerText[5]'>
+              <ng-template #content>
+                <div class="e-card-content" fxLayoutGap="20px">
+                </div>
+              </ng-template>
+            </e-tabitem>
+          </e-tabitems>
+        </ejs-tab> -->
+        </div>
+        <div fxLayoutGap="5px" fxLayout="column" class="form-action-buttons">
+          <button class="form-btn-datas">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <br/> Edit</button>
+          <button class="form-btn-datas">
+            <i class="fa fa-square-o" aria-hidden="true"></i> Move</button>
+          <button class="form-btn-datas">
+            <i class="fa fa-files-o" aria-hidden="true"></i> Duplicate </button>
+          <button class="form-btn-datas">
+            <i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+          <button class="form-btn-datas">
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i> More</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div>
+    <ejs-dialog #AddQuestionDialog id='dialog' header='Add a new question' width='480px' [visible]='isOpen' showCloseIcon='true'
+      isModal='true'>
+      <ng-template #content>
+        <button ejs-button class="tab-button" (click)="template()">Templates</button>
+        <button ejs-button class="tab-button" (click)="myquestion()">My Questions</button>
+        <div *ngIf="templatetab">
+
+          <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+            <span class="yes">YES/NO</span>
+            <button class="sample">Sample</button>
+            <span class="check">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+            <span class="yes">YES/NO</span>
+            <button class="sample">Sample</button>
+            <span class="check">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+            <span class="yes">YES/NO</span>
+            <button class="sample">Sample</button>
+            <span class="check">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+            <span class="yes">YES/NO</span>
+            <button class="sample">Sample</button>
+            <span class="check">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+            <span class="yes">YES/NO</span>
+            <button class="sample">Sample</button>
+            <span class="check">
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span>
+          </div>
+          <!-- <ejs-grid #grid [selectionSettings]='selectionSettings' [dataSource]='data' [allowPaging]="true" [allowSorting]="true" height="100%"
+              width="100%">
+              <e-columns>
+                <e-column>
+                  <ng-template #content>
+                    <div fxLayout="row" fxLayoutGap="30px" class="dump-data">
+                      <span>YES/NO</span>
+                      <button>Sample</button>
+                      <span>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid> -->
+        </div>
+        <div *ngIf="myquestiontab">
+          My Question
+        </div>
+      </ng-template>
+    </ejs-dialog>
+  </div>
+</div>

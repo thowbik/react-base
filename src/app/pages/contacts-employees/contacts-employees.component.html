@@ -1,0 +1,166 @@
+<div class="page-container">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Contacts</p>
+            </div>
+
+        </div>
+        <div class="header-button-layout " fxLayout="row" fxLayout.sm="column">
+            <div class="header-button-left scrollmenu" fxFlex="60" fxLayoutAlign="start center">
+                <button ejs-button class="header-actions-button contact-link" (click)="newcontact(0)" *ngxPermissionsOnly="[rolePageActionType().create]">New Contact</button>
+                <button ejs-button class="header-actions-button" routerLink="/import">Import</button>
+                <div *ngxPermissionsOnly="[rolePageActionType().delete]">
+                    <button ejs-button class="header-actions-button" id="targetButton" (click)="onDeleteContact()" *ngIf="selectcount">Delete</button>
+                </div>
+                <button ejs-button class="header-actions-button" *ngIf="dataLength > 0" (click)="exportCSV($event)">Export</button>
+                <button ejs-dropdownbutton [items]='items' class="header-actions-button" (select)='moreOption($event)'>More</button>
+                <div *ngIf="showGroupPopup">
+                    <app-makegroup (emitClosePopupFromGroup)="closedFromGroup($event)" (click)="SubmitGroup($event)"></app-makegroup>
+                </div>
+                <div *ngIf="showTransferPopup">
+                    <app-transfer (emitClosePopupFromTransfer)="closedFromTransfer($event)" (click)="Transfer($event)"></app-transfer>
+                </div>
+            </div>
+
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span class="totalCountLayout">{{page}} of {{totalPages}} {{pageType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()' [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true" [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div>
+        <ejs-dialog #Dialog [buttons]='dlgButtons' [visible]='isOpenDialogue' [header]='header' [content]='bodycontents' [showCloseIcon]='showCloseIcon'
+            isModal='true' [width]='width' class="deletedialog">
+        </ejs-dialog>
+    </div> -->
+
+    <div>
+        <ejs-dialog #Dialog id='dialog' header='Confirmation' class="popup-footer-layout delpopup" [visible]='isOpenDialogue' showCloseIcon='showCloseIcon'
+            isModal='true'>
+            <ng-template #content>
+                <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+                    <div class="popup-body-layout confirmation_title">
+                        <p class="delete-popup-alertmsg">Are you sure you want to delete the selected employee?</p>
+                    </div>
+
+                    <div class="popup-footer-layout delpopup">
+                        <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                            <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                            <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ejs-dialog>
+    </div>
+
+    <div class="tab-actions-layout">
+        <div class="tab-button-layout" fxLayout="row">
+            <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+
+
+                <button ejs-button class="tab-button" routerLink="/contacts" routerLinkActive="tabbuttonactive">All</button>
+
+
+                <!-- <button ejs-button class="tab-button"  [ngClass]="{'active':isClicked}" (click)="isClicked = (isClicked? false :true )">Users</button> -->
+                <button ejs-button class="tab-button" routerLink="/connected" routerLinkActive="tabbuttonactive">Connected</button>
+                <button ejs-button class="tab-button" routerLink="/employees" routerLinkActive="tabbuttonactive">Employees</button>
+                <button ejs-button class="tab-button" routerLink="/groups" routerLinkActive="tabbuttonactive">Groups</button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <ejs-grid #grid class="customfilter" [allowExcelExport]='true' [selectionSettings]='selectionSettings' allowTextWrap='true' [filterSettings]='filterSettings' [allowFiltering]="true"
+            [dataSource]='paginationData' [searchSettings]='searchOptions' [pageSettings]='initialPage' [allowPaging]="true"
+            [allowSorting]="true" width="100%" (rowSelecting)="select($event)" (checkBoxChange)="change($event)" (beforeExcelExport)='beforeExcelExport($event)'>
+            <e-columns>
+                <e-column textAlign='Center' field='FNames' type='checkbox' [allowFiltering]='false' [allowSorting]='false' width='38'>
+                    <span class="e-userimg sf-icon-Male"></span>
+                </e-column>
+                <e-column textAlign='Right' field='' headerText='' [allowEditing]=false width='40' [allowFiltering]='false' [allowSorting]='false'>
+                    <ng-template #template let-data>
+                        <div class="empimg" *ngIf="data.imageURL==null ||  data.imageURL==''">
+                            <img class="e-userimg profile-imgs" src="assets/images/user.png" alt="{{data.id}}" /> 
+                        </div>
+                        <div class="empimg" *ngIf="data.imageURL">
+                            <img class="e-userimg profile-imgs" src="{{environmentUrl}}{{data.imageURL}}" alt="{{data.id}}" />
+                        </div>
+                    </ng-template>
+                </e-column>
+                <e-column field='fullName' headerText='Name' class="contactname" [filter]='filter' clipMode='EllipsisWithTooltip' width='105'>
+                    <ng-template #template let-employeedata>
+                        <div class="edit-contacts contact-email">
+                            <div id="Emptext">{{employeedata.fullName}}</div>
+                            <div id="subtext">{{employeedata.emailAddress}}</div>
+                        </div>
+                    </ng-template>
+                </e-column>
+
+                <e-column field='rating' headerText='Ratings' width='83' [allowFiltering]='false' textAlign='Right'>
+                    <ng-template #template let-data>
+                        <div class="edit-contacts">
+                            <div id="rating">{{4.5}}</div>
+                        </div>
+                    </ng-template>
+                </e-column>
+                <e-column field='connectionStatusTypeName' headerText='Status' [filter]='filter' width='130' textAlign='Right'>
+                    <ng-template #template let-data>
+                        <div class="edit-contacts">
+                            <div id="statustext" [ngClass]="{
+                                'statusTypeOne' : data.connectionStatusType == contactStatusType().AddedAsContact,
+                                'statusTypeTwo' : data.connectionStatusType == contactStatusType().InviteSent,
+                                'statusTypeThree' : data.connectionStatusType == contactStatusType().RequestSent,
+                                'statusTypeFour' : data.connectionStatusType == contactStatusType().InviteSent,
+                                'statusTypeFive' : data.connectionStatusType == contactStatusType().Connected,
+                                'statusTypeSix' : data.connectionStatusType == contactStatusType().Rejected,
+                                'statusTypeSeven' : data.connectionStatusType == contactStatusType().UserRequestSent,
+                                'statusTypeEight' : data.connectionStatusType == contactStatusType().Active,
+                                'statusTypeNine' : data.connectionStatusType == contactStatusType().UserRequestRejected}">{{data.connectionStatusTypeName}}</div>
+
+                        </div>
+                    </ng-template>
+                </e-column>
+                <e-column  field='' headerText='' [allowEditing]=false width='30' [allowFiltering]='false' [allowSorting]='false'>
+                    <ng-template #template let-data>
+                    </ng-template>
+                </e-column>
+                <e-column field='dayValue' headerText='Last Activity' [filter]='filter' width='100'>
+                    <ng-template #template let-data>
+                        <div class="edit-contacts datetime">
+                            <div id="Emptext">{{data.timeValue}}</div>
+                            <div id="subtext">{{data.dayValue}}</div>
+
+                        </div>
+                    </ng-template>
+                </e-column>
+                <e-column  field='' headerText='' [allowEditing]=false width='10' [allowFiltering]='false' [allowSorting]='false'>
+                    <ng-template #template let-data>
+                    </ng-template>
+                </e-column>
+            </e-columns>
+
+        </ejs-grid>
+
+    </div>
+   
+</div>

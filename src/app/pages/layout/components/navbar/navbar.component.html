@@ -1,0 +1,39 @@
+<ejs-sidebar #sidebar [type]='type' [width]='width' [enableDock]='enableDock' [dockSize]='dockSize'
+    [enableGestures]='enableGestures' [showBackdrop]="showBackdrop" [closeOnDocumentClick]="closeOnDocumentClick">
+    <!-- <div class="nav-toolbar" fxLayout="row" fxLayoutAlign="start center">
+        <img class="nav-logo" src="assets/images/logos/icon_react_bw_white_48.png">
+        <div class="nav-title" [ngClass]="{'expand-text': !isOpen}">react</div>
+        
+    </div> -->
+    <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+                <!-- <img class="logo" src="assets/images/logos/icon_react_bb_white_100.png"> -->
+            <img class="logo" src="assets/images/logo.svg">
+            <div class="title" [ngClass]="{'expand-text': !isOpen}">react</div>
+        </div>
+    </div>
+    <!-- [mediaQuery]= "mediaQuery" -->
+    <div id="listcontainer">
+        <ejs-listview [dataSource]='data' *ngIf="data.length>0">
+            <ng-template #template let-data="">
+                <div class="e-list-wrapper">
+                    <a class="nav-item accent" [routerLink]="[data.url]" [routerLinkActive]="['active', 'activePage']">
+                            <img src="assets/images/{{data.icon}}"/> 
+                            <!--  <object  type="image/svg+xml">
+                                {{data.icon}}
+                              </object>  -->
+                        <!-- <span [ngClass]="{'expand-icon': !isOpen}"><i [ngClass]="data.icon"></i></span> -->
+                        <span [ngClass]="{'expand-text': !isOpen}" class="nav-item-text">{{data.title}}</span>
+                    </a>
+                </div>
+            </ng-template>
+        </ejs-listview>
+    </div>
+</ejs-sidebar> 
+<!-- (window:resize)="onResizeWindow()" -->
+<div class="main-container">
+    <app-topnav></app-topnav>
+    <div class="content scroll">
+        <router-outlet></router-outlet>
+    </div>
+</div>

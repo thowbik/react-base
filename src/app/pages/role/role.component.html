@@ -1,0 +1,593 @@
+<div class="role-page">
+    <form name="form" [formGroup]="roleForm">
+
+
+        <div class="header-actions-layout">
+
+            <div fxLayout="row" class="header-dashboard">
+                <div fxLayoutAlign="start center" fxFlex="80">
+                    <span class="role-title">{{cardTitle}}</span>
+                </div>
+
+                <div class="page-button-layout" fxLayout="row" fxFlex="20" fxLayoutAlign="end">
+                    <button ejs-button class="header-actions-button page-action-button save-button"
+                        fxLayoutAlign="center" fxLayoutGap="10px"  type="submit"
+                        (click)='save()'>Save</button>
+                    <button type="button" ejs-button class="header-actions-button page-action-button"
+                        fxLayoutAlign="center" id="targetButton" (click)="goToRoles()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="e-card top-layout" fxLayoutGap="10px" id="basic">
+            <div class="e-card-header">
+                <div class="e-card-header-caption">
+                    <div class="e-card-title title-layout">General</div>
+                </div>
+            </div>
+
+            <div class="e-card-content" fxLayoutGap="20px" fxLayout="column" fxLayoutAlign="space-around start">
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="role-label">Role Name:</label>
+                    <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                        <!-- <input class="rolepg-rolename" type='text' (keyup)="firstName($event)" formControlName="name" required /> -->
+                        <!--  <input type="text"> -->
+                        <textarea class="rolepg-rolename" type='text' autoFocus (keyup)="firstName($event)" formControlName="name"
+                            required></textarea>
+                        <div
+                            *ngIf="roleForm.controls.name.errors && (submitted || roleForm.controls.name.dirty || roleForm.controls.name.touched)">
+                            <span class="errors" *ngIf="roleForm.controls.name.errors?.required">Role Name is
+                                required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="role-label">Description:</label>
+                    <div class="contact-input" fxLayout="column" fxLayoutGap="5px">
+                        <textarea class="rolepg-roledesc" formControlName="description"></textarea>
+                        <div
+                            *ngIf="roleForm.controls.description.errors && (submitted || roleForm.controls.description.dirty || roleForm.controls.description.touched)">
+                            <span class="errors" *ngIf="roleForm.controls.description.errors?.required">Role Description
+                                is required</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="role_permission">
+            <div class="e-card" fxLayoutGap="10px" *ngIf="dashboard_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Dashboard" [checked]="dashboardchecked"
+                                (change)='roleDashboard($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_Dashboard" class="e-card-content" *ngIf="dashboarddata!=null">
+                    <ejs-grid #dashboardgrid [dataSource]='dashboarddata' [selectionSettings]='selectionOptions'
+                        class="grid-tbl_user" (cellSelected)='dashboardSelected($event)'
+                        [ngClass]="dashboard_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='dashboardDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+
+            <div class="e-card" fxLayoutGap="10px" *ngIf="forms_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Forms" [checked]="formchecked"
+                                (change)='roleForms($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent" class="e-card-content" *ngIf="data!=null">
+
+                    <ejs-grid #formgrid [dataSource]='data' allowTextWrap='true' [selectionSettings]='selectionOptions'
+                        class="grid-tbl" (cellSelected)='cellsSelected($event)'
+                        [ngClass]="forms_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Share' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.addviewers"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Transfer' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.changeownership"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Add Contributor' width="120px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.addcontributors"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all" (change)='allSelected($event)'>
+                                    </ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+
+                    </ejs-grid>
+
+                </div>
+            </div>
+            <div class="e-card" fxLayoutGap="10px" *ngIf="question_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Questions" [checked]="questionchecked"
+                                (change)='roleQuestion($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_Question" class="e-card-content" *ngIf="questionsdata!=null">
+                    <ejs-grid #questiongrid [dataSource]='questionsdata' allowTextWrap='true'
+                        [selectionSettings]='selectionOptions' class="grid-tbl"
+                        (cellSelected)='questionsSelected($event)'
+                        [ngClass]="question_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Share' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.addviewers"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Transfer' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.changeownership"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Add Contributor' width="120px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.addcontributors"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all" (change)='allSelected($event)'>
+                                    </ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+
+            <div class="e-card" fxLayoutGap="10px" *ngIf="chat_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Chats" [checked]="chatchecked"
+                                (change)='roleChat($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_Chat" class="e-card-content" *ngIf="chatdata!=null">
+                    <ejs-grid #chatgrid [dataSource]='chatdata' width="40%" [selectionSettings]='selectionOptions'
+                        class="grid-tbl_user" (cellSelected)='chatSelected($event)'
+                        [ngClass]="chat_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='chatDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+            <div class="e-card" fxLayoutGap="10px" *ngIf="user_div && roleCheck_Admin.isAdmin">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Users" [checked]="userchecked"
+                                (change)='roleUser($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_User" class="e-card-content" *ngIf="userdata!=null">
+                    <ejs-grid #usergrid [dataSource]='userdata' width="40%" [selectionSettings]='selectionOptions'
+                        class="grid-tbl_user" (cellSelected)='userSelected($event)'
+                        [ngClass]="user_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='userDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+            <div class="e-card" fxLayoutGap="10px" *ngIf="contact_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Contacts" [checked]="contactchecked"
+                                (change)='roleContact($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_Contact" class="e-card-content" *ngIf="contactdata!=null">
+                    <ejs-grid #contactsgrid [dataSource]='contactdata' width="40%"
+                        [selectionSettings]='selectionOptions' class="grid-tbl" (cellSelected)='contactSelected($event)'
+                        [ngClass]="contact_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Share' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.addviewers"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='Transfer' width="100px" textAlign='Center'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.changeownership"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='contactDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+
+
+            <div class="e-card" fxLayoutGap="10px" *ngIf="report_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Report" [checked]="reportchecked"
+                                (change)='roleReport($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_report" class="e-card-content" *ngIf="reportdata!=null">
+                    <ejs-grid #reportgrid [dataSource]='reportdata' width="40%" [selectionSettings]='selectionOptions'
+                        class="grid-tbl_user" (cellSelected)='reportSelected($event)'
+                        [ngClass]="report_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='reportDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+
+
+            <div class="e-card" fxLayoutGap="10px" *ngIf="settings_div">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-title">
+                            <ejs-checkbox class="role-view" label="Settings" [checked]="settingchecked"
+                                (change)='roleSettings($event)'></ejs-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="GridParent_settings" class="e-card-content" *ngIf="settingsdata!=null">
+                    <ejs-grid #settingsgrid [dataSource]='settingsdata' width="40%"
+                        [selectionSettings]='selectionOptions' class="grid-tbl_user"
+                        (cellSelected)='settingsSelected($event)'
+                        [ngClass]="settings_grid ? 'enablegrid' : 'disablegrid'" [rowHeight]='60'>
+                        <e-columns>
+                            <e-column field='lablename' headerText='' width="140px">
+                            </e-column>
+
+                            <e-column headerText='View' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+
+                                    <ejs-checkbox class="role-view" [checked]="data.view"></ejs-checkbox>
+
+                                </ng-template>
+
+                            </e-column>
+
+                            <e-column headerText='Create' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.create"></ejs-checkbox>
+                                </ng-template>
+
+                            </e-column>
+                            <e-column headerText='Edit' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.edit"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='Delete' width="100px" textAlign='Center'
+                                [customAttributes]='customAttributes'>
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.delete"></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                            <e-column headerText='All' width="50px" textAlign='Right' [customAttributes]='customchange'>
+
+                                <ng-template #template let-data>
+                                    <ejs-checkbox class="role-view" [checked]="data.all"
+                                        (change)='settingsDataSelected($event)'></ejs-checkbox>
+                                </ng-template>
+                            </e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

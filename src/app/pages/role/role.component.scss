@@ -1,0 +1,197 @@
+.role-title{
+    margin: 2px 0px;
+    padding: 12px 0px 0px 24px !important;
+    font-size: 20px;
+    color: #333333;
+    font-weight: bold;
+   
+}
+.role-page{
+    background-color: #ffffff;
+    margin-top: 57px;
+    border-top: 1px solid;
+    height: auto !important;
+    border-bottom: 1px solid white;
+    margin-bottom: 30px !important;
+}
+.e-card
+{
+    background: #FFFFFF;
+    border: 2px solid #E0E0E0;
+    box-sizing: border-box;
+    margin-top: 16px;
+    margin-bottom: 13px;
+    margin-left: 12px;
+    width: 97.5%;
+    box-shadow: none;
+}
+.top-layout {
+    padding-left: 20px !important;
+    padding-bottom: 20px;
+}
+.title-layout {
+    padding-left: 8px !important;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+.e-checkbox-wrapper .e-frame + .e-label, .e-css.e-checkbox-wrapper .e-frame + .e-label{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 10px;
+    line-height: 24px;
+}
+.e-card .e-card-content {
+    padding: 0px 20px 0px 20px !important;
+}
+.contact-input{
+    min-width: 250px; 
+}
+label.role-label {
+    line-height: 24px;
+    font-size: 16px;
+    color: #000000;
+    min-width: 200px;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.grid-tbl{
+    width: 93% !important;
+    border: none;
+    margin-left: 20px;
+    overflow-y: hidden;
+}
+.grid-tbl_user{
+    width: 70% !important;
+    margin-left: 20px;
+    border: none;
+    overflow-y: hidden;
+}
+/* .grid-tbl-contact{
+    width: 40% !important;
+    border: none;
+    overflow-y: hidden;
+} */
+
+.e-grid .e-gridheader{
+    border: none !important;
+}
+
+.e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+    background-color: none !important;
+    border-color: #757575;
+}
+.e-checkbox-wrapper .e-frame.e-check, .e-css.e-checkbox-wrapper .e-frame.e-check {
+    background-color: #2979ff !important;
+    border-color: transparent;
+    color: #fff;
+}
+.e-grid .e-rowcell {
+    border-style: none !important; 
+    border-width: 0px !important; 
+}
+.role_permission {
+    margin-bottom: 70px !important;  
+}
+.e-ripple-element{
+    background-color: none;
+}                                                                                                                                                                                                                                                                                                                                         
+.disablegrid {
+    pointer-events: none;
+    opacity: 0.4;
+}
+.wrapper {
+    cursor: not-allowed;
+}
+.e-control.e-grid.e-wrap .e-columnheader .e-headercelldiv{
+       margin-right: 3px !important;
+}
+.header-actions-layout{
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    box-sizing: border-box;
+    position: fixed;
+    top: 61px;
+    height: 60px;
+    z-index: 1;
+    // box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+@media screen and (min-width: 500px) and (max-width: 1200px) and (-webkit-min-device-pixel-ratio: 1) {
+    .grid-tbl{
+        width: 100% !important
+    }
+}
+
+.e-control.e-grid .e-gridcontent {
+    height: auto !important;
+    overflow-y: hidden !important;
+}
+.e-control.e-grid .e-gridheader {
+    height: 60px;
+    box-shadow: none !important;
+    z-index: 0;
+    position: relative;
+    border: none !important;
+}
+/* 
+
+.e-control.e-grid .e-rowcell{
+    padding-right: 30px !important;
+} */
+/* .e-control.e-grid .e-gridheader tr th:last-child {
+    padding-right: 30px !important;
+} */
+.e-control.e-grid{
+    overflow:auto !important;
+}
+.e-grid .e-headercell.customcss{
+    padding-left: 3px;
+}
+.e-grid .e-headercell.customchange{
+    padding-right: 28px;
+}
+
+.rolepg-rolename {
+    height: 14px !important;
+    line-height: 14px;
+    padding: 5px;
+    border: 0.5px solid #333333 !important;
+    border-radius: 2px;
+}
+
+.rolepg-rolename:focus {
+    border: 0.5px solid #2979FF !important;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+.rolepg-roledesc {
+    padding: 5px;
+    border: 0.5px solid #333333 !important;
+    border-radius: 2px;
+}
+.rolepg-roledesc:focus {
+    border: 0.5px solid #2979FF !important;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+.page-action-button {
+    margin: 14px 0px 14px 15px !important; 
+}
+.page-button-layout {
+   margin-right: 25px !important;  
+}
+.save-button {
+    width:80px !important;
+}
+.e-control.e-grid.e-gridhover tr[role='row']:not(.e-editedrow):hover .e-rowcell:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-control.e-grid.e-gridhover tr[role='row']:hover .e-detailrowcollapse:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-control.e-grid.e-gridhover tr[role='row']:hover .e-rowdragdrop:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-control.e-grid.e-rtl .e-gridhover tr[role='row']:hover .e-rowdragdrop:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell), .e-control.e-grid.e-gridhover tr[role='row']:hover .e-detailrowexpand:not(.e-cellselectionbackground):not(.e-active):not(.e-updatedtd):not(.e-indentcell)  ,.e-control.e-grid td.e-cellselectionbackground{
+      background-color: #FFFFFF !important;
+   // color: #000;
+}

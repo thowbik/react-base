@@ -1,0 +1,56 @@
+<div class="login-container">
+    <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" (click)="goToHome()" class="navigatebutton">
+            <img class="logo" src="assets/images/logos/icon_react_bw_white_48.png">
+            <div class="title">react</div>
+        </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" class="outerdiv">
+        <div fxLayout="column" fxLayoutAlign="center center" class="innerdiv">
+            <div class="page-card-title"> Enterprise Sign In</div>
+            <form name="form" [formGroup]="loginForm" fxFlex fxLayout="column" fxLayoutAlign="start start" novalidate>
+
+                <div class="e-float-input">
+                    <div class="usersub-input textfield dropdown">
+                        <label class="">Country</label>
+                        <ejs-dropdownlist #countrydropdown [popupHeight]="400" [fields]='countryFields'
+                            [allowFiltering]='true' cssClass='country-popup' class="signup-country" #samples
+                            [dataSource]='countryList' formControlName="param" (close)="onClose($event)">
+                        </ejs-dropdownlist>
+                    </div>
+
+                </div>
+
+                <div class="e-float-input">
+                    <input type='text' formControlName="username" class="login-input" required />
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text labelname">Username</label>
+                    <div *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)"
+                        class="alert alert-danger">
+                        <span *ngIf="loginForm.controls.username.errors?.required">Username is required</span>
+                    </div>
+                </div>
+
+                <div class="e-float-input">
+                    <input type='password' class="login-input" formControlName="password" required />
+                    <span class="e-float-line"></span>
+                    <label class="e-float-text labelname">Password</label>
+                    <div *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)"
+                        class="alert alert-danger">
+                        <span *ngIf="loginForm.controls.password.errors?.required">Password is required</span>
+                    </div>
+                    <br>
+                    <ejs-checkbox class="role-view" label="Remember me"></ejs-checkbox>
+                </div>
+
+
+                <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+                    <button class="signin" type="submit" [disabled]="!loginForm.valid" ejs-button
+                        (click)="login()">Submit</button>
+                    <button ejs-button class="e-link signup" (click)="goToSignup()">Sign Up for a New Enterprise
+                        Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

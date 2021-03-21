@@ -1,0 +1,91 @@
+<div class="contact-page">
+
+  <div class="header-actions-layout">
+    <div fxLayout="row" class="header-dashboard">
+
+      <div class="page-title" fxFlex="50">
+        <p>Contacts <span>
+            <i class="right directionicon"></i>
+          </span> Import</p>
+      </div>
+    </div>
+    <div class="import-content" fxLayout="column" fxLayoutGap="25px">
+      <div class="download-div" fxLayout="row">
+        <p class="download-text">Download sample file
+          <span class="here-class">
+            <a href='/assets/images/contact.csv' download>
+              here
+            </a>
+          </span>
+        </p>
+        <span class="dot-import">.</span>
+      </div>
+      <!-- <pre>{{files | json}}</pre> -->
+      <!-- <div class="upload-div" fxLayout="row" fxLayoutGap="10px">
+      <div class="upload-files">
+        <span class="text-file">Upload File:</span>
+      </div>
+
+      <div class="fileinputs">
+
+        <input type="file" id="documentUpload" class="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"> -->
+      <!-- <input type="file" class="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple> -->
+      <!-- <div class="fakefile">
+          <input class="file-inputs"/>
+          <button class="header-actions-button choosefile">Choose file</button>
+        </div>
+        <div class="file-name">
+          <span  *ngFor="let file of files">
+            {{file.name}}
+            <br/>
+          </span>
+        </div>
+      </div>
+    </div> -->
+    <!-- <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput> -->
+    <!-- <div>
+        <img src="{{imgResultBeforeCompress}}" alt="">
+      <img src="{{imgResultAfterCompress}}" alt="">
+    </div> -->
+      <div class="upload-div" fxLayout="row" fxLayoutGap="14px">
+        <div class="upload-files">
+          <span class="text-file">Upload File:</span>
+        </div>
+
+        <div class="">
+  <!-- [style.display]="uploadButtonName == 'Choose File' ? 'block' : 'none'" -->
+          <button [style.display]="uploadButtonName == 'Choose File' ? 'block' : 'none'" ejs-button class="header-actions-button fileContainer" fxLayoutAlign="center" id="targetButton"
+            fxLayoutGap="15px">{{uploadButtonName}}
+            <input type="file" id="documentUpload" class="file" ngFileSelect [options]="options"
+              (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" />
+          </button>
+        </div>
+        <div class="filename-style" fxLayoutAlign="start center" *ngFor="let file of files" >
+          {{file.name}}<img   class="close-icon" 
+          src="assets/images/close2.svg"
+          (click)="clearUploadControlValue()"/>   
+          <!-- <i  (click)="removeSelectedFile()" class="fa fa-trash" aria-hidden="true"></i> -->
+        </div>
+        <!-- <button *ngIf="files.length > 0" ejs-button class="header-actions-button fileContainer" fxLayoutAlign="center"
+        fxLayoutGap="15px" (click)="removeSelectedFile()">Remove File
+      </button> -->
+
+      </div>
+      <div class="save-import" fxLayout="row">
+        <button ejs-button ejs-button id="submitbutton" class="header-actions-button" fxLayoutAlign="center"
+          type="submit" *ngIf="files.length > 0" (click)="onsubmit()">Upload</button>
+        <button ejs-button class="header-actions-button" fxLayoutAlign="center" id="targetButton" fxLayoutGap="15px"
+        [routerLink]="'/contacts'">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- 
+<div class="fileinputs">
+    <input type="file" class="file" />
+    <div class="fakefile">
+      <input />
+      <button class="btn-primary">Choose file</button>
+    </div>
+  </div> -->

@@ -1,0 +1,256 @@
+.NewGroupLayout {
+    height: 100% !important;
+    display: block !important;
+}
+
+.label {
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 0px !important;
+    line-height: 1.5em;
+}
+
+.labels {
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 0px !important;
+   // line-height: 1.5em;
+    // margin-left: 6px;
+}
+
+label.contact-label {
+    font-size: 16px;
+    color: #000000;
+    min-width: 200px;
+    margin-bottom: auto;
+    margin-top: auto;
+   
+}
+
+.user-input {
+    margin-top: 5px;
+}
+
+.groupname {
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;
+}
+
+.input-control{
+    display: block;
+    width: 96.2% !important;
+    padding: 6px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    // color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid black;
+    // width: 100%;
+    // border-radius: 5px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.input-control:disabled {
+    cursor: not-allowed !important; 
+}
+
+// .grpmsgarea {
+//     margin-top: 50px !important;
+// }
+
+.form-control {
+    display: block;
+    padding: 6px 6px;
+    font-size: 16px;
+    line-height: 1.42857143;
+    // color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-color: transparent;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.textarea.contactgrouptextarea {
+    width: 100%;
+    height: 80px;
+    // border-color: black !important;
+    // margin-bottom: 15px;
+}
+.responsive-textarea.contactgrouptextarea{
+    margin-left: 0px;
+    border: 1px solid black !important;
+    border-radius: 2px;
+}
+
+
+.responsive-textarea.contactgrouptextarea:disabled {
+    cursor: not-allowed !important;
+}
+
+.e-dialog {
+    background-color: #fff;
+    box-shadow: 0 12px 40px 5px rgba(0, 0, 0, 0.26);
+} 
+
+.e-dialog .e-dlg-content {
+    display: block;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    overflow: auto;
+    overflow: hidden !important;
+}
+
+.e-dialog .e-dlg-content {
+    display: block;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    overflow: auto;
+    overflow: hidden !important;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    // border-radius: 8px !important;
+}
+
+.e-popup {
+    height: auto;
+    position: absolute;
+    width: auto;
+    z-index: 1000;
+}
+.e-control.e-dialog .e-dlg-header-content + .e-dlg-content {
+    padding-top: 0;
+    display: initial !important;
+}
+// .form-group {
+//     margin-bottom: 15px;
+// }
+
+.e-control.e-dialog .e-dlg-header-content + .e-dlg-content {
+    padding-top: 0;
+    display: initial !important;
+}
+
+
+.user-groupinput {
+    height: 100px;
+    padding-top: 0px;
+}
+/* css for make group popup */
+.select-multipleContact .e-multi-select-wrapper {
+    overflow-y: auto !important;
+    //height: 90px !important;
+    padding-right: 0px !important;
+}
+.e-multi-select-wrapper .e-chips-collection {
+    cursor: default;
+    display: block;
+    //margin: 10px !important;
+}
+.e-multi-select-wrapper .e-delim-values {
+    font-family: Roboto !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    align-items: center !important;
+    color: #000000 !important;
+    // margin-left: -4px !important;
+}
+div#multi-template_popup{
+    // left: 432px  !important;
+    position: relative !important;
+}
+.user-input.eixting_Group_css {
+    margin-bottom: 30px;
+}
+ejs-multiselect#multi-template {
+    border: 1px solid black !important;
+}
+#multi-template_popup .multijob {
+    margin-top:auto;
+    margin-bottom:auto; 
+    font-size: 14px !important;
+    font-family: Roboto !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    line-height: 24px !important;
+    color: #000000  !important;
+    opacity: 0.75 !important;
+}
+.e-bigger #multi-template_popup .multijob {
+    margin-top: -16px;
+}
+
+.bootstrap #multi-template_popup .multijob {
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 7px; 
+}
+.bootstrap4 #multi-template_popup.e-popup .multijob {
+    margin-top: 0;
+}
+
+.e-bigger.bootstrap4 #multi-template_popup.e-popup .multijob {
+    margin-top: -15px;
+}
+#multi-template_popup .multiename {
+    display: block !important;
+    font-family: Roboto !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+    line-height: 24px  !important;
+    color: #000000 !important;
+    margin-top:auto;
+    margin-bottom:auto;
+  /*   margin-top: -55px;
+    margin-left: 65px !important; */
+}
+/* .memeber-Data {
+    height: 60px;
+} */
+.multiprofileimg {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-indent: 10px;
+}
+.conttact-group-add{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap{
+    padding-top: 6px !important;
+    height: 90px !important;
+    padding: 6px !important;
+}
+dropdownInPopup.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap{
+    padding-top: 6px !important;
+    height: auto !important;
+    padding: 6px !important;
+}
+.textbox-layout {
+    border: 1px solid black !important;
+    padding: 6px 0px;
+    border-radius: 2px;
+}
+.form-group {
+    margin-bottom: 15px !important;
+}

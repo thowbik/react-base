@@ -1,0 +1,191 @@
+<!-- <div *ngxPermissionsOnly="['ADMIN']">
+    <div>You can see this text ADMIN</div>
+</div>
+<div *ngxPermissionsOnly="['GUEST']">
+    <div>You can see this text GUEST</div>
+</div> -->
+<div class="page-container">
+  <div class="header-actions-layout">
+    <div fxLayout="row" class="forms-header-dashboard">
+      
+        <div class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="50%">
+            <span class="Title">Forms</span>
+            <i class="right directionicon"></i>
+            <span class="subTitle">{{formName}}</span>
+        </div>
+  
+  </div>
+    <div class="header-button-layout " fxLayout="row" fxLayout.sm="column">
+            <div class="header-button-left scrollmenu" fxFlex="60" fxLayoutAlign="start center">
+                    <button ejs-button class="header-actions-button" (click)="back()">
+                            <span>
+                              <i class="left directionicon"></i>
+                            </span>Back</button>
+                          <button ejs-button class="header-actions-button" (click)="openSendFormPopup()">Add</button>
+                         
+                          <button ejs-button class="header-actions-button"  (click)="onDelete()" *ngIf="selectcount">Remove</button>
+                          <button ejs-button class="header-actions-button">More</button>
+            </div>
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span>{{page}} of {{totalPages}} {{pageType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()' [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true" [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+    <!-- <div class="header-untitled" fxLayoutAlign="center">
+      <span *ngIf="formId == 0" class="forms-names" fxLayoutAlign="center">Untitled</span>
+      <span *ngIf="formId != 0" class="forms-names" fxLayoutAlign="center">{{FormName}}</span>
+    </div> -->
+  </div>
+  <div class="tab-actions-layout">
+    <div class="tab-button-layout" fxLayout="row">
+      <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+        <button ejs-button class="tab-button questionFormButton" routerLink="/newquestion/{{formId}}/{{pageid}}/0"
+          routerLinkActive="tabbuttonactive">Form</button>
+        <button ejs-button class="tab-button" routerLink="/responses"
+          routerLinkActive="tabbuttonactive">Responses(73)</button>
+        <button ejs-button class="tab-button temp-disabled" routerLink="/route2"
+          routerLinkActive="tabbuttonactive">Insights</button>
+        <button ejs-button class="tab-button temp-disabled" routerLinkActive="tabbuttonactive" routerLink="/responders/{{formId}}/{{pageid}}">Responders</button>
+        <button ejs-button class="tab-button" routerLink="/formoptions/{{formId}}/{{pageid}}"
+          routerLinkActive="tabbuttonactive">Form Options
+          </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="respondersData!=null">
+
+      <ejs-grid #grid allowTextWrap='true' [selectionSettings]='selectionSettings' [editSettings]='editSettings'
+          [dataSource]='respondersData' [pageSettings]='initialPage' [allowPaging]="true" [allowSorting]="true"
+          [filterSettings]='filterSettings' [allowFiltering]="true" [allowSelection]='true' (rowSelecting)="getUserSelect($event)"
+          (checkBoxChange)="change($event)" width="100%">
+
+          <e-columns>
+              <e-column field='FNames' textAlign='Center' type='checkbox' id="checkBox" [allowFiltering]='false' [allowSorting]='false'
+                  width='38'>
+              </e-column>
+              <e-column field='' headerText='' textAlign='Right' [allowEditing]=false width='40' [allowFiltering]='false'
+                  [allowSorting]='false'>
+                  <ng-template #template let-data>
+                      <div class="empimg" *ngIf="data.imageURL">
+
+
+                          <img class="e-userimg profile-imgs" *ngIf="data.imageURL" src="{{environmentUrl}}{{data.imageURL}}"
+                              alt="{{data.id}}" />
+                      </div>
+                      <div class="empimg" *ngIf="data.imageURL==null ||  data.imageURL==''">
+                          <img class="e-userimg profile-imgs" src="assets/images/user.png" alt="{{data.id}}" />
+                      </div>
+                  </ng-template>
+              </e-column>
+              <e-column field='fullName' headerText='Responder' width='180' [allowFiltering]='false'>
+                  <ng-template #template let-data>
+                      <div class="edit-contacts contact-email">
+                          <div id="Emptext">{{data.fullName}}</div>
+                          <!-- <div id="subtext">{{data.emailAddress}}</div> -->
+                      </div>
+
+                  </ng-template>
+              </e-column>
+          
+
+              <!-- <e-column field='isActive' headerText='Status' width='80' textAlign='Right' [filter]='filter'>
+                  <ng-template #template let-data>
+                      <div id="statustext" class="edit-contacts">
+
+                          <div *ngIf="data.isActive == true" class="statusTypeOne"> Active</div>
+                          <div *ngIf="data.isActive == false" class="statusTypeTwo"> Inactive</div>
+                      </div>
+                  </ng-template>
+              </e-column> -->
+              <e-column field='formresponseStatusType' headerText='Response Status' [allowFiltering]='false' [customAttributes]='customAttributes'
+                  width='130' textAlign='Right'>
+                  <ng-template #template let-data>
+                      <div class="edit-contacts" *ngIf="data.formresponseStatusTypeName">
+                          <div id="statustext" [ngClass]="{
+                            'statusTypeTwo' : data.formresponseStatusType == FormresponseStatusType().Pending,
+                            'statusTypeThree' : data.formresponseStatusType == FormresponseStatusType().Received}">{{data.formresponseStatusTypeName}}</div>
+                      </div>
+                  </ng-template>
+              </e-column>
+              <e-column  field='' headerText='' [allowEditing]=false width='30' [allowFiltering]='false' [allowSorting]='false'>
+                  <ng-template #template let-data>
+                  </ng-template>
+              </e-column>
+              <e-column field='dayValue' headerText='Form Sent Time' width='110' [allowFiltering]='false'>
+                  <ng-template #template let-data>
+                      <div class="edit-contacts datetime">
+                          <div id="Emptext">{{data.timeValue}}</div>
+                          <div id="subtext">{{data.dayValue}}</div>
+
+                      </div>
+                  </ng-template>
+              </e-column>
+              <!-- <e-column field='lastChangeTs' type='date' headerText='Last Activity' [customAttributes]='customAttributes' [format]='formatOptions'
+                  width='110'>
+              </e-column> -->
+          </e-columns>
+
+      </ejs-grid>
+
+  </div>
+
+
+ 
+  <!-- <div>
+      <ejs-dialog #DeleteDialog [buttons]='dlgButtons' [visible]='isOpen' [header]='header' [content]='bodycontents' [showCloseIcon]='showCloseIcon'
+          [width]='width' class="deletedialog " isModal='true'>
+          <ng-template #content>
+                  <div class='form-group newuserborder' *ngIf="selectedUserRecord">
+                          <div class="Newuserempimg"></div>
+                        
+                      </div> 
+          </ng-template>
+      </ejs-dialog>
+  </div> -->
+  <div>
+      <ejs-dialog #DeleteDialog header='Confirmation' class="popup-footer-layout delpopup" [visible]='isOpen'
+          showCloseIcon='true' isModal='true'>
+          <ng-template #content>
+              <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+
+                  <div class="popup-body-layout">
+                      <p class="delete-popup-alertmsg">Are you sure you want to delete the selected user?</p>
+                  </div>
+
+                  <div class="popup-footer-layout delpopup">
+                      <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                          <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                          <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                      </div>
+                  </div>
+
+              </div>
+          </ng-template>
+      </ejs-dialog>
+  </div>
+  <div *ngIf="showSendFormToPopup" >
+    <app-sendformto (emitClosePopupSendFormTo)="closedSendFormToPopup($event)" (click)="sendForm($event)"></app-sendformto>
+    </div>
+</div>
+
+<div *ngIf="showDeletePopup">
+    <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClick($event)"></app-deletepopup>
+</div>

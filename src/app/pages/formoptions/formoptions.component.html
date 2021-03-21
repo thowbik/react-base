@@ -1,0 +1,111 @@
+<div class="forms-page page-container">
+  <div class="header-actions-layout">
+    <div fxLayout="row" class="forms-header-dashboard">
+    
+          <div *ngIf="formId == 0 || FormName == ''" class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="50%">
+              <span class="Title">Forms</span>
+              <i class="right directionicon"></i>
+              <span class="subTitle">Untitled</span>
+          </div>
+          <div *ngIf="formId != 0 && FormName != ''" class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="50%">
+              <span class="Title">Forms</span>
+              <i class="right directionicon"></i>
+              <span class="subTitle">{{FormName}}</span>
+          </div>
+    
+    </div>
+    <div class="header-button-layout forms-header " fxLayout="row" fxLayoutGap="20px">
+      <button ejs-button class="header-actions-button" (click)="back()">
+        <span>
+          <i class="left directionicon"></i>
+        </span>Back</button>
+        <button ejs-button class="header-actions-button" (click)="save()">Save</button>
+    
+    </div>
+  </div>
+  <div class="tab-actions-layout">
+    <div class="tab-button-layout" fxLayout="row">
+      <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+        <button ejs-button class="tab-button" routerLink="/newquestion/{{formId}}/{{pageid}}/0"
+          routerLinkActive="tabbuttonactive">{{QuestionFormstitle}}</button>
+        <button ejs-button class="tab-button" routerLink="/responses"
+          routerLinkActive="tabbuttonactive">Responses(73)</button>
+        <button ejs-button class="tab-button" routerLink="/route2" routerLinkActive="tabbuttonactive">Insights</button>
+        <button ejs-button class="tab-button" routerLink="/responders/{{formId}}/{{pageid}}"
+          routerLinkActive="tabbuttonactive">Responders</button>
+        <!-- <button ejs-button class="tab-button" routerLink="/route4" routerLinkActive="tabbuttonactive">Correct
+          Answer</button> -->
+        <button ejs-button class="tab-button" routerLink="/formoptions/{{formId}}/{{pageid}}" routerLinkActive="tabbuttonactive">Form
+          Options</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <form name="form" id="formId" [formGroup]="formOptions" novalidate autocomplete="off"> -->
+
+  <form novalidate name="form" [formGroup]="formOptions">
+
+
+    <div fxLayout="column" fxLayoutAlign="start start" class="para" fxLayoutGap="30px">
+
+      <!-- <div fxLayout="row" fxLayoutAlign="start center">
+        <label class="label">Form ID <span class="Optional-Span">(Auto-generated)</span></label>
+        <input type="text" class="formID-inputBox borderLayout-ForTextBox">
+      </div> -->
+
+      <div fxLayout="row"  fxLayoutAlign="start center" >
+        <label class="label">Add Time Limit to Respond</label>
+        <div class="border-layout" style="margin-right:30px !important;">
+
+          <ejs-dropdownlist cssClass='contact-user-popup' [allowFiltering]='false' class="dropdownInPopup"
+            #Contactsdropdown [dataSource]='timeLimitToRespondTypeList' [fields]='timeLimitToRespondTypeFields'
+            formControlName="timeLimitToRespondType">
+          </ejs-dropdownlist>
+        </div>
+<!-- *ngIf="TimeLimitToRespondType().One_Day == this.formdetails.timeLimitToRespondType " -->
+        <div  class="datePicker-Layout">
+          <div class="border-layout">
+            <div id="control_wrapper">
+              <ejs-datetimepicker format='dd MMMM yyyy , HH:MM ' [min]='minDate' formControlName="timeLimitDuration"></ejs-datetimepicker>
+            </div>
+          </div>
+
+          <div id="subtext">Time Left: {{days}} Days {{hours}} Hours {{minutes}} Minutes</div>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" >
+        <label class="label">Show Correct Answer</label>
+        <div class="border-layout">
+
+          <ejs-dropdownlist cssClass='contact-user-popup' [allowFiltering]='false' class="dropdownInPopup"
+            [popupWidth]="200" #Contactsdropdown [dataSource]='showCorrectAnswerTypeList'
+            [fields]='showCorrectAnswerTypeFields' formControlName="showCorrectAnswerType">
+          </ejs-dropdownlist>
+
+        </div>
+
+      </div>
+
+
+      <div>
+        <span>Add Tags (Each tag must be separated by a comma “,”)</span>
+      </div>
+        <!-- <textarea  class='form-control textarea' rows='4' cols='80' id='address'></textarea> -->
+
+        <!-- <input type="text" class="textarea"> -->
+        <!-- <div class="message-input">
+          <textarea formControlName="message" class='form-control textarea' rows='2' id='address'></textarea>
+        </div> -->
+          <div class="multiSelect-layout"> 
+            <ejs-multiselect id='custom-list' class="tags-layout" [dataSource]='tagTypesList' formControlName="tags"
+              [allowCustomValue]=true [mode]='box' [fields]='tagTypeFields' (close)="onCloseMultiselect($event)">
+            </ejs-multiselect>
+          </div>
+          <div class="footer"></div>
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,97 @@
+<div>
+    <ejs-dialog #AddGroupDialog id='dialog' header='Send Form to ...' width='900px' (open)="dialogOpen()"
+        (close)="dialogClose()" [visible]='isOpen' showCloseIcon='true' isModal='true'>
+        <ng-template #content>
+
+            <form name="form" [formGroup]="newSendForm" class="NewGroupLayout" novalidate>
+
+                <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+                    <div class="popup-body-layout" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+
+                        <div class="form-group">
+                            <div fxLayout="row" fxLayoutGap="28px">
+
+                                <ejs-radiobutton [checked]="true" class="contact-label labels" label="Contact" autofocus
+                                    [value]="1" name="custom" (change)="createlabelname($event)" required>
+                                </ejs-radiobutton>
+
+                                <ejs-radiobutton class="contact-label labels" label="Group" [value]="2" name="custom"
+                                    (change)="createlabelname($event)" required>
+                                </ejs-radiobutton>
+
+                            </div>
+                        </div>
+
+                        <div class='form-group'>
+
+                            <label class="labels">
+                                {{labelFormSend}}
+                            </label>
+
+                            <div class="user-groupinput" *ngIf="contactDropdown">
+                                
+                                <ejs-multiselect #template class="select-multipleContact" cssClass="memberSelectionPopup" id="multi-template" [popupWidth]="674"
+                                    [popupHeight]="160" formControlName="recordId" [dataSource]="contacts" [fields]="multifield1"
+                                    [placeholder]="placeholder" fxLayoutGap="10px" [closePopupOnSelect]="false" [mode]='box' [allowFiltering]='true'> 
+
+                                    <ng-template #itemTemplate let-data>
+                                        <div class="memeber-Data" fxLayout="row">
+                                            <div class="multiprofileimg">
+                                                <span>
+                                                    <img class="e-userimg profile-imgs" *ngIf="data.imageURL==null ||  data.imageURL==''" src="assets/images/user.png" alt="{{data.id}}"
+                                                    />
+
+                                                    <img class="e-userimg profile-imgs" *ngIf="data.imageURL" src="{{environmentUrl}}{{data.imageURL}}" alt="{{data.id}}" />
+                                                </span>
+                                            </div>
+                                            <div class="conttact-group-add" fxLayoutGap="10px">
+                                                <div class="multiename">{{data.fullName}}</div>
+                                                <div class="multijob">{{data.emailAddress}}</div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ejs-multiselect>
+                          
+
+                            </div>
+                            <div class="user-groupinput" *ngIf="groupDropdown">
+                                <ejs-multiselect #template class="select-multipleContact"
+                                    cssClass="memberSelectionPopup" id="multi-template" [popupWidth]="674"
+                                    [popupHeight]="160" formControlName="recordId" [dataSource]="groups"
+                                    [fields]="multifield" [placeholder]="placeholder" fxLayoutGap="10px"
+                                    [closePopupOnSelect]="false" [mode]='box'[allowFiltering]='true' (close)="onClose($event)"> 
+
+                                    <ng-template #itemTemplate let-data>
+                                        <div class="memeber-Data" fxLayout="row">
+                                            <div class="contact-group-add" fxLayoutGap="10px">
+                                                <div class="multiename">{{data.name}}</div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ejs-multiselect>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="labels">
+                                Message
+                            </label>
+                            <div class="textarea-layout" style="margin-top: 2px !important;">
+                                <textarea class='' formControlName="message" class='form-control textarea' rows='2'
+                                    id='address'></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="popup-footer-layout">
+                        <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                            <button class="popup-footer-button" id="btn" [disabled]="!newSendForm.valid" ejs-button (click)="SubmitForm()"> Send Form
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </ejs-dialog>
+</div>

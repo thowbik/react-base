@@ -1,0 +1,26 @@
+.e-control.e-dialog .e-dlg-header-content + .e-dlg-content {
+    padding-top: 0;
+    display: initial !important;
+}
+.popup-body-layout {
+    padding: 28px 37px 40px;
+}
+.popup-header-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    color: #333333;
+}
+.transfer-input {
+    width: 100% !important;
+}
+.e-filter-parent {
+    
+    padding: 4px 8px 4px 0px !important;
+}
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap {
+    padding: 6px !important;
+    align-items: center;
+}

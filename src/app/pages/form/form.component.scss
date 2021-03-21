@@ -1,0 +1,171 @@
+.title {
+    margin: 18px;
+    font-size: 20px;
+    color: #393939;
+    font-weight: 600;
+}
+
+.header-untitled{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    font-size: 18px;
+    text-align: center;
+    border-top: 1px solid #393939;
+   // border-bottom: 1px solid;
+}
+
+.add-newquestions{
+    background: none !important;
+    border: 0px !important;
+    margin-bottom: 15px;
+}
+.form-btn{
+    text-align: center;
+    box-sizing: border-box;
+    //max-width: 60% !important;
+    margin-left: 124px;
+    height: 16%;
+    // margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    width: 80% !important;
+}
+.form-data
+  {
+    box-sizing: border-box;
+    width: 80% !important;
+    margin-left: 124px;
+    height: 100px;
+    background-color: white;
+  }
+  .form-data1
+  {
+    box-sizing: border-box;
+    width: 80% !important;
+    margin-left: 124px;
+    height: 267px;
+    background-color: white;
+  }
+  .form-datas{
+    box-sizing: border-box;
+    max-width: 60% !important;
+    margin-left: 124px;
+    height: 90px;
+    margin-top: 8px;
+    background-color: white; 
+  }
+  .e-card-actions{
+    margin-left: 34%;
+  }
+  .e-card{
+    background-color: #e0e0e0;
+  }
+  .e-tab-header.e-control.e-toolbar.e-keyboard {
+    background-color: white;
+    margin-top: -10px;
+  }
+/*   div#e-dropdown-btn_1-popup {
+    left: 1017.922px !important;
+    top: 350px !important;
+    position: absolute !important;
+  }
+  button#e-dropdown-btn_1 {
+    float: right;
+  }
+  .e-control.e-dropdown-popup ul{
+    background: none !important;
+    box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0); 
+  }
+  .e-control.e-dropdown-popup ul .e-item {
+    border: 1px solid !important;
+    margin-bottom: 3px !important;
+    background-color: #ffffff;
+    width: 95px;
+    padding-left: 6px;
+    
+  }
+
+  
+  .e-control.e-dropdown-popup[_ngcontent-c13]{
+    background: none !important;
+  
+  }
+  .e-control.e-dropdown-popup {
+    //border: 1px solid !important;
+    margin-bottom: 3px !important;
+    background-color: #ffffff;
+    width: 85px;
+    padding-left: 7px;
+    font-size: 12px !important;
+    border-radius: 0px 8px 8px 0px !important;
+    position: relative !important;
+}*/
+.dropdownbutton {
+float: right !important;
+} 
+:host ::ng-deep.tab-button {
+  min-width: 150px !important; 
+}
+  // @media screen and (min-width: 700px) and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  //   div#e-dropdown-btn_1-popup {
+  //     left: 750.922px !important;
+  //     top: 230px !important;
+  //     position: fixed !important;
+  //   }
+  //   button#e-dropdown-btn_1 {
+  //     float: right;
+  //   }
+  // }
+
+  .dump-data {
+    margin-top: 9px !important  ;
+    padding: 10px !important;
+    border: 1px solid #e0e0e0 !important;
+}
+button.sample {
+  margin-left: 170px;
+}
+.check{
+  margin-left: 17px;
+}
+.tab-button {
+  width: 50% !important; 
+}
+
+.form-btn-datas{
+  width: 66px;
+  height: 50px;
+  background: #FFFFFF;
+  margin-left: 16px;
+  border: 0px;
+  border-radius: 0px 8px 8px 0px;
+
+}
+.form-action-buttons{
+  padding-top:10.5%;
+}
+.labels-layout{
+  height: 500px;
+}
+button.tab-button.temp-disabled.e-control.e-btn {
+  background: #E0E0E0;
+}
+button.tab-button.temp-disabled.e-control.e-btn:focus {
+  background: #E0E0E0 !important;
+}
+
+@media (min-width: 790px) and (max-width: 960px) {
+  .form-action-buttons{
+    padding-top:20%;
+  }
+  .form-btn-datas{
+    width: 66px;
+    height: 50px;
+    background: #FFFFFF;
+    margin-left: 38px;
+    border-radius: 0px 8px 8px 0px;
+  
+  }
+}

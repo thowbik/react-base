@@ -1,0 +1,69 @@
+
+ 
+<div  class="page-container">
+  <div fxLayout="row" fxLayoutAlign="center center">
+      <span class="form-header">Sample Form</span>
+  </div>
+   
+    <div fxLayout="column" fxLayoutGap="20px">
+   
+      
+    
+      <div fxLayout="row" fxLayoutAlign="space-evenly start">
+      <dynamic-form fxFlex="50" class="dynamicform" [fields]="regConfig" fxLayoutAlign="space-evenly start" (submit)="submit($event)">
+      </dynamic-form>
+      <div fxFlex="30" class="formvaluescontainer">
+          <h3 style="text-align: center !important;">
+            Inputs
+              </h3>
+        <div class="formvalues">
+         <label class="formlabel"> Name:</label>
+        {{ form.value.name }}
+      </div>
+      <div class="formvalues">
+        <label class="formlabel"> Favorite actor:
+            </label>
+        {{ form.value.favoriteactor }}
+      </div>
+    
+        <div class="formvalues">
+            <label class="formlabel"> Favorite Food:
+                </label>
+            {{ form.value.favoritefood }}
+          </div>
+          <div class="formvalues">
+            <label class="formlabel"> Favorite Color:
+                </label>
+            {{ form.value.favoritecolor }}
+          </div>
+          <div class="formvalues">
+              <label class="formlabel"> 
+                  Date of Birth:
+                  </label>
+              {{ form.value.dob }}
+            </div>
+            <div class="formvalues">
+                <label class="formlabel"> 
+                    Country :
+                    </label>
+                {{ form.value.country }}
+              </div>
+              <div class="formvalues">
+                  <label class="formlabel"> 
+                    File Selected :
+                      </label>
+                  {{ form.value.picture }}
+                </div>
+                <div class="formvalues">
+                    <label class="formlabel"> 
+                       Accept Terms :
+                        </label>
+                    {{ form.value.term }}
+                  </div>
+          </div>
+    </div>
+   
+    
+
+
+  </div> </div>

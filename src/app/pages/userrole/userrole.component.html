@@ -1,0 +1,125 @@
+<!-- <div *ngxPermissionsOnly="['ADMIN']">
+    <div>You can see this text ADMIN</div>
+</div>
+<div *ngxPermissionsOnly="['GUEST']">
+    <div>You can see this text GUEST</div>
+</div> -->
+<div class="page-container">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Roles</p>
+            </div>
+
+        </div>
+        <div class="header-button-layout" fxLayout="row">
+
+            <div class="header-button-left" fxFlex="60" fxLayout="row">
+                <button *ngxPermissionsOnly="[rolePageActionType().create]" ejs-button class="header-actions-button" (click)="addRole(0)">New Role</button>
+                <div *ngxPermissionsOnly="[rolePageActionType().delete]">
+                    <button ejs-button class="header-actions-button" (click)="onDeleteRoles()" *ngIf="selectcount">Delete</button>
+                </div>
+            </div>
+
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span class="totalCountLayout">{{page}} of {{totalPages}} {{pageType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()' [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true" [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="tab-actions-layout">
+            <div class="tab-button-layout" fxLayout="row">
+                <!-- <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+                        <button ejs-button class="tab-button" (click)="goToUser()">Users</button>
+                        <button ejs-button class="tab-button">Roles</button>
+        
+                    </div> -->
+                <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+                    <button ejs-button class="tab-button" routerLink="/users" routerLinkActive="tabbuttonactive">Users</button>
+                    <button ejs-button class="tab-button" routerLink="/userrole" routerLinkActive="tabbuttonactive">Roles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="paginationData!=null">
+
+        <ejs-grid #grid [selectionSettings]='selectionSettings' allowTextWrap='true' [dataSource]='paginationData' [allowPaging]="true"
+            [allowSorting]="true" [searchSettings]='RolesearchOptions' [pageSettings]='initialPage' [filterSettings]='filterSettings'
+            [allowFiltering]="true" (rowSelecting)="roleSelect($event)" (checkBoxChange)="change($event)" width="100%"  >
+            <e-columns>
+                <e-column  textAlign='Center' field='FNames' type='checkbox' [allowFiltering]='false' [allowSorting]='false' width='50'>
+                    <!-- <span class="e-userimg sf-icon-Male"></span> -->
+                </e-column>
+                <e-column field='name' headerText='Name' width='180' [allowFiltering]='false'>
+                    <ng-template #template let-data>
+                        <div class="edit-contacts contact-email">
+                            {{data.name}}
+                        </div>
+                    </ng-template>
+                </e-column>
+
+                <e-column field='description' headerText='Description' width='250' [allowFiltering]='false'>
+                    <ng-template #template let-data>
+                        <div class="edit-contacts role-description">
+                            {{data.description}}
+                        </div>
+
+                    </ng-template>
+                </e-column>
+                <e-column field='numberOfUser' headerText='No.of Users' width='150' textAlign='Right' [allowFiltering]='false'>
+                    <ng-template #template let-roles>
+                        <div class="edit-contacts">
+                            <div id="Emptext" class="countsrole-class">{{roles.numberOfUser}}</div>
+                        </div>
+                    </ng-template>
+                </e-column>
+                <e-column field='Description' headerText='Actions' width='250' textAlign='Center' [allowFiltering]="false">
+                    <ng-template #template let-roles>
+                        <div [ngClass]="roles.roleSystemType  == 1 ? 'admin-class' : 'anotherrole-class'">
+                            <div class="edit-contacts" *ngIf="roles.roleSystemType  == 0" >
+                                <button ejs-button class="header-actions-button add-button grid-action-button" (click)="addRole(roles.id); $event.stopPropagation()">
+                                    Edit</button>
+                                <button ejs-button class="header-actions-button grid-action-button" (click)="addDuplicateRole(roles.id); $event.stopPropagation()">Duplicate</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+
+    </div>
+    <div>
+        <ejs-dialog #DeleteDialog header='Confirmation' class="popup-footer-layout delpopup" [visible]='isOpen' showCloseIcon='showCloseIcon'
+            isModal='true'>
+            <ng-template #content>
+                <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+
+                    <div class="popup-body-layout">
+                        <p class="delete-popup-alertmsg">Are you sure you want to delete the selected role?</p>
+                    </div>
+
+                    <div class="popup-footer-layout delpopup">
+                        <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                            <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                            <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                        </div>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ejs-dialog>
+    </div>
+</div>

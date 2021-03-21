@@ -1,0 +1,118 @@
+<div class="page-container">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Questions</p>
+            </div>
+
+        </div>
+        <div class="header-button-layout " fxLayout="row">
+            <div class="header-button-left scrollmenu" fxFlex="75" fxLayoutAlign="start center">
+                <button ejs-button class="header-actions-button" routerLink="/label/{{LabelPageTypeno().QuestionPage}}">
+                    <span>
+                        <i class="left directionicon"></i>
+                    </span>Labels</button>
+                <button ejs-button class="header-actions-button" (click)="goToQuestion($event,LabelPageTypeno().QuestionPage)">New Question</button>
+                <button ejs-button class="header-actions-button" (click)="duplicateForm()" *ngIf="isAllowedDuplicate">Duplicate Question</button>
+                <button ejs-button class="header-actions-button" (click)="applyLabel()" *ngIf="selectcount">Apply Label</button>
+                <!-- <button ejs-button class="header-actions-button">Move</button> -->
+                <button ejs-button class="header-actions-button" (click)="onDeleteQuestion()" *ngIf="selectcount">Delete</button>
+                <!-- <button ejs-button class="header-actions-button">Share</button> -->
+                <button #moreButton ejs-dropdownbutton [items]='items' class="header-actions-button" (select)='moreOption($event)'>More</button>
+                <!-- <button ejs-button class="header-actions-button">More</button> -->
+            </div>
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span class="totalCountLayout">{{page}} of {{totalPages}} {{pageNoType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()'
+                    [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true"
+                    [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <div class="forms-body-layout">
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <ejs-grid #grid [dataSource]='data' rowHeight='48' style="cursor: pointer;" [filterSettings]='filterOptions' [allowFiltering]="false" [searchSettings]='searchOptions' [pageSettings]='initialPage' (rowSelecting)="select($event)"
+            (checkBoxChange)="change($event)" width="100%">
+            
+            <e-columns>
+                <e-column  textAlign='Center' field='FNames' type='checkbox' [allowFiltering]='false' [allowSorting]='false' width='38'>
+                </e-column>
+
+                <!-- <e-column field='formName' headerText='Question' class="navigationIcon" clipMode='EllipsisWithTooltip' width='150'>
+                </e-column> -->
+                <e-column  field='formName' headerText='Question' [filter]='filter' class="contactname" clipMode='EllipsisWithTooltip' width='160'>
+                        <ng-template #template let-data>
+                            <div class="edit-contacts">
+                                <div class="navigationIcon">{{data.formName}}</div>
+                              
+                            </div>
+    
+                        </ng-template>
+                    </e-column>
+
+                <e-column field='response' [filter]='filter' headerText='Responses' width='100'></e-column>
+
+                <e-column field='questionTypeName' headerText='Type' [filter]='filter' width='100'>
+                        <ng-template #template let-data>
+                                <div id="response">
+                                    <div>{{data.questionTypeName}}</div>
+                                  
+                                </div>
+        
+                            </ng-template>
+                </e-column>
+
+            </e-columns>
+
+        </ejs-grid>
+
+    </div>
+    </div>
+    <div *ngIf="showDeletePopup">
+        <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClick($event)"></app-deletepopup>
+    </div>
+    <div *ngIf="showLabelPopup">
+        <app-sharedlabel (emitClosePopupFromLabel)="closedFromLabel($event)" (click)="SubmitLabel($event)"></app-sharedlabel>
+    </div>
+    <div *ngIf="showTransferPopup">
+        <app-transfer (emitClosePopupFromTransfer)="closedFromTransfer($event)" (click)="Transfer($event)"></app-transfer>
+    </div>
+    
+    <!--   <div>
+        <ejs-dialog #DeleteQuestionDialog header='Confirmation' class="popup-footer-layout delpopup" [visible]='isOpen' showCloseIcon='true'
+            width='400px' isModal='true'>
+            <ng-template #content>
+                <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+      
+                    <div class="popup-body-layout delpopup">
+                        <p class="delete-popup-alertmsg">Are you sure you want to delete the selected contact?</p>
+                    </div>
+      
+                    <div class="popup-footer-layout">
+                        <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                            <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                            <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                        </div>
+                    </div>
+      
+                </div>
+            </ng-template>
+        </ejs-dialog>
+      </div> -->
+
+</div>

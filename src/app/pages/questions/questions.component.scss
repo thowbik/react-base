@@ -1,0 +1,162 @@
+.e-control.e-grid .e-filtermenudiv {
+    float: right;
+    margin: -17px 0px !important;
+    padding: 6px;
+    text-align: right;
+}
+#response {
+    padding-left: 5px !important;
+  }
+  /*css for grid checkbox alignment */
+  .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    outline: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 28px !important;
+} 
+.e-control.e-grid .e-rowcell .e-checkbox-wrapper, .e-control.e-grid .e-rowcell .e-css.e-checkbox-wrapper {
+    height: 22px !important;
+    line-height: 20px;
+    margin-left: 0px !important;
+    align-self: center;
+    align-items: center;
+    vertical-align: middle;
+    /* display: flex; */
+}
+/*css for grid checkbox alignment */
+//.left {
+//     transform: rotate(135deg);
+//     -webkit-transform: rotate(135deg);
+//     margin-bottom: 1px;
+//   }
+//   i {
+//     border: 1px solid black;
+//     border-width: 0 2px 2px 0;
+//     display: inline-block;
+//     padding: 3px;
+//   }
+//   .e-control.e-grid .e-rowcell {
+//     font-weight: bold;
+//     color: black;
+//   }
+//   @media screen and (min-width: 600px) and (max-width: 959px) and (-webkit-min-device-pixel-ratio: 1) {
+   
+//     div.scrollmenu {
+//         overflow: auto;
+//         white-space: nowrap;
+//     }
+      
+//     div.scrollmenu{
+//         display: inline-block;
+//         color: #888888;
+//         text-align: center;
+//         padding: 6px;
+//         text-decoration: none;
+//     }
+// }
+// i#dot-icons{
+//   border:0px;
+// }
+// td.e-rowcell {
+//   white-space: normal !important;
+// }
+
+// tr.e-columnheader.e-defaultcursor {
+//   font-weight: bold;
+//   color: black;
+// }
+// .input-control{
+//   display: block;
+//   width: 96.2%;
+//   padding: 6px 12px;
+//   font-size: 14px;
+//   line-height: 1.42857143;
+//   color: #555;
+//   background-color: #fff;
+//   background-image: none;
+//   border: 1px solid black;
+//   border-radius: 5px;
+//   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//   box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//   -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+//   -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+//   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+// }
+// .form-control{
+//   display: block;
+//   width:  96.3%;
+//   padding: 6px 12px;
+//   font-size: 14px;
+//   line-height: 1.42857143;
+//   color: #555;
+//   background-color: #fff;
+//   background-image: none;
+//   border: 1px solid black;
+//   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//   box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+//   -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+//   -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+//   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+// }
+
+// .NewlabelLayout {
+//   display: block !important;
+// }
+// .Newuserdiv[_ngcontent-c13] {
+//   padding: 30px 15px 10px;
+// }
+
+// span.e-input-group-icon.e-ddl-icon.e-search-icon {
+//   margin-top: auto;
+//   margin-bottom: auto;
+//   left: -10px;
+// }
+
+// .label {
+//   font-weight: 400;
+//   font-size: 18px;
+//   color: black;
+//   margin-bottom: 0px !important;
+// }
+// .form-group{
+//   margin-top: 10px;
+//   margin-bottom: 15px;
+// }
+// .addbutton:hover{
+//   background-color: #2979ff;
+//   color: white !important;
+ 
+// }
+
+// .addbutton{
+//   text-decoration :none !important;
+//   height: 40px;
+//   background-color: #2979FF;
+//   border-color: transparent;
+//   color: #fff !important;
+//   width: 30%;
+//   border-radius: 5px;
+//   margin-top: 30px;
+//   margin-bottom: 12px;
+//   text-transform: none !important;
+// }
+// .user-input{
+//   min-width: 250px; 
+//   border: 1px solid black;
+//   border-radius: 0px;
+//   margin-top: 10px;
+// }
+// .message-input{
+//   margin-top: 10px;
+// }
+// .navigationIcon {
+//   cursor: pointer;
+// }
+// .e-control.e-grid .e-filtermenudiv {
+//   margin: -17px 0px !important;
+// }

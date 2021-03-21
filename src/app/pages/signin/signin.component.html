@@ -1,0 +1,38 @@
+<div class="signupouterdiv">
+
+
+    <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" (click)="goToHome()" class="navigatebutton">
+            <img class="logo" src="assets/images/logo.svg">
+            <div class="title">react</div>
+        </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" style="height: calc(100vh - 60px);">
+        <div fxLayout="column" class="signupinnerdiv">
+            <div fxLayoutAlign="center center" class="page-card-title">  Sign in to your Enterprise Account</div>
+            <div fxLayout="row" fxLayoutAlign="space-evenly start" class="procedure-layout">
+  
+              <div fxLayout="column" fxLayoutAlign="start start">
+                  <h5 class="barcode">Sign in using your Mobile Phone </h5>
+                  <div class="steps">
+                    <p>Step 1 : Open React app on your mobile phone.</p>
+                    <p>Step 2 : Tap Menu button and select Scan QR Code.</p>
+                    <p>Step 3 : Scan the QR Code on the right with your phone.</p>
+                  </div>
+                  <div class="alternateoption">OR</div>
+                  
+                  <div>
+                    
+                      <a routerLink="/eaccount">Sign In using an Email One-Time-Password(OTP)</a>
+                  </div>
+                  
+              </div>
+              <qrcode class="qrcode" [qrdata]="myAngularxQrCode" [level]="'M'" size= {{canvassize}} ></qrcode>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center"  class="newaccount">
+                    
+              <a routerLink="/newaccount">Sign Up for a New Enterprise Account</a>
+          </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,252 @@
+<div class="page-container">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Contacts</p>
+            </div>
+
+        </div>
+        <div class="header-button-layout " fxLayout="row" fxLayout.sm="column">
+            <div class="header-button-left scrollmenu" fxFlex="60" fxLayoutAlign="start center">
+                <button ejs-button class="header-actions-button contact-link" (click)="addGroup($event)" *ngxPermissionsOnly="[rolePageActionType().create]">New Group</button>
+                <div *ngxPermissionsOnly="[rolePageActionType().delete]">
+                    <button ejs-button class="header-actions-button" (click)="onDeleteContact()" *ngIf="selectcount">Delete</button>
+                </div>
+                <button ejs-dropdownbutton [items]='items' class="header-actions-button" (select)='moreOption($event)'>More</button>
+                <div *ngIf="showTransferPopup">
+                    <app-transfer (emitClosePopupFromTransfer)="closedFromTransfer($event)" (click)="Transfer($event)"></app-transfer>
+                </div>
+            </div>
+
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span class="totalCountLayout">{{page}} of {{totalPages}} {{pageType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()' [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true" [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+
+        <ejs-dialog #Dialog id='dialog' header='Confirmation' class="popup-footer-layout delpopup" [visible]='isOpen' showCloseIcon='true'
+            isModal='true'>
+
+            <ng-template #content>
+
+                <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+
+                    <div class="popup-body-layout">
+                        <p class="delete-popup-alertmsg">Are you sure you want to delete the selected group?</p>
+                    </div>
+
+                    <div class="popup-footer-layout delpopup">
+                        <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                            <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                            <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </ng-template>
+
+        </ejs-dialog>
+
+    </div>
+
+    <div class="tab-actions-layout">
+        <div class="tab-button-layout " id="tab_btn_res">
+            <div class="header-button-left" fxFlex="100" fxLayout="row">
+                <button ejs-button class="tab-button tabbuttonscroll add-all" routerLink="/contacts" routerLinkActive="tabbuttonactive">All</button>
+                <!-- <button ejs-button class="tab-button"  [ngClass]="{'active':isClicked}" (click)="isClicked = (isClicked? false :true )">Users</button> -->
+                <button ejs-button class="tab-button tabbuttonscroll" routerLink="/connected" routerLinkActive="tabbuttonactive">Connected</button>
+                <button ejs-button class="tab-button tabbuttonscroll" routerLink="/employees" routerLinkActive="tabbuttonactive">Employees</button>
+                <button ejs-button class="tab-button tabbuttonscroll" routerLink="/groups" routerLinkActive="tabbuttonactive">Groups</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+
+        <ejs-grid #connectgrid class="customfilter" [dataSource]='paginationData' allowTextWrap='true' [selectionSettings]='selectionSettings' [pageSettings]='initialPage'
+            [editSettings]='editSettings' [allowPaging]="true" [allowSorting]="true" [filterSettings]='filterSettings' [allowFiltering]="true"
+            (rowSelecting)="selecte($event)" width="100%" (checkBoxChange)="change($event)">
+
+            <e-columns>
+
+                <e-column field='FNames' textAlign='Center' type='checkbox' [allowFiltering]='false' [allowSorting]='false' width='38'>
+                    <span class="e-userimg sf-icon-Male"></span>
+                </e-column>
+
+
+                <!-- <e-column field='' headerText='' [allowEditing]=false [allowFiltering]='false' width='40' [allowSorting]='false'>
+                    <ng-template #template let-groupdata>
+                        <div class="empimg">
+                            <img class="e-userimg profile-imgs" src="https://content1.jdmagicbox.com/comp/chennai/50/044p7031250/catalogue/xenovex-technologies-pvt-ltd-vadapalani-chennai-computer-software-developers-8lpi0v6lk6.jpg?interpolation=lanczos-none&output-format=jpg&resize=1024:*&crop=1024:270px;*,*"
+                                alt="{{groupdata.id}}" />
+                        </div>
+                    </ng-template>
+                </e-column> -->
+
+                <e-column field='name' textAlign='Left' [filter]='filter' headerText='Name' class="contactname" clipMode='EllipsisWithTooltip' width='200'>
+                    <ng-template #template let-groupdata class="groupdata-align">
+                        <div class="edit-contacts contact-email">
+                            <div id="Emptext">{{groupdata.name}}</div>
+                            <div id="subtext">{{groupdata.groupMemberNames}}</div>
+                        </div>
+                    </ng-template>
+                </e-column>
+
+                <!-- <e-column field='Rating' headerText='Ratings'  width='40'>
+                    <ng-template #template let-groupdata>
+                        <div class="edit-contacts">
+                            <div id="Emptext" >{{4.5}}</div>
+                        </div>
+                    </ng-template>
+                </e-column> -->
+
+                <!-- <e-column field='data.isActive' headerText='Group Type' [filter]='filter' width='40' textAlign='Right'>
+                    <ng-template #template let-groupdata>
+                        <div id="statustext" class="edit-contacts">
+                          <div *ngIf="groupdata.ispublic"> Public </div>
+                          <div *ngIf="!groupdata.ispublic"> Private </div>
+                        </div>
+                      
+                      </ng-template>
+                </e-column> -->
+
+                <e-column field='groupMemberCount' headerText='No.of Members' [filter]='filter' width='130' textAlign='Right'>
+                    <ng-template #template let-groupdata>
+                        <div class="edit-contacts">
+                            <div class="countsrole-class">{{groupdata.groupMemberCount}}</div>
+                        </div>
+                    </ng-template>
+                </e-column>
+
+                <e-column field='Description' headerText='Actions' textAlign='Center' [allowFiltering]="false" width='200'>
+                    <ng-template #template let-groupdata>
+                        <div *ngxPermissionsOnly="[rolePageActionType().edit]" class="button-layaout">
+                            <button ejs-button class="header-actions-button grid-action-button" (click)="editGroupName(groupdata.id); $event.stopPropagation()">Edit</button>
+                        </div>
+                    </ng-template>
+                </e-column>
+
+                <e-column field='Description' headerText='' [allowFiltering]="false" width='100'>
+                    <ng-template #template let-groupdata>
+
+                    </ng-template>
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+
+    </div>
+
+</div>
+<div *ngIf="showGroupPopup">
+    <app-makegroup (emitClosePopupFromGroup)="closedFromGroup($event)" (click)="SubmitGroup($event)"></app-makegroup>
+</div>
+
+<div>
+    <ejs-dialog #AddConnectDialog id='dialog' width='35%' [buttons]='dlgButtonsConnect' [visible]='isOpenDialogue' [header]='headerConnect'
+        [content]='bodycontentsConnect' [showCloseIcon]='showCloseIcon' isModal='true'>
+        <ng-template #content>
+            <span>Surely Connect the Connected</span>
+            <!--  <button ejs-button ejs-button id="submitbutton"  class="contact-page-btn" (click)="connect(data.id,data.fullName); $event.stopPropagation()">
+            <span class="connect-page">
+                <i class="fa fa-close" aria-hidden="true"></i>
+                Close</span>
+        </button> -->
+        </ng-template>
+    </ejs-dialog>
+</div>
+
+<div>
+    <ejs-dialog #AddGroupDialog id='dialog' header='Manage Group' width='400px'
+        [visible]='isOpen' showCloseIcon='true' isModal='true'>
+        <ng-template #content>
+
+            <form name="form" [formGroup]="newGroupForm" class="NewGroupLayout" novalidate>
+
+                <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+                    <div class="popup-body-layout" fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+
+                        <div class='form-group' *ngIf="existing_Group">
+                            <label class="label">Choose a Group</label>
+
+                            <div class="user-input eixting_Group_css">
+                                <ejs-dropdownlist #GroupTo class="dropdownInPopup" [popupWidth]="675" #Contactsdropdown [dataSource]='this.data' [fields]='fields'
+                                    (select)='selectGroup($event)'></ejs-dropdownlist>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="!existing_Group">
+                            <label class="label">Group Name</label>
+                            <div fxLayoutGap="20px">
+                                <input #GroupName type="text" class='input-control groupname' placeholder="Group Name" formControlName="name" />
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="openmembers">
+                            <label class="labels">
+                                Members
+                            </label>
+                            <div class="user-groupinput">
+
+                                <ejs-multiselect #template class="select-multipleContact" cssClass="memberSelectionPopup" id="multi-template" [popupWidth]="674"
+                                    [popupHeight]="160" formControlName="userOrganisationMappingId" [dataSource]="contacts" [fields]="multifield"
+                                    [placeholder]="placeholder" fxLayoutGap="10px" [closePopupOnSelect]="false" [mode]='box'> 
+
+                                    <ng-template #itemTemplate let-data>
+                                        <div fxLayout="row" fxLayoutGap="10px">
+                                            <div class="multiprofileimg">
+                                                <span>
+                                                    <img class="e-userimg profile-imgs" *ngIf="data.imageURL==null ||  data.imageURL==''" src="assets/images/user.png" alt="{{data.id}}"
+                                                    />
+
+                                                    <img class="e-userimg profile-imgs" *ngIf="data.imageURL" src="{{environmentUrl}}{{data.imageURL}}" alt="{{data.id}}" />
+                                                </span>
+                                            </div>
+                                            <div class="conttact-group-add" fxLayoutGap="10px">
+                                                <div class="multiename">{{data.fullName}}</div>
+                                                <!-- <div class="multijob">{{data.emailAddress}}</div> -->
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ejs-multiselect>
+                            </div>
+                        </div>
+                        <div *ngIf="!existing_Group">
+                            <label class="label">
+                                Description
+                            </label>
+                            <div>
+                                <textarea #Description formControlName="description" class='form-control textarea responsive-textarea contactgrouptextarea'
+                                    rows='2'></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-footer-layout">
+                        <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                            <button class="popup-footer-button" id="btn" [disabled]="!newGroupForm.valid" ejs-button (click)="SubmitGroup()"> Save </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </ejs-dialog>
+</div>

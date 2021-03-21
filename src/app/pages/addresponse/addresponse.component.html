@@ -1,0 +1,296 @@
+<div class="formViewouterdiv">
+    <form name="form" id="formId" [formGroup]="questionForm" novalidate autocomplete="off">
+  <div class="toolbar-formview" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" class="navigatebutton">
+      <img class="logo" src="assets/images/formview-logo.svg">
+      <div class="title">react</div>
+    </div>
+<div *ngIf="!isResponse" class="formviewpage-tilte">Preview</div>
+    <div class="admintitle">
+      <span class="username">Hello
+        <button ejs-dropdownbutton class="profile-btn" [items]='items' cssClass="e-flat e-round e-caret-hide"
+          (select)='logout($event)'>
+          <i class="fas fa-user-circle"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+  <div fxLayout="row" class="header-layout">
+    <div class="formviewpage-tilte" fxFlex="100" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+      <div class="centerLayout">
+          <span class="">{{FormName}}</span>
+          <span>{{counter+1}}/{{QuestionCount}}</span>
+      </div>
+     
+      <ng-progress #progressBar (started)="onStarted()" (completed)="onCompleted()"></ng-progress>
+    </div>
+
+    <div class="header-button-right" fxFlex="0" fxLayoutAlign="end center">
+        <button *ngIf="!isResponse" ejs-button class="header-actions-button e-control e-btn" data-ripple="true">Share
+          </button>
+      <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true">Close
+      </button>
+    </div>
+  </div>
+  <div class="formview-content" fxLayoutAlign="center center"  fxfxLayout="row">
+    <button class="preview-Nexticon" (click)="showPreviousQuestion()"> <i
+        class="left directionicon preview"></i></button>
+ 
+      <div formArrayName="multipleQuestions"
+        *ngFor="let singlequestion of  questionForm.get('multipleQuestions')['controls']; let questionindex=index">
+        <div [formGroupName]="questionindex">
+
+<div fxLayoutAlign="start start">
+    <div *ngIf="questionindex == counter" class="designLayout" fxLayout="column"   fxLayoutGap="15px">
+        <span>
+          {{questionindex+1}}. {{singlequestion.value.description}}</span>
+          <div cdkDropList class="example-list"
+          [cdkDropListData]="singlequestion.get('saveQuestionResponseCommand').controls"
+          (cdkDropListDropped)="drop($event,questionindex)"  >
+        <div formArrayName="saveQuestionResponseCommand"
+         [ngClass]="(singlequestion.value.questionType == questionType().matrixcheckbox || singlequestion.value.questionType == questionType().matrixradiobox) ? 'matrixoptionposition' : '' "
+          *ngFor="let option of singlequestion.get('saveQuestionResponseCommand')['controls']; let j=index" #elem="cdkDrag" cdkDrag>
+          <div [formGroupName]="j">
+
+
+            <div *ngIf="singlequestion.value.questionType == questionType().reorder">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px" class="borderSpacingLayout">
+                <span fxFlex="30">{{j+1}}. {{option.value.description}}</span>
+                <span class="example-handle" fxFlex="30">
+                  <ejs-tooltip #tooltip content='Move' class="drag-tooltip">
+                    <img class="drag-icon" src="assets/images/fa-bars.svg" cdkDragHandle/>
+                  </ejs-tooltip>
+                </span>
+             
+              </div>
+              
+            </div>
+
+            <div *ngIf="singlequestion.value.questionType == questionType().radio" class="question-radiobutton" fxLayoutGap="30px">
+              <ejs-radiobutton label="{{option.value.description}}"
+                name="radioButtonSelected{{questionindex}}" formControlName="questionResponseId" [value]="option.value.id" (change)="selectedOption($event,questionindex)"></ejs-radiobutton>
+            </div>
+            <div *ngIf="singlequestion.value.questionType == questionType().checkbox" class="question-radiobutton">
+            
+                <ejs-checkbox label="{{option.value.description}}" 
+                 value="false" (change)="selectedOption($event,questionindex)" formControlName="questionResponseId">
+              </ejs-checkbox>
+            </div>
+            <div *ngIf="singlequestion.value.questionType == questionType().text" class="question-radiobutton">
+            
+              <input type="text" class="form-input" formControlName="answerText" />
+          </div>
+          <div *ngIf="singlequestion.value.questionType == questionType().rating" fxLayout="column">
+
+            <div class="rating-div borderSpacingLayout" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px">
+              <span class="rating-answer" fxFlex="30">{{option.value.description}}</span>
+              <bar-rating class="rating-star" (rateChange)="selectedOption($event,questionindex)" formControlName="questionResponseId" fxFlex="30" name="rating" [max]="5">
+              </bar-rating>
+            
+            </div>
+          </div>
+      
+          </div>
+        </div>
+          </div>
+
+          <!-- code for matrix type-->
+          
+          <div *ngIf="singlequestion.value.questionType == questionType().matrixcheckbox || singlequestion.value.questionType == questionType().matrixradiobox" >
+         
+             
+              <!-- <div formArrayName="rows" *ngFor="let childQuestion of singlequestion.get('rows')['controls']; let s=index" #elem="cdkDrag" cdkDrag> -->
+                  <div fxLayout="row" >
+                  <div fxLayout="column" fxFlex="100" fxLayoutGap = "20px">
+                    
+                    <div formArrayName="rows"
+                      *ngFor="let childQuestion of singlequestion.get('rows')['controls']; let k=index">
+                      <div [formGroupName]="k">
+
+                  <span fxFlex="45" [ngClass]="k == 0 ? 'matrixLeftLayout':''">{{k+1}}. {{childQuestion.value.description}}</span>
+
+                  <div fxFlex="55" fxLayoutAlign="space-between center"  fxLayout="column">
+                      <div fxLayout="row" style="margin-bottom: 20px;height: 30px;" fxLayoutAlign="space-around center" *ngIf="k == 0">
+                          <div  class="MatrixheaderLayout" *ngFor="let optionLabel of singlequestion.value.saveQuestionResponseCommand;">
+                              <label >{{optionLabel.description}}</label>
+                            </div>
+                      </div>
+                      <div fxLayout="row" fxLayout="row"  fxLayoutAlign="space-around center">
+
+                     
+                    <div formArrayName="saveQuestionResponseCommand" class="matrixoptionposition"
+                    *ngFor="let matrixOption of childQuestion.get('saveQuestionResponseCommand')['controls']; let l=index" fxLayoutGap ="30px" fxLayoutAlign="end start">
+                    <div [formGroupName]="l">
+                        <ejs-checkbox *ngIf="singlequestion.value.questionType == questionType().matrixcheckbox"
+                        value="false" formControlName="questionResponseId">
+                     </ejs-checkbox>
+                     <div *ngIf="singlequestion.value.questionType == questionType().matrixradiobox" fxLayoutGap ="50px">
+                        <ejs-radiobutton fxLayoutGap ="30px"
+                        name="selectedMatrixRadio_{{k}}" formControlName="questionResponseId"></ejs-radiobutton>
+                     </div>
+                   
+                     <span *ngIf="singlequestion.value.questionType == questionType().matrixradiobox">&nbsp;</span>
+                <!-- <span fxFlex="30"> {{childQuestion.value.description}}22</span> -->
+
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                
+                      </div>
+                   
+
+                    </div>
+                    </div>
+
+                   <!-- <div fxLayout="row" fxFlex="60" fxLayoutGap="60px">
+                      <div 
+                      *ngFor="let count of singlequestion.value.rows;" fxLayout="column" fxLayoutGap="50px">
+                      </div>
+                    </div> -->
+                  </div>
+
+
+              <!-- <div fxFlex="50"  fxLayout="row">
+                <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="50px">
+                  <span fxFlex="30"> {{option.value.description}}11</span>
+                  <ejs-checkbox 
+                  value="false">
+               </ejs-checkbox>
+                </div>
+              </div> -->
+            <!-- </div> -->
+          </div>
+
+
+
+
+
+
+
+
+
+        <!-- <div *ngIf="!singlequestion.value.isValidAnswer && singlequestion.value.questionType != questionType().reorder && singlequestion.value.questionType != questionType().match && singlequestion.value.questionType != questionType().linear">
+        <span *ngIf="singlequestion.value.questionType != questionType().rating" class="errors"> Please select atleast one option</span>
+        <span *ngIf="singlequestion.value.questionType == questionType().rating" class="errors"> Please rate for atleast one option</span>
+      </div> -->
+        <!-- <div
+        *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors && (submitted || questionform.controls.multipleQuestions.controls[i].controls.description.dirty || questionform.controls.multipleQuestions.controls[i].controls.description.touched)">
+        <span class="errors"
+          *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors?.required">Description
+          is required</span>
+      </div> -->
+      <div *ngIf="singlequestion.value.questionType == questionType().linear" fxLayout="column">
+        <div fxLayout="column" fxLayoutAlign="center center" class="sliderDesign-layout" *ngIf="singlequestion.value.saveQuestionResponseCommand.length > 0">
+          <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+          
+            <div *ngFor="let items of singlequestion.value.saveQuestionResponseCommand;let i=index">
+              <span *ngIf="items.description == singlequestion.value.sliderResponse">{{i+1}}</span>
+            </div>
+            <span *ngIf="singlequestion.value.sliderResponse">{{singlequestion.value.sliderResponse}}</span>
+          </div>
+         
+          <ng5-slider [(value)]="value" [(highValue)]="text" formControlName="sliderResponse" [options]="singlequestion.value.sliderData"></ng5-slider>
+       <div class="layoutGap"></div>
+        </div>
+        </div>
+      <div *ngIf="singlequestion.value.questionType ==questionType().match"
+      style="margin-top: 5px;">
+      <div
+      *ngIf="(singlequestion.value.matchColumnList>0) && singlequestion.value.questionType ==8"
+      fxLayout="row" fxLayoutAlign="space-evenly center"  fxLayoutGap="20px">
+
+      <div fxLayout="column" class="text borderLayout-Forheader">
+        <ejs-textbox #matchHeaderName1 style="width: 100%" 
+          class="matchTextBoxBorder matchQuestion-textareaForHeader" value="{{headerTitle1}}" autofocus readonly></ejs-textbox>
+      </div>
+
+      <div fxLayout="column" class="text borderLayout-Forheader">
+        <ejs-textbox #matchHeaderName2 class="matchTextBoxBorder matchQuestion-textareaForHeader" value="{{headerTitle2}}"
+          autofocus readonly>
+        </ejs-textbox>
+      </div>
+
+      <div *ngIf="singlequestion.value.matchColumnList ==3" fxLayout="column"
+        class="text borderLayout-Forheader">
+        <ejs-textbox #matchHeaderName3 class="matchQuestion-textareaForHeader" value="{{headerTitle3}}"autofocus readonly>
+        </ejs-textbox>
+      </div>
+
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-evenly center">
+
+    
+      <div fxLayout="column" *ngIf="singlequestion.value.column1.length > 0" class="borderLayout">
+        <div cdkDropList
+        [cdkDropListData]="singlequestion.get('column1').controls"
+        (cdkDropListDropped)="columnDrop($event,questionindex,'column1')">
+        <div formArrayName="column1" class="match-textboxGap"
+          *ngFor="let option of singlequestion.get('column1').controls; let c1=index" cdkDrag
+          #elem="cdkDrag" cdkDrag>
+          <div [formGroupName]="c1" fxLayout="column" class="text" fxLayoutAlign="start start">
+            <input type="text" formControlName="description"
+              class="matchTextBoxBorder matchQuestion-textarea">
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" *ngIf="singlequestion.value.column2.length > 0" class="borderLayout">
+        <div cdkDropList
+        [cdkDropListData]="singlequestion.get('column2').controls"
+        (cdkDropListDropped)="columnDrop($event,questionindex,'column2')">
+        <div formArrayName="column2" class="match-textboxGap"
+          *ngFor="let option of singlequestion.get('column2').controls; let c2=index" cdkDrag
+          #elem="cdkDrag" cdkDrag>
+          <div [formGroupName]="c2" fxLayout="column" class="text" fxLayoutAlign="start start">
+            <input type="text" formControlName="description"
+              class="matchTextBoxBorder matchQuestion-textarea">
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div fxLayout="column"
+        *ngIf="singlequestion.value.column3 && singlequestion.value.column3.length > 0"
+        class="borderLayout">
+        <div cdkDropList
+        [cdkDropListData]="singlequestion.get('column3').controls"
+        (cdkDropListDropped)="columnDrop($event,questionindex,'column3')">
+        <div formArrayName="column3" class="match-textboxGap"
+          *ngFor="let option of singlequestion.get('column3').controls; let c3=index" cdkDrag
+          #elem="cdkDrag" cdkDrag>
+          <div [formGroupName]="c3" fxLayout="column" class="text" fxLayoutAlign="start start">
+            <input type="text" formControlName="description"
+              class="matchTextBoxBorder matchQuestion-textarea">
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+        <div class="btn-preview sliderButton" fxLayoutAlign="end end" fxLayout="row">
+          <button  *ngIf="singlequestion.value.questionType != questionType().match" ejs-button class="header-actions-button clearButton e-control e-btn" data-ripple="true"
+            (click)="clear(questionindex)">Clear</button>
+
+         
+        </div>
+      </div>
+</div>
+         
+
+        </div>
+      </div>
+   
+    <button class="preview-Previousicon" (click)="showNextQuestion()"><i
+        class="right directionicon preview nextIcon"></i></button>
+  </div>
+    <div fxLayout="row"  fxLayoutAlign="center center" class="header-layout">
+      <button  ejs-button *ngIf="isResponse"
+      class="header-actions-button e-control e-btn popup-footer-button" data-ripple="true" (click)="save()">
+      Submit</button>
+  
+    </div>
+  </form>
+
+</div>

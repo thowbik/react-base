@@ -1,0 +1,41 @@
+<div class="page-container">
+    <div class="header-actions-layout">
+            <div fxLayout="row" class="header-dashboard">
+                    <div class="page-title" fxFlex="50%">
+                        <p>Reports</p>
+                    </div>
+                  
+                </div>
+    </div>
+<div fxLayout="row" fxLayoutAlign="space-around start" class="rowtop">
+    <div>
+
+   
+    <div fxLayout="column" fxLayoutAlign="center center">
+
+   
+        <div class="reports">
+                <label>Summary Reports</label>
+                <ejs-listview id='sample-list' [dataSource]='report'></ejs-listview>
+            </div>
+            <div>
+                    <label>Detailed Reports</label>
+                    <ejs-listview id='sample-list' [dataSource]='chart'></ejs-listview>
+            </div>
+        </div>
+    </div>
+            <div>
+                    <label>Insights</label>
+                <ejs-listview id='sample-list' [dataSource]='chart'></ejs-listview>
+            </div>
+</div>
+
+
+<!--<div fxLayout="row" fxLayoutAlign="center center">
+    <div>
+            <label>Detailed Reports</label>
+            <ejs-listview id='sample-list' [dataSource]='chart'></ejs-listview>
+    </div>
+       
+</div>-->
+</div>

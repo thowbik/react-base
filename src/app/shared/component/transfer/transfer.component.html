@@ -1,0 +1,82 @@
+
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <ejs-dialog #TransferDialog header='Transfer Ownership'  width='750px' (open)="dialogOpen()"  (close)="dialogClose()" [visible]='isOpen' showCloseIcon='true' (close)="dialogClose()" isModal='true'>
+       
+        <form name="form" [formGroup]="transferForm" class="NewGroupLayout" novalidate>
+            <ng-template #content>
+
+                <div class="popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+                    <!-- <label class="label">Transfer from</label> -->
+                    <!-- <div class="user-input">
+                    <ejs-dropdownlist class="dropdownInPopup" [popupWidth]="675" #Contactsdropdown [dataSource]='contactsTransfer'></ejs-dropdownlist>
+                </div> -->
+                <span class="popup-header-title">{{SelectedContactCount}} {{recordType}} Selected</span>
+                    <div class='form-group' *ngIf="isAdminCheck">
+                        <label class="label">Transfer from</label>
+                        <div class="user-input transfer-input input-popupFields" >
+
+                            <ejs-dropdownlist [allowFiltering]='true' #transferFrom id='employees' [dataSource]='contactsTransferFrom' [fields]='fields' [popupHeight]='height' [placeholder]='watermark'
+                                formControlName="transferFromUserId" (close)="onClose($event)" (select)='transferFromChange($event)'>
+                                <!-- <ng-template>
+                                    <div class="head">
+                                        <span class="photo">Photo</span>
+                                        <span style="margin-left:17px;">Employee Info</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-data>
+                                    <div>
+                                        <img class="e-userimg profile-imgs" src="assets/images/user.png"
+                                            alt="{{data.id}}" />
+                                        <div class="ename"> {{data.Name}} </div>
+                                        <div class="job"> {{data.Designation}} </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-data>
+                                    <div>
+                                        <img class="e-userimg profile-imgs" src="assets/images/user.png"
+                                            alt="{{data.id}}" />
+                                        <div class="name"> {{data.Name}} </div>
+                                    </div>
+                                </ng-template> -->
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                    <div class='form-group newuserborder' *ngIf="transferFromSelectedContact">
+                        <div class="Newuserempimg">
+                            <img class="e-userimg profile-imgs" *ngIf="TransferFromImageURL==null ||  TransferFromImageURL==''"  src="assets/images/user.png"
+                            alt="{{transferFromSelectedContact.id}}" />
+
+                            <img class="e-userimg profile-imgs" *ngIf="TransferFromImageURL"  src="{{environmentUrl}}{{TransferFromImageURL}}" alt="{{transferFromSelectedContact.id}}" />
+                        </div>                        
+                        <div id="NewuserEmptext">{{TransferFromName}}</div>
+                        <div id="Newusersubtext">{{TransferFromEmail}}</div>
+                    </div>
+               
+                    <div class='form-group'>
+                        <label class="label">Transfer to</label>
+                        <div class="user-input">
+                            <ejs-dropdownlist [allowFiltering]='true' #transferTo class="dropdownInPopup" [popupWidth]="675" #Contactsdropdown [dataSource]='contactsTransferTo' [fields]='fields'
+                                formControlName="transferToUserId" (select)='transferToChange($event)' ></ejs-dropdownlist>
+                        </div>
+                    </div>
+                    <div class='form-group newuserborder' *ngIf="transferToSelectedContact">
+                        <div class="Newuserempimg">
+                            <img class="e-userimg profile-imgs" *ngIf="TransferToImageURL==null ||  TransferToImageURL==''"  src="assets/images/user.png"
+                            alt="{{transferToSelectedContact.id}}" />
+
+                            <img class="e-userimg profile-imgs" *ngIf="TransferToImageURL"  src="{{environmentUrl}}{{TransferToImageURL}}" alt="{{transferToSelectedContact.id}}" />
+                        </div>                         
+                        <div id="NewuserEmptext">{{TransferToName}}</div>
+                        <div id="Newusersubtext">{{TransferToEmail}}</div>
+                    </div>
+
+                </div>
+                <div class="popup-footer-layout" fxLayout="column" fxLayoutGap="20px">
+                    <div fxLayoutAlign="center center">
+                        <button class="popup-footer-button" id="btn" ejs-button (click)="Transfer()"  [disabled]="!transferForm.valid">Transfer</button>
+                    </div>
+                </div>
+            </ng-template>
+        </form>
+    </ejs-dialog>
+</div>

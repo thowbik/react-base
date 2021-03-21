@@ -1,0 +1,49 @@
+<div class="fix-nav" fxLayout="row">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="50" class="toolbar-left" fxLayoutGap="20px">
+        <img src="assets/images/topbar.svg" class="expandwindow" (click)="toggleSidebar()" />
+        <!-- <button ejs-button cssClass="e-flat side-btn" iconCss= "e-icons e-MT_menu1" (click)="toggleSidebar()" fxFlex="10"></button> -->
+        <div fxLayout="row" class="ip-box" (window:resize)="onResize($event)">
+            <form name="form" [formGroup]="searchform" class="NewUserLayout" novalidate>
+                <!-- <ejs-dropdownlist class="listingdatas" id='ddlelement' [dataSource]='listingdata' [value]="listingdata.name" formControlName="page" *ngIf="listingdata?.length>0" [fields]='fields'
+                fxFlex="45">
+            </ejs-dropdownlist> -->
+                <i class="fa fa-search search-withpage" aria-hidden="true"></i>
+                <ejs-dropdownlist id='listingdue' [enableRtl]="false" fxFlex="2" #sample1 [dataSource]='listingdata'
+                    [popupWidth]="200" [cssClass]='customClass' [value]="listingdata.name" formControlName="page"
+                    *ngIf="listingdata?.length>0" [fields]='localFields' (close)="onClose($event)"></ejs-dropdownlist>
+                <i class="fas fa-caret-down emptyContent" *ngIf="listingdata?.length==0"></i>
+
+                <input placeholder="Search" #box (keyup.enter)="search(box.value)" type="text" class="searchbox"
+                    fxFlex="10" />
+            </form>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50" fxLayoutGap="10px" class="toolbar-right">
+        <div class="left-top">
+            <ejs-dropdownlist id='ddlelement' [style.width.px]="250" #samples [dataSource]='orginizationTypes'
+                cssClass="organisationdropdown" [fields]='fields' [enableRtl]="false" [(value)]='value'
+                (select)='orginizationChange($event)' fxLayout="row wrap"
+                *ngIf="orginizationTypes!=null && value!= null"></ejs-dropdownlist>
+        </div>
+
+        <button ejs-button cssClass="e-flat e-round e-caret-hide" class="alert-button">
+            <i class="far fa-bell"></i>
+        </button>
+
+
+        <ejs-tooltip #tooltip content={{userName}} class="tooltip">
+            <button ejs-dropdownbutton class="profile-button" [items]='items' cssClass="e-flat e-round e-caret-hide"
+                (select)='profileclick($event)'>
+                <i class="fas fa-user-circle"></i>
+            </button>
+        </ejs-tooltip>
+
+    </div>
+    <!-- <div *ngIf="media.isActive('sm')" fxLayoutAlign="end center" fxLayoutGap="10px" fxFlex="50" class="toolbar-right" >
+        <input placeholder="Search" type="text" class="ip-box" fxFlex="40"/>
+        <button ejs-dropdownbutton class="profile-btn" [items]='mobileItems'  cssClass="e-flat e-round e-caret-hide" (select)='profileclickMobile($event)' fxFlex="5"><i class="fas fa-ellipsis-v"></i></button>
+    </div> -->
+    <!-- <ejs-dialog #DeleteDialog [buttons]='dlgButtons' [visible]='isOpen' [header]='header' [content]='bodycontents' [showCloseIcon]='showCloseIcon'
+        [width]='width' class="deletedialog " isModal='true'>
+    </ejs-dialog> -->
+</div>

@@ -1,0 +1,244 @@
+<div class="forms-page">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="50%">
+                <span class="Title">Forms</span>
+                <i class="right directionicon"></i>
+                <span class="subTitle">All Forms</span>
+            </div>
+
+        </div>
+        <div class="header-button-layout " fxLayout="row" fxLayout.sm="column">
+            <div class="header-button-left scrollmenu" fxFlex="60" fxLayoutAlign="start center">
+                <button ejs-button class="header-actions-button" routerLink="/label/{{LabelPageTypeno().FormPage}}">
+                    <span>
+                        <i class="left directionicon"></i>
+                    </span>Labels</button>
+                <!-- <button ejs-button class="header-actions-button" (click)="addForm($event,LabelPageTypeno().FormPage)">New
+                    Form</button> -->
+                    <button ejs-button class="header-actions-button" (click)="addFormPopup()">New
+                            Form</button>
+                    <button ejs-button class="header-actions-button" (click)="duplicateForm()" *ngIf="isAllowedDuplicate">Duplicate Form</button>
+                <button ejs-button class="header-actions-button" (click)="applyLabel()" *ngIf="selectcount">Apply Label</button>
+                <!-- <button ejs-button class="header-actions-button">Move</button> -->
+                <div *ngxPermissionsOnly="[rolePageActionType().delete]">
+                    <button ejs-button class="header-actions-button" (click)="onDeleteForm()" *ngIf="selectcount">Delete</button>
+                </div>
+                <!-- <button ejs-button class="header-actions-button" (click)="sendForm()" *ngIf="selectcount">Send</button> -->
+                <!-- <button ejs-button class="header-actions-button">Share</button> -->
+                <button #moreButton ejs-dropdownbutton [items]='items' class="header-actions-button" (select)='moreOption($event)'>More</button>
+            </div>
+            <!--   {{page}}
+            {{totalPages}} -->
+            <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                    <span class="totalCountLayout">{{page}} of {{totalPages}} {{pageNoType}} ({{dataLength}} {{itemType}})</span>
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()'
+                    [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true"
+                    [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <div class="labels-layout">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <ejs-grid #grid [dataSource]='paginationData' [filterSettings]='filterOptions' [allowFiltering]="false"
+                [searchSettings]='searchOptions' [pageSettings]='initialPage' (rowSelecting)="select($event)" rowHeight='43'
+                width="100%" [editSettings]='editSettings' [allowPaging]="true" (checkBoxChange)="change($event)">
+                <e-columns>
+                    <e-column field='FNames' textAlign='Center' type='checkbox' [allowFiltering]='false' [allowSorting]='false'
+                        width='38'>
+                        <span class="e-userimg sf-icon-Male"></span>
+                    </e-column>
+
+                    <!-- <e-column field='formName' headerText='Form Name' clipMode='EllipsisWithTooltip' width='100%'>
+                    </e-column> -->
+                    <e-column field='formName' [filter]='filter' headerText='Form Name' class="contactname" clipMode='EllipsisWithTooltip'
+                        width='160'>
+                        <ng-template #template let-data>
+                            <div class="edit-contacts">
+                                <div class="navigationIcon">{{data.formName}}</div>
+
+                            </div>
+
+                        </ng-template>
+                    </e-column>
+
+                    <!-- <e-column field='formDescription' headerText='Description' width='100%'></e-column> -->
+                    <!-- <e-column  field='formDescription' headerText='Description' [filter]='filter' class="contactname" clipMode='EllipsisWithTooltip' width='160'>
+                            <ng-template #template let-data>
+                                <div class="edit-contacts datetime">
+                                    <div class="navigationIcon">{{data.formDescription}}</div>
+                                  
+                                </div>
+        
+                            </ng-template>
+                        </e-column> -->
+
+                    <e-column field='' headerText='Responses' width='100' [allowFiltering]='false' [allowSorting]='false' textAlign='Right'>
+
+                        <ng-template #template let-data>
+                            <div class="edit-contacts">
+                                <div id="rating">1,334</div>
+                            </div>
+                        </ng-template>
+                    </e-column>
+                    <e-column field='' headerText='Responders' width='100' [allowFiltering]='false' [allowSorting]='false' textAlign='Right'>
+                        <ng-template #template let-data>
+                            <div class="edit-contacts">
+                                <div id="rating">3,567</div>
+                            </div>
+                        </ng-template>
+                    </e-column>
+                    <e-column field='date' headerText='Date' width='100' [allowFiltering]='false' [allowSorting]='false'>
+
+                        <ng-template #template let-data>
+                            <div class="edit-contacts">
+                                <div id="responders">06 Aug 2019</div>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                </e-columns>
+
+            </ejs-grid>
+
+        </div>
+    </div>
+</div>
+<div *ngIf="showDeletePopup">
+    <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClick($event)"></app-deletepopup>
+</div>
+
+<div *ngIf="showDeletePopupForTemplate">
+    <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClickTemplate($event)"></app-deletepopup>
+</div>
+
+<div *ngIf="showLabelPopup">
+    <app-sharedlabel (emitClosePopupFromLabel)="closedFromLabel($event)" (click)="SubmitLabel($event)"></app-sharedlabel>
+</div>
+
+<div *ngIf="showTransferPopup">
+    <app-transfer (emitClosePopupFromTransfer)="closedFromTransfer($event)" (click)="Transfer($event)"></app-transfer>
+</div>
+
+
+
+<!--Start   Popup for create new Form-->
+
+<div fxLayout="row" fxLayoutAlign="center center">
+        <ejs-dialog #AddFormDialog id='dialog' header='New Form' [visible]='isOpen' showCloseIcon='true' isModal='true' (close)="clear()">
+            <ng-template #content>
+                <form name="form" [formGroup]="createForm">
+                    <div style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25); ">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+    
+    
+    
+                            <input type="text" placeholder="Search" class="searchtemplateForm"  formControlName="template"
+                                style="text-align: center;" />
+    
+                            <!-- <ejs-textbox #searchValue placeholder="Search" class="searchtemplateForm"
+                                style="text-align: center;" formControlName="template">
+                            </ejs-textbox> -->
+
+
+
+                        </div>
+                        <div fxLayout="row" class="lableGroup">
+                            <label class="label tabLabel" style="cursor:auto !important"> Suggested Keywords:</label>
+                            <label class="label tabLabel" (click)="SearchTeamplate('Business')">Business </label>
+                            <label class="label tabLabel" (click)="SearchTeamplate('Education')">Education </label>
+                            <label class="label tabLabel" (click)="SearchTeamplate('Science')">Science </label>
+                            <label class="label tabLabel" (click)="SearchTeamplate('Technology')">Technology </label>
+                            <label class="label tabLabel" (click)="SearchTeamplate('Social')">Social </label>
+                        </div>
+                    </div>
+    
+                    <div style="height:420px !important; overflow: auto;">
+    
+    
+                        <div fxLayout="column">
+                            <div fxLayout="row" style="align-items: center; box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);">
+                                <label fxFlex="81.4" class="label marginForTemplateName " style="font-size: 16px !important">Blank
+                                    Form</label>
+                                <button fxFlex="10" ejs-button class="header-actions-button"
+                                    (click)="addForm($event,LabelPageTypeno().FormPage)">Select</button>
+                            </div>
+                        </div>
+    
+    
+                        <div *ngFor="let item of templateFormsData; let index =index" fxLayout="column">
+                            <div fxLayout="row" style="align-items: center; box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);">
+    
+                                <!-- <label fxFlex="60" class="label"   style="margin-left: 25px;">{{item.templateName}}</label> -->
+    
+                                <div fxFlex="71" class="edit-contacts contact-email">
+                                    <div id="Emptext" class="marginForTemplateName" >{{item.templateName}}</div>
+                                    <div id="subtext" class="marginForTemplateName" >Created by {{item.organisationName}}
+                                    </div>
+                                </div>
+
+                                
+                                <button *ngIf="item.userId == userId" fxFlex="10" ejs-button class="header-actions-button"
+                                (click)="onDeleteTemplateForm(item.id)">Delete</button>
+    
+                                <!-- <label fxFlex="10" class="label" >{{item.count}} used</label> -->
+    
+                                <div fxFlex="10" class="edit-contacts contact-email" style="margin-left: 25px;">
+                                    <!-- <div id="Emptext" style="cursor:auto;">{{item.count}}M</div> -->
+                                    <div id="Emptext" style="cursor:auto;">20M</div>
+
+                                    <div id="subtext" style="cursor:auto;">Used</div>
+                                </div>
+    
+    
+                                <!-- <button fxFlex="10" ejs-button class="header-actions-button"
+                                        (click)="preview()"> Preview</button> -->
+    
+                                <!-- <button fxFlex="12" ejs-button class="header-actions-button"
+                                    iconCss="e-btn-sb-icon e-stop-icon" iconPosition="Right">Preview</button> -->
+    
+    
+    
+    
+                                <button fxFlex="10" ejs-button class="header-actions-button selectButtonMargin"
+                                    (click)="sampleTemplateForm(item.id)">Select</button>
+                            </div>
+    
+                        </div>
+                        <!-- *ngIf="totalTemplate > 9" -->
+                        <div *ngIf="isMore" fxLayout="column" >
+                            <div fxLayout="row" fxLayoutAlign="end center"
+                                style="align-items: center;  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);">
+                                <button fxFlex="10" ejs-button class="header-actions-button selectButtonMargin"
+                                     (click)="viewMore()">More</button>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <div class="popup-footer-layout" style="height:55px !important;">
+    
+                    </div>
+    
+                </form>
+            </ng-template>
+        </ejs-dialog>
+    
+    </div>
+    
+    <!--End   Popup for create new Form-->

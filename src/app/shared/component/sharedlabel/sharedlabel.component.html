@@ -1,0 +1,41 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <ejs-dialog #AddLabelDialog id='dialog' header='{{cardTitle}}' (open)="dialogOpen()" (close)="dialogClose()"
+        [visible]='isOpen' showCloseIcon='true' isModal='true'>
+        <ng-template #content>
+            <form name="form" [formGroup]="newlabelForm" class="NewlabelLayout" novalidate>
+                <div class="popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+                    <!-- <label class="label">Choose Account</label>
+                  <div class="user-input">
+                      <ejs-dropdownlist class='role-choose' [dataSource]="orginizationTypes" [fields]='datafields' #Contactsdropdown formControlName="organisationId"></ejs-dropdownlist>
+                  </div> -->
+                    <div class="form-group" *ngIf="!updateLabel">
+                        <label class="label">Label Name</label>
+                        <div class="message-input">
+                            <input type="text" class='form-control' placeholder="Label Name"
+                                formControlName="labelName" />
+                        </div>
+                    </div>
+
+                    <div class='form-group' fxLayout="column" fxLayoutGap="20px">
+                        <ejs-checkbox *ngIf="!updateLabel" #checkbox class="role-view" label="{{chooseLabel}}"
+                            [checked]='formchecked' (change)='labelParent($event)'></ejs-checkbox>
+                        <label *ngIf="updateLabel" class="label update-label">{{chooseLabel}}</label>
+                        <div class="user-input">
+                            <ejs-dropdownlist id='games' cssClass='question-label-popup' #sample1
+                                formControlName="parentId" [readonly]="temppntLabel" (open)='onOpen()'>
+                                <ng-template #noRecordsTemplate>
+                                    <div id='tree' class="labelList"></div>
+                                </ng-template>
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer-layout">
+                    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                        <button class="popup-footer-button" id="btn" ejs-button (click)="Submit()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </ejs-dialog>
+</div>

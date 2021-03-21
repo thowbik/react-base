@@ -1,0 +1,321 @@
+
+.formViewouterdiv {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    height: 100vh;
+    overflow: hidden;
+}
+.admintitle{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    margin-right: 12px;
+  }
+  .username {
+    color: black !important;
+}
+
+.profile-btn, .profile-btn:hover {
+    color: black !important;
+}
+.title{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    color: #2979FF;
+}
+.formviewpage-tilte{
+    font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+align-items: center;
+text-align: center;
+color: #000000;
+margin-top: auto;
+margin-bottom: auto;
+}
+button#e-dropdown-btn_0 {
+    background-color: white;
+}
+.header-layout{
+    height: 100px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.toolbar-formview {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    height: 60px !important;
+}
+i.fas.fa-user-circle{
+    font-size: 24px;
+}
+.formview-content{
+    background-color: #E0E0E0 !important;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.designLayout{
+    box-sizing: border-box !important;
+    border-radius: 8px;
+    border: 0.5px solid transparent !important;
+    box-shadow: 1px 2px 3px rgba(51, 51, 51, 0.5) !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    //line-height: 40px;
+    top: 0;
+    bottom: 0;
+    width: 750px;
+    height: calc(100vh - 401px);
+    overflow-y: scroll;
+    padding: 16px;
+    background: #FFFFFF;
+}
+.preview-Nexticon,.preview-Previousicon{
+    background: #FFFFFF;
+    border-radius: 50px;
+    width: 60px;
+    height: 60px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+    border: 0;
+    margin-right: 0px !important;
+    margin-left: 5%;
+}
+.preview-Nexticon {
+  margin-right: 5% !important;
+  margin-left: 0px !important;
+}
+button:focus {
+    outline: none !important;
+  }
+  .header-button-right {
+    float: right;
+    margin-right: 20px;
+}
+ /* Start Angular Drag and Drop  css */
+ .example-list {
+    //width: 500px;
+    max-width: 100%;
+    display: block;
+    margin-top: 8px;
+    background: white;
+    border-radius: 0px;
+    //overflow: hidden;
+  }
+  
+  .example-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: white;
+    font-size: 14px;
+  }
+  
+  .example-box span {
+    cursor: move;
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    // box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    //             0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    //             0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-box:last-child {
+    border: none;
+  }
+  
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  /* end Angular Drag and Drop  css */
+
+  .borderLayout {
+    background: rgba(255, 255, 255, 0.5);
+    border: 0.5px solid #333333;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  
+  .borderLayout-Forheader {
+    background: rgba(224, 224, 224, 0.5);
+    border-radius: 4px;
+  }
+  .matchTextBoxBorder {
+    border: 0px !important;
+    background: rgba(224, 224, 224, 0.5);
+    border-radius: 4px;
+    //   width: 240px;
+    // height: 30px;
+    left: 485px;
+    top: 538px;
+    margin-left: 2px;
+  }
+  
+  .gap {
+    padding-bottom: 20px;
+  }
+  
+  .matchQuestion-textarea {
+    border: 0.5px solid transparent !important;
+    border-radius: 4px !important;
+    width: 200px;
+    height: 30px;
+    background: rgba(224, 224, 224, 0.5);
+    // background: rgb(155, 147, 147);
+    font-size: 14px !important;
+    text-align: start;
+    padding-left: 5px !important;
+  }
+  .matchQuestion-textareaForHeader {
+    border: 0.5px solid transparent !important;
+    border-radius: 4px !important;
+    width: 200px;
+    height: 30px;
+    background: rgba(224, 224, 224, 0.5);
+    // background: rgb(155, 147, 147);
+    font-size: 14px !important;
+    text-align: center;
+    padding-left: 5px !important;
+  }
+  .closeIconForMatch[_ngcontent-c18] {
+    width: 17px !important;
+    height: 32px !important;
+    margin-right: 4px;
+}
+.showIcon[_ngcontent-c18] {
+  cursor: pointer !important;
+}
+:host ::ng-deep.ng5-slider-inner-tooltip[_ngcontent-c16] {
+  height: 100%;
+  display: none !important;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-tick-legend {
+  display: none;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-span {
+  outline: none !important;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-pointer {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  top: -8px;
+  z-index: 3;
+  border-radius: 16px;
+  background-color: #ff0000c9;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-tick {
+  text-align: center;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    background: #ff3636;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-left: 0px;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-bar {
+  left: 0;
+  width: 98%;
+  height: 4px;
+  z-index: 1;
+  background: #ff0000c9;
+  border-radius: 2px;
+}
+:host ::ng-deep.ng5-slider .ng5-slider-pointer:after {
+  content: '';
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  border-radius: 4px;
+  /* background: #ff3636; */
+}
+.popup-footer-button {
+  background-color: #2979FF !important;
+  width: fit-content !important;
+}
+
+.matrixoptionposition{
+  float: left;
+  margin-left: 30px;
+}
+.MatrixheaderLayout {
+  width: 15% !important;
+}
+.matrixLeftLayout {
+  margin-top: 52px;
+}
+.question-radiobutton {
+  margin-bottom: 15px;
+  margin-left: 40px;
+}
+.clearButton {
+  margin-bottom: 0px !important;
+}
+.centerLayout {
+  margin-left: 15%;
+}
+.borderSpacingLayout {
+  margin-left: 40px !important; 
+}
+/*media query for center layout */
+@media (min-height:400px) and (max-height:600px){
+  .designLayout {
+    height: calc(100vh - 340px) !important;
+  } 
+}
+@media (min-height:601px) and (max-height:650px){
+  .designLayout {
+    height: calc(100vh - 340px) !important;
+  } 
+}
+@media (min-height:651px) and (max-height:900px){
+  .designLayout {
+    height: calc(100vh - 401px);
+  } 
+}
+@media (min-height:901px) and (max-height:1200px){
+  .designLayout {
+    height: calc(100vh - 460px);
+  } 
+}
+@media (min-height:1201px) and (max-height:1500px){
+  .designLayout {
+    height: calc(100vh - 501);
+  } 
+}
+  

@@ -1,0 +1,7 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="outerdiv">
+    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="50" class="innerdiv" fxLayoutGap="20px">
+        <div class="page-card-title">Select Organisation </div>
+        <ejs-dropdownlist id='ddlelement' [dataSource]='orginizationTypes' [fields]='fields' [placeholder]='text'
+            (select)='orginizationChange($event)'></ejs-dropdownlist>
+    </div>
+</div>

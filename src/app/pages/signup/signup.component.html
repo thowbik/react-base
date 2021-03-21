@@ -1,0 +1,584 @@
+<div class="signupouterdiv">
+
+
+    <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" (click)="goToHome()" class="navigatebutton">
+            <img class="logo" src="assets/images/logo.svg">
+            <div class="title">react</div>
+        </div>
+
+        <div class="admintitle">
+            <span class="username">Hello {{username}}
+                <button ejs-dropdownbutton class="profile-btn" [items]='items' cssClass="e-flat e-round e-caret-hide"
+                    (select)='logout($event)'>
+                    <i class="fas fa-user-circle"></i>
+                </button>
+
+            </span>
+        </div>
+
+        <!-- <span *ngIf="isOpen" (click)="onResizeWindow()" class="nav-title" fxLayoutAlign="end left" fxFlex="50"><i class="fas fa-times"></i></span> -->
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center" style="height: calc(100vh - 60px);">
+        <div fxLayout="column" class="signupinnerdiv">
+            <div>
+                <h4 class="signupwizard-header"> New Business Account</h4>
+            </div>
+
+            <aw-wizard class="my-custom-css-wrapper" [navBarLayout]="'small'">
+                <aw-wizard-step [stepTitle]="workflow[0].step" class="activestep" [stepId]="workflow[0].stepId">
+
+                    <div>
+                        <!-- <div class="borderstartline"></div> -->
+                        <form name="form" [formGroup]="form" autocomplete="off">
+
+                            <div fxLayout="row" fxLayoutAlign="space-evenly start" [style.height.px]="scrollareaHeight"
+                                class="enterprise-container scrollarea-layout">
+
+                                <div fxLayout="column" fxLayoutGap="15px" class="signup-content">
+
+                                    <div>
+                                        <label class="label">Organization Name</label>
+
+
+                                        <div>
+                                            <input type='text' autoFocus (keyup)="onKey($event)" formControlName="name"
+                                                class="user-input" required />
+                                        </div>
+
+
+                                        <div
+                                            *ngIf="form.controls.name.errors && ( form.controls.name.dirty || form.controls.name.touched)">
+                                            <span class="errors"
+                                                *ngIf="form.controls.name.errors?.required">Organization Name is
+                                                required</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="label">Address Line1</label>
+                                        <div>
+                                            <input type='text' class="user-input" formControlName="address1" required />
+                                        </div>
+                                        <div
+                                            *ngIf="form.controls.address1.errors && ( form.controls.address1.dirty || form.controls.address1.touched)">
+                                            <span class="errors" *ngIf="form.controls.address1.errors?.required">Address
+                                                is required
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="label">Address Line2</label>
+                                        <div>
+                                            <input type='text' class="user-input" formControlName="address2" />
+                                        </div>
+
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px"
+                                        class="subdivision-layout">
+                                        <div fxFlex="50">
+                                            <label class="label">City</label>
+                                            <div>
+                                                <!-- <ejs-dropdownlist #samples [dataSource]='country'
+                                                    formControlName="city">
+                                                </ejs-dropdownlist> -->
+                                                <input type='text' class="usersub-input textfield"
+                                                    formControlName="city" required />
+                                            </div>
+
+                                        </div>
+                                        <div fxFlex="50">
+                                            <label class="label">State/Province</label>
+                                            <div>
+                                                <!-- <ejs-dropdownlist #samples [dataSource]='country'
+                                                    formControlName="state">
+                                                </ejs-dropdownlist> -->
+                                                <input  (blur)="onStateBlurMethod()"  type='text' class="usersub-input textfield"
+                                                    formControlName="state" required />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+                                        <div fxFlex="50">
+                                            <div
+                                                *ngIf="form.controls.city.errors && ( form.controls.city.dirty || form.controls.city.touched)">
+                                                <span class="errors" *ngIf="form.controls.city.errors?.required">City is
+                                                    required
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div fxFlex="50">
+                                            <div
+                                                *ngIf="form.controls.state.errors && ( form.controls.state.dirty || form.controls.state.touched)">
+                                                <span class="errors" *ngIf="form.controls.state.errors?.required">State
+                                                    is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px"
+                                        class="subdivision-layout">
+                                        <div fxFlex="50">
+                                            <label class="label">Country</label>
+                                            <div  class="usersub-input textfield dropdown">
+
+                                                <!-- <ejs-dropdownlist #samples [dataSource]='country'
+                                                    formControlName="country" popupWidth='200px' popupHeight='200px'>
+                                                </ejs-dropdownlist> -->
+
+                                                <ejs-dropdownlist   #countrydropdown  [popupHeight]="152"
+                                                    [fields]='countryFields' [allowFiltering]='true'
+                                                    cssClass='country-popup' class="signup-country" #samples
+                                                    [dataSource]='countryList' formControlName="countryId"
+                                                    (close)="onClose($event)"> 
+                                                </ejs-dropdownlist>
+
+                                                <!-- <ejs-autocomplete id='games'   formControlName="countryId" #sample [dataSource]='countryList'
+                                               [fields]='countryFields' (change)='onChange($event)' ></ejs-autocomplete> -->
+
+                                            </div>
+
+                                        </div>
+                                        <div fxFlex="50">
+                                            <label class="label">Postal/Zip Code</label>
+                                            <div>
+                                                <input  #postalCode  type="text" maxlength="12" class="usersub-input textfield"
+                                                    formControlName="postalCode" required />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+                                        <div fxFlex="50">
+                                            <div
+                                                *ngIf="form.controls.countryId.errors && ( form.controls.countryId.touched)">
+                                                <span class="errors"
+                                                    *ngIf="form.controls.countryId.errors?.required">Country is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div fxFlex="50">
+                                            <div
+                                                *ngIf="form.controls.postalCode.errors && ( form.controls.postalCode.dirty || form.controls.postalCode.touched)">
+                                                <span class="errors"
+                                                    *ngIf="form.controls.postalCode.errors?.required">Postal Code is
+                                                    required
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <label class="label">Website</label>
+                                        <div>
+                                            <input type='text' class="user-input" formControlName="webSite" required (blur)="checkwebsite($event)"/>
+                                        </div>
+                                        <div
+                                            *ngIf="form.controls.webSite.errors && ( form.controls.webSite.dirty || form.controls.webSite.touched)">
+                                            <span class="errors" *ngIf="form.controls.webSite.errors?.required">Website
+                                                is required
+                                            </span>
+                                            <span class="errors" *ngIf="form.controls.webSite.errors?.pattern">Please
+                                                enter a valid Website Address</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <div class="borderendline"></div> -->
+                            <div class="borderendline">
+                                <div class='enterpriceactionsbutton' fxLayout="row" fxLayoutAlign="end end">
+
+                                    <button type="submit" awNextStep (click)="register()"  [disabled]="!form.valid"
+                                        ejs-button class="header-actions-button signup-footer-button">Next
+                                        <span *ngIf="form.valid">
+                                            <i class="right directionicon"></i>
+                                        </span>
+                                        <span *ngIf="!form.valid">
+                                            <i class="right disabledicon"></i>
+                                        </span>
+
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="workflow[1].step" [stepId]="workflow[1].stepId">
+                    <div class="enterpriseinfocontainer">
+                        <!-- <div class="borderstartline"></div> -->
+                        <form name="form" [formGroup]="verifyform">
+
+                            <div fxLayout="row" fxLayoutAlign="space-evenly start" [style.height.px]="scrollareaHeight"
+                                class="enterprise-container scrollarea-layout"
+                                style="padding-bottom: 100px !important;">
+                                <div fxLayout="column" fxLayoutGap="15px" class="signup-content">
+                                    <div>
+                                        <label class="label">Admin Full Name</label>
+                                        <div>
+                                            <input type='text' value="{{username}}" formControlName="adminName"
+                                                class="user-input admininfo sm-responsive user-input-email" readonly />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="label">Role</label>
+                                        <div>
+                                            <input type='text' value="Admin"
+                                                class="user-input admininfo sm-responsive user-input-email" readonly/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="label">Business Email Address</label>
+                                        <div>
+                                            <input tabindex="0" type='text' autoFocus class="user-input sm-responsive user-input-email" formControlName="emailAddress" 
+                                           (blur)="checkemail($event)" />
+                                            <button type="submit" *ngIf="!verified" ejs-button class="header-actions-button signup-footer-button verify-button-responsive button-gap"
+                                                (click)="emailverify()">Verify</button>
+                                            <img src="assets/images/verified.svg" class="verifiedimage"
+                                                *ngIf="verified" />
+                                        </div>
+                                        <div
+                                            *ngIf="verifyform.controls.emailAddress.errors && (verifyform.controls.emailAddress.dirty || verifyform.controls.emailAddress.touched)">
+                                            <span class="errors"
+                                                *ngIf="verifyform.controls.emailAddress.errors?.required">
+                                                Email is required</span>
+                                            <span class="errors"
+                                                *ngIf="verifyform.controls.emailAddress.errors?.pattern">Email is
+                                                invalid</span>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="enableSubmit && isShowOtp">
+                                        <label class="label">Type in the Email One-Time-Password</label>
+                                        <div>
+
+
+                                            <input type='text' class="user-input sm-responsive user-input-email"
+                                                formControlName="oneTimePW" />
+
+
+
+                                            <button *ngIf="!verified" [disabled]="!enableSubmit" ejs-button
+                                                class="header-actions-button signup-footer-button verify-button-responsive button-gap"
+                                                (click)="otpverify()">Submit</button>
+                                        </div>
+
+                                        <!-- <div
+                                            *ngIf="viewform.controls.emailAddress.errors && (viewform.controls.emailAddress.dirty || viewform.controls.emailAddress.touched)">
+                                            <span class="errors" *ngIf="viewform.controls.emailAddress.errors?.required">
+                                                Email is required</span>
+                                            <span class="errors" *ngIf="viewform.controls.emailAddress.errors?.email">Email
+                                                is invalid</span>
+                                        </div> -->
+                                    </div>
+                                    <div *ngIf="verified">
+
+                                        <div fxLayout="row">
+
+                                            <button ejs-button class="header-actions-button body-layout-button"
+                                                (click)="changeemail()">Change Email Address</button>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="terms-condition-layout">
+
+                                        <div fxLayout="row" fxLayoutGap="10px">
+                                            <div>
+                                                <ejs-checkbox class="sign-up-check" (change)="acceptTerms($event)">
+                                                </ejs-checkbox>
+                                            </div>
+
+                                            <div class="terms-content">Accept
+                                                <span class="privacypolicy" (click)="showTermsofService()">Terms of
+                                                    Service</span>
+                                                and
+                                                <span class="privacypolicy" (click)="showAccept()">Privacy Policy</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- <div class="borderendline"></div> -->
+                            <div class="borderendline">
+                                <div class='enterpriceactionsbutton' fxLayout="row"
+                                    fxLayoutAlign="space-between center">
+
+                                    <button ejs-button class="header-actions-button signup-footer-button"
+                                        awPreviousStep>
+                                        <span>
+                                            <i class="left directionicon"></i>
+                                        </span>Back</button>
+
+                                    <button type="submit" ejs-button class="header-actions-button signup-footer-button"
+                                        [disabled]="!verified || !termsAccepted" (click)="getorgId()" awNextStep>Next
+                                        <span *ngIf="verified && termsAccepted">
+                                            <i class="right directionicon"></i>
+                                        </span>
+                                        <span *ngIf="!verified || !termsAccepted">
+                                            <i class="right disabledicon"></i>
+                                        </span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </aw-wizard-step>
+
+
+                <aw-wizard-step [stepTitle]="workflow[2].step">
+                    <div class="enterpriseinfocontainer">
+
+                        <!-- <div class="borderstartline"></div> -->
+                        <div [style.height.px]="scrollareaHeight" class="enterprise-container scrollarea-layout">
+                            <div fxLayoutGap="20px" class="signup-content chooseplan">
+
+
+                                <form name="form" [formGroup]="basicform" class="NewUserLayout" novalidate>
+                                    <ul fxLayout="row" fxLayoutAlign="space-around center" fxLayout.sm="column"
+                                        class="choose-plan-options">
+                                        <li fxLayoutAlign="center center">
+
+
+                                            <div>
+                                                <div>
+                                                    <ejs-radiobutton label="Basic" name="plan1"
+                                                        [value]="basicPlanChecked" formControlName="basic"
+                                                        (click)="basicPlanSelected()">
+                                                    </ejs-radiobutton>
+
+                                                </div>
+                                                <div class="card-layout">
+
+
+                                                    <div [innerHTML]="basicplan" (click)="basicPlanSelected()"></div>
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </li>
+
+                                        <li>
+
+                                            <div>
+                                                <div>
+                                                    <ejs-radiobutton name="plan2" label="Professional"
+                                                        formControlName="plus" [value]="plusPlanChecked"
+                                                        (click)="plusPlanSelected()">
+                                                    </ejs-radiobutton>
+                                                </div>
+
+                                                <div class="card-layout">
+                                                    <div [innerHTML]="plusplan" (click)="plusPlanSelected()"></div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </li>
+
+                                        <li>
+
+                                            <div>
+                                                <div>
+                                                    <ejs-radiobutton name="plan3" label="Premium" formControlName="pro"
+                                                        [value]="proPlanChecked" (click)="proPlanSelected()">
+                                                    </ejs-radiobutton>
+                                                </div>
+
+                                                <div class="card-layout">
+                                                    <div [innerHTML]="proplan" (click)="proPlanSelected()"></div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </li>
+
+
+
+
+                                    </ul>
+                                </form>
+                                <!-- <div class="row" *ngFor='let payment of chooseplan'>
+                                    <ejs-radiobutton [label]='payment'  [value]="payment" name="payment" [(ngModel)]="value"></ejs-radiobutton>
+                                </div> -->
+                            </div>
+
+                        </div>
+                        <!-- <div class="borderendline"></div> -->
+                        <div class="borderendline">
+                            <div class='enterpriceactionsbutton' fxLayout="row" fxLayoutAlign="space-between center">
+
+                                <button ejs-button class="header-actions-button signup-footer-button" awPreviousStep>
+                                    <span>
+                                        <i class="left directionicon"></i>
+                                    </span>Back</button>
+
+                                <button type="submit" (click)="hideSuccessmsg()" [awGoToStep]="{stepIndex: 3}"
+                                    ejs-button class="header-actions-button signup-footer-button">Next
+                                    <span>
+                                        <i class="right directionicon"></i>
+                                    </span>
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </aw-wizard-step>
+
+                <aw-wizard-step [stepTitle]="workflow[3].step" [stepId]="workflow[3].stepId">
+                    <div class="enterpriseinfocontainer" *ngIf="!successmessage">
+                        <!-- <div class="borderstartline"></div> -->
+
+                        <div fxLayout="row" fxLayoutAlign="center center" [style.height.px]="scrollareaHeight"
+                            class="enterprise-container scrollarea-layout">
+                            <div fxLayout="column" fxLayoutGap="20px" class="signup-content chooseplan">
+
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="payment" value="credit Crd" checked="true"> Credit
+                                        Card
+                                        <br>
+                                        <!-- <ejs-radiobutton name="payment" value="credit Crd" label="Credit Card" checked="true"></ejs-radiobutton> -->
+                                    </li>
+
+                                    <li>
+                                        <input type="radio" name="payment" value="credit Crd"> Net Banking
+                                        <br>
+                                        <!-- <ejs-radiobutton name="payment" value="netbanking" label="Net Banking">
+                                        </ejs-radiobutton> -->
+                                    </li>
+
+                                    <li>
+                                        <input type="radio" name="payment" value="credit Crd"> Debit Card
+                                        <br>
+                                        <!-- <ejs-radiobutton name="payment" value="debit" label="Debit Card">
+                                        </ejs-radiobutton> -->
+                                    </li>
+
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="borderendline"></div> -->
+                        <div class="borderendline">
+                            <div class='enterpriceactionsbutton' fxLayout="row" fxLayoutAlign="space-between center">
+
+                                <button ejs-button class="header-actions-button signup-footer-button" awPreviousStep>
+                                    <span>
+                                        <i class="left directionicon"></i>
+                                    </span>Back</button>
+
+                                <button type="submit" ejs-button
+                                    class="header-actions-button paymentbtn-resp signup-footer-button"
+                                    [awGoToStep]="{stepIndex: 3}" (click)="success()">Make Payment
+                                    <span>
+                                        <i class="right directionicon"></i>
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enterpriseinfocontainer" *ngIf="successmessage">
+                        <!-- <div class="borderstartline"></div> -->
+                        <div fxLayout="row" fxLayoutAlign="center center" [style.height.px]="scrollareaHeight"
+                            class="enterprise-container scrollarea-layout">
+                            <div fxLayout="column" fxLayoutGap="20px" class="signup-content">
+                                <span class="successmsg">Congratulations !</span>
+                                <span class="successsubmsg">Your new business account</span>
+                                <span class="successsubmsg">has been created.</span>
+                            </div>
+                        </div>
+                        <!-- <div class="borderendline"> </div> -->
+                        <div class="borderendline">
+                            <div class='enterpriceactionsbutton' fxLayout="row" fxLayoutAlign="end end">
+
+
+
+                                <button type="submit" ejs-button
+                                    class="header-actions-button reactaccount-resp signup-footer-button"
+                                    (click)="finishFunction()" awNextStep>Open React for Business
+                                    <span>
+                                        <i class="right directionicon"></i>
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </aw-wizard-step>
+            </aw-wizard>
+
+        </div>
+
+        <ejs-dialog #AcceptDialog id='dialog' width='400px' header='Privacy Policy' [visible]='isOpen'
+            showCloseIcon='true' isModal='true'>
+            <ng-template #content>
+                <div class="start-line"></div>
+                <div class="terms-popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none"
+                    fxLayoutGap="20px">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                        scrambled
+                        it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                        the
+                        release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                        publishing
+                        software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+
+
+
+                </div>
+            </ng-template>
+        </ejs-dialog>
+        <ejs-dialog #TermsDialog id='dialog' width='400px' header='Terms of Service' [visible]='isOpen'
+            showCloseIcon='true' isModal='true'>
+            <ng-template #content>
+
+                <div class="terms-popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none"
+                    fxLayoutGap="20px">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                        scrambled
+                        it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                        the
+                        release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                        publishing
+                        software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+
+
+
+                </div>
+            </ng-template>
+        </ejs-dialog>
+    </div>
+</div>

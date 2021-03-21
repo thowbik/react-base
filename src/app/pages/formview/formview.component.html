@@ -1,0 +1,146 @@
+<div class="formViewouterdiv">
+
+    <div class="toolbar-formview" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" class="navigatebutton">
+        <img class="logo" src="assets/images/formview-logo.svg">
+        <div class="title">react</div>
+      </div>
+      <div class="formviewpage-tilte">
+        <span>Preview</span>
+      </div>
+      <div class="admintitle">
+        <span class="username">Hello
+          <button ejs-dropdownbutton class="profile-btn" [items]='items' cssClass="e-flat e-round e-caret-hide"
+            (select)='logout($event)'>
+            <i class="fas fa-user-circle"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div fxLayout="row" class="seconddiv-formview">
+      <div class="formviewpage-tilte" fxFlex="100" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center">
+        <span class="">Product Satisfaction Survey</span>
+        <span>2/12</span>
+      </div>
+      <div class="header-button-right" fxFlex="0" fxLayoutAlign="end center">
+        <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true">Share
+        </button>
+        <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true">Close
+        </button>
+      </div>
+    </div>
+    <div class="formview-content" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="20px">
+      <button class="preview-Nexticon" (click)="showPreviousQuestion()"> <i
+          class="left directionicon preview"></i></button>
+      <form name="form" id="formId" [formGroup]="addResponsesForm" novalidate autocomplete="off">
+        <div *ngFor="let questionitems of selectedMultipleQuestion; let i = index">
+          <div *ngIf="i == counter" class="designLayout" fxLayout="column">
+            <span>
+              {{i+1}}. {{questionitems.description}}</span>
+            <div *ngFor="let itemanswer of questionitems.saveQuestionResponseCommand let j = index">
+  
+              <div cdkDropList class="example-list sample-list-layout" 
+              [cdkDropListData]="questionitems.saveQuestionResponseCommand.controls"
+                *ngIf="questionitems.questionType == questionType().reorder" (cdkDropListDropped)="sampledrop($event)">
+                <div fxLayout="row" fxLayoutGap="30px" cdkDrag #elem="cdkDrag">
+                  <span>{{j+1}}. {{itemanswer.description}}</span>
+                  <span class="check">
+                    <span class="handle">
+                      <ejs-tooltip #tooltip content='Move' class="tooltip-list">
+                        <img class="drag-icon" src="assets/images/fa-bars.svg" />
+                      </ejs-tooltip>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div *ngIf="questionitems.questionType == questionType().radio" class="question-radiobutton">
+                <ejs-radiobutton label="{{itemanswer.description}}" formControlName="radioResponses"
+                  name="radioButtonSelected" [value]="itemanswer">
+                </ejs-radiobutton>
+              </div>
+              <div *ngIf="questionitems.questionType == questionType().checkbox">
+                <ejs-checkbox label="{{itemanswer.description}}" 
+                  (change)="onChange(itemanswer,$event)" >
+                </ejs-checkbox>
+              </div>
+              <div *ngIf="questionitems.questionType == questionType().rating">
+  
+                <div class="rating-div" fxLayout="row" fxFlex="70">
+                  <span class="rating-answer" fxFlex="60">{{itemanswer.description}}</span>
+                  <bar-rating class="rating-star" fxLayoutAlign="end"  (rateChange)="onrating(itemanswer,$event)" fxFlex="30" name="rating" [max]="5">
+                  </bar-rating>
+                </div>
+              </div>
+              <div *ngIf="questionitems.questionType == questionType().text">
+  
+                <input type="text" class="form-input" value="" />
+              </div>
+            </div>
+            <div class="btn-preview" fxLayoutAlign="end" fxLayout="row">
+              <button ejs-button class="header-actions-button e-control e-btn " data-ripple="true">Clear</button>
+  
+              <button *ngIf="counter == (selectedMultipleQuestion.length-1)" ejs-button
+                class="header-actions-button e-control e-btn " data-ripple="true" (click)="submitAnswer()">
+                Submit</button>
+            </div>
+          </div>
+  
+        </div>
+      </form>
+      <button class="preview-Previousicon" (click)="showNextQuestion()"><i
+          class="right directionicon preview"></i></button>
+    </div>
+  <!--   <div class="formview-content" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="20px">
+      <button class="preview-Nexticon" (click)="showPreviousQuestion()"> <i
+          class="left directionicon preview"></i></button>
+      <div *ngFor="let questionitems of selectedMultipleQuestion; let i = index">
+        <div *ngIf="i == counter" class="designLayout" fxLayout="column">
+          <span>
+            {{i+1}}. {{questionitems.description}}</span>
+          <div *ngFor="let itemanswer of questionitems.saveQuestionResponseCommand let j = index">
+  
+            <div cdkDropList class="example-list sample-list-layout"
+              *ngIf="questionitems.questionType == questionType().reorder" (cdkDropListDropped)="sampledrop($event)">
+              <div fxLayout="row" fxLayoutGap="30px" cdkDrag #elem="cdkDrag">
+                <span>{{j+1}}. {{itemanswer.description}}</span>
+                <span class="check">
+                  <span class="handle">
+                    <ejs-tooltip #tooltip content='Move' class="tooltip-list">
+                      <img class="drag-icon" src="assets/images/fa-bars.svg" />
+                    </ejs-tooltip>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="questionitems.questionType == questionType().radio" class="question-radiobutton">
+              <ejs-radiobutton label="{{itemanswer.description}}" formControlName="radioResponses"
+                name="radioButtonSelected" readonly>
+              </ejs-radiobutton>
+            </div>
+            <div *ngIf="questionitems.questionType == questionType().checkbox">
+              <ejs-checkbox label="{{itemanswer.description}}" formControlName="checkboxResponses"
+                (change)="onChange($event,itemanswer.description)" readonly>
+              </ejs-checkbox>
+            </div>
+            <div *ngIf="questionitems.questionType == questionType().rating">
+  
+              <div class="rating-div" fxLayout="row" fxFlex="70">
+                <span class="rating-answer" fxFlex="60">{{itemanswer.description}}</span>
+                <bar-rating class="rating-star" fxLayoutAlign="end" fxFlex="30" name="rating" [max]="4">
+                </bar-rating>
+              </div>
+            </div>
+            <div *ngIf="questionitems.questionType == questionType().text">
+  
+              <input type="text" class="form-input" value="{{itemanswer.description}}" />
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+  
+      <button class="preview-Previousicon" (click)="showNextQuestion()"><i
+          class="right directionicon preview"></i></button>
+    </div> -->
+  </div>

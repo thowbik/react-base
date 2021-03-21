@@ -1,0 +1,61 @@
+<div class="home-container">
+
+        <!-- <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <div class="toolbar-left" fxLayout="row">
+                    <img class="logo" src="assets/images/logos/icon_react_bw_white_48.png">
+                    <div class="title-left">react</div>
+                </div>
+            </div>
+            <div fxLayout="column" fxLayout.xs="row" fxLayoutGap="20px">
+                <div class="title-right">
+                    <span class="signupbutton" (click)="goTologin()">Sign In</span> &nbsp; | &nbsp;
+                    <span class="signupbutton" (click)="goTosignup()">Sign Up</span>
+                </div>
+            </div>
+        </div> -->
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" (click)="goTohome()" class="navigatebutton">
+                    <img class="logo" src="assets/images/logo.svg">
+                    <div class="title">react</div>
+                </div>
+                
+                <div  fxLayoutGap="20px">
+                        <div class="title-right">
+                            <span class="signupbutton" (click)="goTosigin()">Sign In</span> &nbsp; | &nbsp;
+                            <span class="signupbutton" (click)="goTosignup()">Sign Up</span>
+                        </div>
+                    </div>
+        
+                
+            </div>
+    
+        <div class="rowspacing">
+            <div fxLayout="column" fxLayoutAlign="start start" fxFlex="80">
+                <div class="content">
+                    Welcome to
+                    <br/> React for Business
+                </div>
+            </div>
+        </div>
+        <div class="rowspacing backgroundimage-layout">
+                <div fxLayout="row" fxLayoutAlign="space-between start" fxFlex="100" class="sign">
+                        <img class="backgroundimage" src="assets/images/logos/Rectangle 2.4.png" fxFlex="75">
+                        <button class="try" (click)="goTowelcome()" fxFlex=15 fxFlex.sm="20">
+                            <span class="try-text">Try for Free</span>
+                        </button>
+                    </div>
+            </div>
+    <br/>
+    <!-- <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100" class="sign">
+            <img class="backgroundimage" src="assets/images/logos/Rectangle 2.4.png" fxFlex="75">
+            <button class="try" (click)="goTowelcome()" fxFlex=15 fxFlex.sm="20">
+                <span class="try-text">Try for Free</span>
+            </button>
+        </div> -->
+       
+            
+         
+      
+    </div>
+    

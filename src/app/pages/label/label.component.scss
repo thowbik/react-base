@@ -1,0 +1,213 @@
+/* 
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    margin-bottom: 2px;
+    border: 1px solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+}  */
+
+.forms-page{
+    background-color: #ffffff;
+    margin-top: 0px;
+}
+.form-control{
+    display: block;
+    width: 98.0%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    font-weight: 400;
+    color: black;
+    background-color: #fff;
+    background-image: none;
+    border: 0.5px solid #333333;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.form-group{
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+input.e-input::selection, .e-input-group input.e-input::selection, .e-input-group.e-control-wrapper input.e-input::selection, .e-float-input input::selection, .e-float-input.e-control-wrapper input::selection {
+    background: none !important;
+}
+/* :host ::ng-deep .e-ripple-element ,.e-control.e-treeview .e-list-item.e-active.e-hover > .e-fullrow{
+    background-color: #ffffff !important;
+} */
+:host ::ng-deep .e-control.e-treeview .e-ul{
+        padding: 0 !important;
+} 
+.e-popup {
+    height: auto;
+    position: absolute;
+    width: auto;
+    z-index: 1000;
+}
+
+.e-dialog {
+    background-color: #fff;
+    box-shadow: 0 12px 40px 5px rgba(0, 0, 0, 0.26);
+} 
+
+.e-dialog .e-dlg-content {
+    display: block;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    overflow: auto;
+    overflow: hidden !important;
+}
+.label {
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 0px !important;
+}
+.e-control.e-grid .e-headercelldiv{
+    font-family: Roboto !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 24px !important;
+    color: #000000 !important;
+}
+.e-dialog[_ngcontent-c13] .e-dlg-content[_ngcontent-c13] {
+    display: block;
+    flex: 1 1 auto;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    overflow: auto;
+    overflow: hidden !important;
+}
+.NewlabelLayout {
+    display: block !important;
+}
+.Newuserdiv[_ngcontent-c13] {
+    padding: 30px 15px 10px;
+}
+span.e-input-group-icon.e-ddl-icon.e-search-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    // left: 11px;
+    top: 1px;
+}
+.role-choose[_ngcontent-c13] {
+    height: 35px;
+}
+.user-input{
+    min-width: 250px; 
+    border: 1px solid black;
+    border-radius: 0px;
+    margin-top: 10px;
+}
+.message-input{
+    margin-top: 10px;
+}
+
+.label-type-popup {
+    margin-left: 0px !important;  
+}
+.labelList{
+    overflow: auto !important;
+    height: auto !important;
+}
+:host ::ng-deep button.e-lib.e-btn.e-control.edit_button_label.e-edit-delete.e-editbutton{
+    height: 30px !important;
+    border: 0.5px solid #333333!important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    border-radius: 2px !important;
+    text-transform: none !important;
+    margin: 0px 0px 0px 14px !important;
+    background: #ffffff !important;
+    //text-transform:capitalize !important;
+}
+:host ::ng-deep button.e-lib.e-btn.e-control.edit_button_label.e-edit-delete.e-editbutton:hover:enabled {
+    background: #FFFFFF !important;
+    border: 0.5px solid transparent !important;
+    box-shadow: 1px 2px 3px rgba(51, 51, 51, 0.5) !important;
+    
+}
+:host ::ng-deep button.e-lib.e-btn.e-control.edit_button_label.e-edit-delete.e-editbutton{
+    text-transform:capitalize !important;
+}
+
+:host ::ng-deep .e-treegrid .e-rowcell:not(.e-gridclip) .e-treecolumn-container{
+    cursor: pointer !important;
+    padding-left: 43px !important; 
+}
+e-treegrid .e-rowcell:not(.e-gridclip) .e-treecolumn-container span.e-treecell {
+    padding-left: 16px !important;
+}
+:host ::ng-deep ejs-treegrid.e-control.e-treegrid .e-control.e-grid .e-headercelldiv{
+    margin: 3px !important;
+    padding-left: 43px !important;
+  
+}
+:host ::ng-deep span.e-treecell {
+   // padding-left: 23px !important;
+    font-family: Roboto !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 14px !important; 
+    line-height: 24px !important;
+    color: #000000 !important;
+}
+:host ::ng-deep .e-control.e-grid .e-unboundcelldiv {
+    margin: 0px !important;
+    padding-left: 35px !important;
+}
+/* tr.e-row.e-gridrowindex0level0.e-treegrid .e-rowcell:not(.e-gridclip) .e-treecolumn-container span.e-treecell{
+    margin-left: 32px !important;
+} */
+:host ::ng-deep .e-treegrid .e-treegridexpand{
+    font-size: 15px !important;
+   // margin-left: 7px !important;
+}
+ .e-control.e-grid .e-gridcontent tr.e-row:first-child  span.e-treecell{
+   // margin-left: 23px !important;
+}
+:host ::ng-deep .e-treegrid .e-treegridcollapse{
+    font-size: 15px !important;
+  //  margin-left: 7px !important;
+}
+:host ::ng-deep tr.e-columnheader.e-defaultcursor{
+    height: 0px !important;
+}
+/* .question-label-popup{
+    height: 20px !important;
+    overflow: auto !important;
+} */
+div#games_popup {
+    max-height: 250px !important;
+    overflow: auto !important;
+}
+.labels-layout{
+    background: #FFFFFF;
+    // box-shadow: 0px -2px 1px rgba(0, 0, 0, 0.25);
+    // margin-top: -3px;
+    border-top: 1px solid #e5e5e5 !important;
+}
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap {
+    border-color: rgba(0, 0, 0, 0.42);
+    border: none !important;
+    vertical-align: center !important;
+    padding-top: 5px !important;
+    font-size: 16px;
+    font-size: 14px;
+    font-weight: 100;
+    margin: 0px;
+    padding: 8px 12px;
+    line-height: 1.42857143;
+}

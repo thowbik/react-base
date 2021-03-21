@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    margin: 0;
+  }
+  .demo-full-width {
+    width: 100%;
+  }
+  .margin-top {
+    //margin-top: 15px;
+    margin-bottom: 50px !important;
+  }
+  .margin-left {
+    margin-left: 10px;
+  }
+  .radio-label-padding {
+    padding-right: 10px !important;
+    color: grey;
+  }
+  .form {
+    margin-left: 10px;
+    border: 2px solid lightgray;
+    width: 600px;
+    padding-left: 5px;
+    margin-top: 10px;
+  }
+  .page-container {
+    height: 100% !important;
+    overflow: scroll !important;
+  }
+  .dynamicform {
+    margin-top: 50px !important;
+  }
+  .formvalues {
+    margin-bottom: 56px !important;
+  }
+  .form-header{
+    font-size: 2em; 
+    text-align: center;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  .formvaluescontainer {
+    border: 1px solid #e0e0e0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .formlabel {
+    margin-right: 10px !important;
+  }
+  
+// :host ::ng-deep.form-input {
+//     padding: 0px !important;
+//   }
+  
+
+  

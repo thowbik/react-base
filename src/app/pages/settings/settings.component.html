@@ -1,0 +1,52 @@
+<div class="setting-page page-container">   
+        <div fxLayout="row" class="header-dashboard">
+                <div class="page-title" fxFlex="50%">
+                    <p>Settings</p>
+                </div>
+                
+            </div>
+        <div tabindex="0" class="e-card" fxLayoutGap="10px" id="basic">
+            
+            <div class="e-card-content"  fxLayoutGap="20px" fxLayout="column" fxLayoutAlign="space-around start" >
+                <ejs-tab class="tabs-layout" #element id="element"  [animation]='animation' > 
+    
+                    <e-tabitems>
+                        <e-tabitem [header]='headerText[0]' id="users1" class="tabheader">
+                            <ng-template #content>
+                                    <div class="e-card-content" fxLayout="row" fxFlex="100" fxLayoutGap="20px">  
+                                        <textarea class="address-tab" ></textarea>
+                                    </div>
+                            </ng-template>
+                        </e-tabitem>
+                        <e-tabitem [header]='headerText[1]' id="users1" class="tabheader">
+                            <ng-template #content>
+                                <div class="e-card-content ">
+                                    <div class="e-card-content" fxLayout="row" fxFlex="100" fxLayoutGap="20px">  
+                                            <textarea class="address-tab" ></textarea>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </e-tabitem>
+            
+                        <e-tabitem [header]='headerText[2]'>
+                            <ng-template #content>
+                                <div class="e-card-content">
+                                    <div class="e-card-content" fxLayout="row" fxFlex="100" fxLayoutGap="20px">  
+                                        <textarea class="address-tab" ></textarea>
+                                    </div>
+                                </div>                   
+                            </ng-template>
+                        </e-tabitem>
+                        <e-tabitem [header]='headerText[3]'>
+                            <ng-template #content>
+                                <div class="e-card-content" fxLayout="row" fxFlex="100" fxLayoutGap="20px">  
+                                    <textarea class="address-tab" ></textarea>
+                                </div>
+                            </ng-template>
+                        </e-tabitem>
+            
+                    </e-tabitems>
+                </ejs-tab> 
+            </div>
+        </div>
+    </div>

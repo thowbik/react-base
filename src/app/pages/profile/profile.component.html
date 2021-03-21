@@ -1,0 +1,60 @@
+<div class="contact-page">
+    <form name="form" id="formId" [formGroup]="profileForm" novalidate>
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Profile</p>
+            </div>
+           
+        </div>
+
+        <div tabindex="0" class="e-card" fxLayoutGap="10px" id="basic">
+
+            <div class="e-card-content" fxLayoutGap="20px" fxLayout="column" fxLayoutAlign="space-around start">
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Personal Mobile Number:</label>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <input type='text' formControlName="mobileNumber" class="form-input" readonly />
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Email:</label>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <input class="email-address" type="email" formControlName="emailAddress" class="form-input" readonly />
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Name:</label>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <input class="username" type="text" class="form-input" formControlName="firstName" readonly />
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <input class="username" class="form-input" type="text" formControlName="lastName" readonly />
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Date of Birth:</label>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <ejs-datepicker readonly="true" #ejDatePicker class="date-contact" formControlName="dateOfBirth" name="datepicker" [placeholder]=''
+                            required>
+                        </ejs-datepicker>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxFlex="100" fxLayoutGap="20px">
+                    <label class="contact-label">Gender:</label>
+                    <div fxLayout="row" fxLayoutGap="5px">
+                        <ejs-radiobutton label="Male" disabled="true" formControlName="genderType" [value]="1" name="small"></ejs-radiobutton>
+                        <ejs-radiobutton label="Female" disabled="true" name="small" formControlName="genderType" [value]="2"></ejs-radiobutton>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+</div>

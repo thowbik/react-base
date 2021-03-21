@@ -1,0 +1,1310 @@
+<div class="forms-page page-container">
+  <form novalidate name="form" [formGroup]="questionform">
+    <div class="header-actions-layout">
+      <div fxLayout="row" class="forms-header-dashboard">
+      
+            <div *ngIf="formId == 0 || FormName == ''" class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="100%">
+                <span class="Title">Forms</span>
+                <i class="right directionicon"></i>
+                <span class="subTitle">Untitled</span>
+            </div>
+            <div *ngIf="formId != 0 && FormName != ''" class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="100%">
+                <span class="Title">Forms</span>
+                <i class="right directionicon"></i>
+                <span class="subTitle">{{FormName}}</span>
+            </div>
+      
+      </div>
+      <div class="header-button-layout forms-header " fxLayout="row" fxLayoutGap="20px">
+        <button ejs-button class="header-actions-button" (click)="back()">
+          <span>
+            <i class="left directionicon"></i>
+          </span>Back</button>
+        <button ejs-button class="header-actions-button" *ngIf="formId != 0 && disabledValue"
+          (click)="edit()">Edit</button>
+        <button *ngIf="(formId !=0 || questionform.value.formId !=0) && disabledValue" ejs-button
+          class="header-actions-button" (click)="addPreview()">Preview</button>
+          <button ejs-button class="header-actions-button" *ngIf="!disabledValue"
+          (click)="saveAsForm()">Save</button>
+        <button ejs-button class="header-actions-button" *ngIf="!disabledValue && formId>0"
+          (click)="Cancel()">Cancel</button>
+        <button ejs-button class="header-actions-button"
+          *ngIf="(formId !=0 || questionform.value.formId !=0) && disabledValue" (click)="sendFormTo()">Send</button>
+        <button  #moreButton ejs-dropdownbutton [items]='saveItems' (select)='selectAction($event)' class="header-actions-button" >More</button>
+      </div>
+
+      <!-- <div class="header-untitled" fxLayoutAlign="center">
+        <span *ngIf="formId == 0" class="forms-names" fxLayoutAlign="center">Untitled</span>
+        <span *ngIf="formId != 0" class="forms-names" fxLayoutAlign="center">{{FormName}}</span>
+      </div> -->
+    </div>
+    <div class="tab-actions-layout">
+      <div class="tab-button-layout" fxLayout="row">
+        <div class="header-button-left" fxFlex="100" fxLayoutAlign="start center">
+          <button ejs-button class="tab-button questionFormButton" routerLink="/newquestion/0/{{pageid}}"
+            routerLinkActive="tabbuttonactive">{{QuestionFormstitle}}</button>
+          <button ejs-button class="tab-button" routerLink="/responses"
+            routerLinkActive="tabbuttonactive">Responses(73)</button>
+          <button ejs-button class="tab-button temp-disabled" routerLink="/route2"
+            routerLinkActive="tabbuttonactive">Insights</button>
+
+            <button *ngIf="formId > 0" ejs-button class="tab-button temp-disabled" routerLinkActive="tabbuttonactive"
+              routerLink="/responders/{{formId}}/2">Responders</button>
+  
+            <button *ngIf="formId == 0" ejs-button class="tab-button temp-disabled"
+              routerLinkActive="tabbuttonactive" (click)="message(true)">Responders</button>
+  
+            <button *ngIf="formId > 0" ejs-button class="tab-button" routerLink="/formoptions/{{formId}}/{{pageid}}"
+              routerLinkActive="tabbuttonactive">{{QuestionFormstitle}}
+              Options</button>
+  
+            <button *ngIf="formId == 0" ejs-button class="tab-button"
+              routerLinkActive="tabbuttonactive" (click)="message(false)">{{QuestionFormstitle}}
+              Options</button>
+
+        </div>
+      </div>
+    </div>
+    <fieldset [disabled]="disabledValue">
+      <div class="inner-layout">
+        <div fxLayout="row" fxLayoutAlign="center center" class="form-Layout">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px"
+            class="newQuestion-bodylayout form-Layout">
+            <div fxLayout="column">
+              <label class="header-Label">{{QuestionFormstitle}} Name</label>
+
+              <input type='text' class="formName-textarea" formControlName="formName" required />
+              <div
+                *ngIf="questionform.controls.formName.errors && (submitted || questionform.controls.formName.dirty || questionform.controls.formName.touched)">
+                <span class="errors" *ngIf="questionform.controls.formName.errors?.required">{{QuestionFormstitle}}
+                  Name is required</span>
+              </div>
+            </div>
+            <div fxLayout="column" *ngIf="formPage">
+              <label class="header-Label">{{QuestionFormstitle}} Description <span
+                  class="Optional-Label">(Optional)</span> </label>
+              <textarea autosize [minRows]="1" [maxRows]="5" formControlName="formDescription"
+                class='form-control Desc-textarea ' rows='2' cols="200" id='address'></textarea>
+
+            </div>
+            <div fxLayout="column" *ngIf="formPage">
+              <label class="header-Label">Instructions <span class="Optional-Label">(Optional)</span></label>
+              <textarea autosize [minRows]="1" [maxRows]="5" formControlName="instructions"
+                class='form-control Desc-textarea ' rows="2" cols="200" id='address'></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="questionTypeSelected" class="from-panel" fxLayout="column" fxLayoutAlign="center center" cdkDropList
+          (cdkDropListDropped)="dropMultipleQuestions($event)" cdkResize>
+          <div class="newQuestion-bodylayout MoreOption-Layout" formArrayName="multipleQuestions"
+            *ngFor="let singlequestion of questionform.get('multipleQuestions').controls; let i=index" [cdkDragDisabled]="disabledValue" cdkDrag>
+            
+            <div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+              <div fxLayout="column" [formGroupName]="i" class="question-options-layout">
+                <div fxLayout="row" fxLayoutAlign="end" class="btn-question-end">
+
+                  <ejs-tooltip #tooltip content='Duplicate' class="tooltip" *ngIf="formPage">
+                    <img class="toolBar-Buttons"
+                      src="assets/images/duplicate.svg" (click)="duplicate(i)" />
+
+                  </ejs-tooltip>
+
+                  <ejs-tooltip #tooltip content='Move' class="tooltip" *ngIf="formPage">
+                      <img class="toolBar-Buttons" *ngIf="disabledValue" src="assets/images/move.svg" (click)="move()" />
+                    <img class="toolBar-Buttons" *ngIf="!disabledValue" cdkDragHandle src="assets/images/move.svg" />
+
+                  </ejs-tooltip>
+
+                  <ejs-tooltip #tooltip content='Delete' class="tooltip">
+                    <img class="toolBar-Buttons"
+                      src="assets/images/delete.svg" (click)="delete(i,singlequestion.value.id)" />
+
+                  </ejs-tooltip>
+
+                  <ejs-tooltip #tooltip content='More' class="tooltip">
+                      <button #copyButton ejs-dropdownbutton [enableRtl]="false" [items]='moreItems' class="dropdownButton" (select)='action($event,singlequestion.value)'> 
+                        <img class="toolBar-Buttons" (click)="checkEditMode()"
+                        src="assets/images/more.svg"/>
+                      </button>
+                   
+                  </ejs-tooltip>
+
+
+                </div>
+                <div class="question-lists">
+                  <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+                    <div fxLayout="row">
+                      <div fxFlex="3" class="questionNO">
+                        <span>{{i+1}}.</span>
+                      </div>
+                      <div fxLayout="column" fxFlex="90" fxLayoutAlign="start stretch" class="question-layout">
+                        <textarea autosize [minRows]="1" [maxRows]="10" formControlName="description"
+                          Placeholder="Description" class='form-control textarea questionsTextarea' rows='2'
+                          id='address'></textarea>
+                        <div
+                          *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors && (submitted ||  questionform.controls.multipleQuestions.controls[i].controls.description.dirty || questionform.controls.multipleQuestions.controls[i].controls.description.touched)">
+                          <span class="errors"
+                            *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors?.required">Description
+                            is required</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div *ngIf="singlequestion.value.questionType == questionType().linear">
+                      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" class="question-layout">
+                        <label>From</label>
+                        <div class="dropDown-Size">
+                          <ejs-dropdownlist  [enabled]="!disabledValue" [dataSource]='sliderFromValues'
+                          [fields]='slidersFields' formControlName="sliderFromValue"
+                          (select)="sliderChange($event,i,'From')">
+                        </ejs-dropdownlist>
+                        </div>
+                      
+                        <label>To</label>
+                        <div class="dropDown-Size">
+                        <ejs-dropdownlist [enabled]="!disabledValue" [dataSource]='sliderToValues'
+                           [fields]='slidersFields' formControlName="sliderToValue"
+                          (select)="sliderChange($event,i,'To')">
+                        </ejs-dropdownlist>
+                        </div>
+                      </div>
+                      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center"
+                        *ngIf="singlequestion.value.saveQuestionResponseCommand.length > 0">
+                        <ng5-slider [(value)]="value" [options]="singlequestion.value.sliderData[0].sliderValues"></ng5-slider>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+
+                  <div 
+                    *ngIf="singlequestion.value.questionType !=questionType().match && singlequestion.value.questionType !=questionType().matrixcheckbox &&  singlequestion.value.questionType !=questionType().matrixradiobox">
+                   <div fxLayout="column" class="optionsLayout" fxLayoutAlign="start start">
+
+                 
+                    <span *ngIf="singlequestion.value.questionType ==questionType().linear && singlequestion.value.saveQuestionResponseCommand.length > 0">Captions(Optional)</span>
+                    <div  *ngIf="singlequestion.value.questionType !=questionType().text">
+
+                      <div cdkDropList class="example-list"
+                        [cdkDropListData]="singlequestion.get('saveQuestionResponseCommand').controls"
+                        (cdkDropListDropped)="drop($event,i)" >
+                        <div formArrayName="saveQuestionResponseCommand"
+                          *ngFor="let option of singlequestion.get('saveQuestionResponseCommand').controls; let j=index"
+                          class="input-layoutgap" #elem="cdkDrag" cdkDrag [cdkDragDisabled]="singlequestion.value.questionType == questionType().linear">
+                          <div [formGroupName]="j" fxLayout="column" class="text" fxLayoutAlign="start start"
+                            [ngClass]="singlequestion.value.questionType ==questionType().linear ? 'linearQuestionLayout':''">
+
+                            <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+                              <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px"
+                                *ngIf="singlequestion.value.questionType ==questionType().linear">
+                                <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
+                                  <span class="numeric-order">{{option.value.sequenceNO}}</span>
+                                  <input type="text" formControlName="description" class="question-textarea"
+                                    fxFlex="100" />
+
+                                </div>
+                              </div>
+                              <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px"
+                                *ngIf="singlequestion.value.questionType == questionType().rating">
+                                <div fxLayoutGap="10px" class="rating-div-form" fxLayout="row" fxFlex="100">
+                                  <input [ngClass]="disabledValue ? 'editrating-answer-form':'rating-answer-form'"
+                                    type="text" formControlName="description" fxFlex="60" />
+                                  <bar-rating class="rating-form" fxLayoutAlign="end" fxFlex="40" name="rating"
+                                    [max]="5"></bar-rating>
+                                    <!-- <div *ngIf="option.controls.description.errors && (submitted || optionDescriptionValid || option.controls.description.dirty || option.controls.description.touched)">
+                                    <span class="errors" *ngIf="option.controls.description.errors?.required"> Option1
+                                      is required</span>
+                                  </div> -->
+                                  <!-- <div
+                                  *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors && (submitted ||  questionform.controls.multipleQuestions.controls[i].controls.description.dirty || questionform.controls.multipleQuestions.controls[i].controls.description.touched)">
+                                  <span class="errors"
+                                    *ngIf="questionform.controls.multipleQuestions.controls[i].controls.description.errors?.required">Description
+                                    is required</span>
+                                </div> -->
+                                <div
+                                *ngIf="option.controls.description.errors && (submitted || optionDescriptionValid || option.controls.description.dirty || option.controls.description.touched)">
+                                <span class="errors" *ngIf="option.controls.description.errors?.required"> Option
+                                  {{j+1}}
+                                  is required abc</span>
+                              </div>
+                                </div>
+                                <span class="example-handle"
+                                  *ngIf="singlequestion.value.questionType != questionType().rating">
+                                  <ejs-tooltip #tooltip content='Move' class="drag-tooltip">
+                                    <img [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                      src="assets/images/fa-bars.svg" />
+                                  </ejs-tooltip>
+                                </span>
+                        
+                              </div>
+
+                              <div *ngIf="singlequestion.value.questionType == questionType().radio"
+                                class="question-radiobutton">
+                                <ejs-radiobutton label="" formControlName="questionId" name="radioButtonSelected">
+                                </ejs-radiobutton>
+                                <!-- <input type="radio" name="gender" class ="customizeRadioButton" value="male"> -->
+                                <!-- <ejs-radiobutton #radioButtonSelected class="question-radiobutton" name="small"></ejs-radiobutton> -->
+                              </div>
+                              <div *ngIf="singlequestion.value.questionType == questionType().checkbox">
+                                <ejs-checkbox label=""></ejs-checkbox>
+                              </div>
+                              <div *ngIf="singlequestion.value.questionType == questionType().reorder">
+                                <span style="margin-right: 5px;">{{j+1}}.</span>
+                              </div>
+                              <div fxLayout="column" class="imageLayout" fxLayoutGap="10"
+                                *ngIf="singlequestion.value.questionType !== 7 && singlequestion.value.questionType != questionType().linear">
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                  <input [ngClass]="disabledValue ? 'editquestion-textarea':'question-textarea'"
+                                    type='text' placeholder="Option {{j+1}}" formControlName="description" required />
+                                  <span class="example-handle" *ngIf="singlequestion.value.questionType ==5">
+                                    <ejs-tooltip #tooltip content='Move' class="drag-tooltip">
+                                      <img [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                        src="assets/images/fa-bars.svg" />
+                                    </ejs-tooltip>
+                                  </span>
+                                </div>
+
+                                <div fxLayout="row"
+                                  *ngIf="option.value.responseURL && option.value.responseURLType != 2"
+                                  fxLayoutAlign="start center" fxLayoutGap="20">
+                        
+                                  <div class="imageContainer" *ngIf="option.value.isImageFromService">
+
+                                    <img *ngIf="option.value.responseURLType != 3" class="showImage"
+                                      src="{{environmentUrl}}{{option.value.responseURL}}" />
+
+                                    <img *ngIf="option.value.responseURLType == 3" class="showImage"
+                                      src="{{option.value.responseURL}}" />
+
+
+
+                                  </div>
+                                         
+                                  <div class="imageContainer" *ngIf="!option.value.isImageFromService">
+
+                                    <img class="showImage" src="{{option.value.responseURL}}" />
+                                  </div>
+
+                                  <span>
+                                    <ejs-tooltip #tooltip content='Close' class="drag-tooltip" *ngIf="!disabledValue">
+                                      <img class="close-icon" [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                        src="assets/images/close2.svg"
+                                        (click)="removeImage(singlequestion.controls.saveQuestionResponseCommand,j)" />
+                                    </ejs-tooltip>
+
+                                  </span>
+                                </div>
+                                <div fxLayout="row"
+                                *ngIf="option.value.responseURL && option.value.responseURLType == 2"
+                                fxLayoutAlign="start center" fxLayoutGap="20">
+                      
+                                <div  [innerHTML]="option.value.thumbnailURL" class="imageContainer">
+                                   
+                                </div>
+                                   
+                                <span>
+                                  <ejs-tooltip #tooltip content='Close' class="drag-tooltip">
+                                    <img class="close-icon" [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                      src="assets/images/close2.svg"
+                                      (click)="removeImage(singlequestion.controls.saveQuestionResponseCommand,j)" />
+                                  </ejs-tooltip>
+
+                                </span>
+                              </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10"
+                                  *ngIf="!disabledValue">
+                                  <button ejs-button class="header-actions-button fileContainer fileUpload-button"
+                                    fxLayoutAlign="center" id="targetButton" fxLayoutGap="15px">Add Image
+                                    <input type="file" (change)="onFileChange($event,i,j)" #fileInput />
+                                  </button>
+                                  <button ejs-button class="header-actions-button fileUpload-button"
+                                    (click)="addVideo(i,j)">Add Video</button>
+                                  <button ejs-button class="header-actions-button fileUpload-button"
+                                    (click)="addGif(i,j,option.value.responseURL,option.value.responseURLType)">Add GIF</button>
+                                </div>
+                                <div
+                                  *ngIf="option.controls.description.errors && (submitted || optionDescriptionValid || option.controls.description.dirty || option.controls.description.touched)">
+                                  <span class="errors" *ngIf="option.controls.description.errors?.required"> Option
+                                    {{j+1}}
+                                    is required</span>
+                                </div>
+                              </div>
+
+
+                              <span
+                                *ngIf="singlequestion.value.questionType != questionType().linear && !disabledValue">
+                                <ejs-tooltip #tooltip content='Close' class="drag-tooltip">
+                                  <img class="close-icon" [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                    src="assets/images/close2.svg"
+                                    (click)="removeOption(singlequestion.controls.saveQuestionResponseCommand,j)" />
+                                </ejs-tooltip>
+
+                              </span>
+
+
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                      <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start"
+                        *ngIf="singlequestion.value.questionType != questionType().linear && !disabledValue">
+
+                        <button ejs-button class="header-actions-button addoption-button" fxLayoutAlign="center center"
+                          (click)="addOption(singlequestion.controls.saveQuestionResponseCommand)">Add an
+                          option</button>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="optionsLayout" *ngIf="singlequestion.value.questionType == questionType().text">
+                        <input type="text" [disabled]="true" class="question-textarea shortTextDefault"
+                                    fxFlex="40" /> 
+                    </div>
+                    <div class="layout-gap"></div>
+                    <div class="validationMessage-layout">
+
+                      <div fxLayoutGap="10px" class="dotted-layout" fxLayout="row" fxLayoutAlign="start center">
+                        <div fxFlex="22">
+                          <div fxLayout="column" fxLayoutGap="20">
+                            <label class="requiredQuestion">Required</label>
+                            <div style="font-style: italic;font-size: 12px;"><span
+                                style="color: red !important;padding-right: 3px !important;">*</span>Mandatory
+                              question</div>
+
+                          </div>
+
+                        </div>
+                        <div fxFlex="55">
+                          <ejs-checkbox label="" [enableRtl]="true" formControlName="isMandatory"></ejs-checkbox>
+                        </div>
+                        <div *ngIf="singlequestion.value.isAllowedConditionalActions == true">
+                          <div fxLayoutAlign="end center">
+                            <span class="hrline"></span>
+                            <button ejs-button class="header-actions-button conditionalActionButton"
+                              (click)="conditionalAction(i)">Conditional
+                              Actions</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="singlequestion.value.isAllowedConditionalActions == true && !disabledValue">
+                      <div class="validationMessage-layout"
+                        *ngIf="singlequestion.value.isShowConditionalActions == true">
+                        <div fxLayoutGap="10px" class="dotted-layout" fxLayoutAlign="space-between center"
+                          fxLayout="row">
+                          <span class="heading-title">Conditional Actions</span>
+                          <div>
+                            <button ejs-button class="header-actions-button conditionalActionLayout"
+                              (click)="saveConditionalAction(i)">Hide</button>
+                            <button ejs-button class="header-actions-button conditionalActionLayout"
+                              (click)="ConditionalActionDelete(i)">Delete</button>
+                          </div>
+
+                        </div>
+                        <div formArrayName="conditionalActionList"
+                          *ngFor="let conditions of singlequestion.get('conditionalActionList').controls; let k=index">
+                          <div [formGroupName]="k" fxLayout="column" fxLayoutAlign="start stretch">
+                            <div fxLayoutAlign="start center" fxLayout="row" fxLayout.sm="column"
+                              fxLayoutAlign.sm="start stretch" fxLayoutGap="10px" class="dotted-layout conditionalLayout">
+                              <div  style="height: 46px;" fxFlex="1">
+                                <span class="conditionText">If</span>
+
+                              </div>
+                              <div style="height: 46px;" fxLayout="column">
+                                <ejs-dropdownlist [enabled]="!conditions.value.conditionalOptionSelected" #samples
+                                  [dataSource]='conditions.value.listSelectOption' class="customizeDropdownBorder"
+                                  formControlName="conditionalOptionSelected" [fields]='optionsFields'
+                                  (select)="conditionalOptionChange($event,i,k)">
+                                </ejs-dropdownlist>
+                                <div
+                                  *ngIf="conditions.controls.conditionalOptionSelected.errors && ( (conditionalActionsTypeSubmitted || submitted) &&(conditionalOptionsubmitted || conditions.controls.conditionalOptionSelected.dirty || conditions.controls.conditionalOptionSelected.touched))">
+                                  <span class="errors"
+                                    *ngIf="conditions.controls.conditionalOptionSelected.errors?.required"> Conditional
+                                    Action
+
+                                    is required</span>
+                                </div>
+                              </div>
+                              <div fxLayout="column" fxFlex="16" style="margin-right: 0px !important;height: 46px;">
+                              <span class="conditionText">is selected then</span>
+                              </div>
+                              <div style="height: 46px;" fxLayout="column">
+                                <ejs-dropdownlist [enabled]="!disabledValue" #samples
+                                  formControlName="conditionalActionsType" [dataSource]='conditionalActionsType'
+                                  class="customizeDropdownBorder" [fields]='conditionalActionsTypefields'
+                                  (select)="conditionalActionTypeChange($event,i,k,conditions.value.id)"></ejs-dropdownlist>
+                                <div
+                                  *ngIf="conditions.controls.conditionalActionsType.errors && ( (conditionalActionsTypeSubmitted || submitted) && (conditionalActionsTypeSubmitted || conditions.controls.conditionalActionsType.dirty || conditions.controls.conditionalActionsType.touched))">
+                                  <span class="errors"
+                                    *ngIf="conditions.controls.conditionalActionsType.errors?.required">
+                                    Action Type is required</span>
+                                </div>
+                              </div>
+                              <div style="height: 46px;" fxLayout="column">
+                                  <ejs-dropdownlist   [enabled]="!disabledValue" #samples
+                                  *ngIf="conditions.value.isSelectedGotoOption" formControlName="conditionalQuestionId"
+                                  [dataSource]='conditions.value.questionsList' [fields]='questionsListfields'
+                                  class="customizeDropdownBorder" [fields]='conditionalActionsTypefields'>
+                                </ejs-dropdownlist>
+                                <ejs-textbox readonly  [enabled]="!disabledValue" style="padding: 0px !important;"
+                                  formControlName="conditionalURL" *ngIf="!conditions.value.isSelectedGotoOption"
+                                  class="customizeDropdownBorder"
+                                  (click)="showSelectedConditionalActionType(conditions.value.conditionalActionsType,conditions.value.conditionalURL,i,k,conditions.value.id)">
+                                </ejs-textbox>
+                              </div>
+                              <span style="height: 46px;">
+                                <ejs-tooltip #tooltip content='Close' class="drag-tooltip">
+                                  <img class="close-icon" [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                    src="assets/images/close2.svg"
+                                    (click)="removeConditionalAction(singlequestion.controls.conditionalActionList,k,conditions.value.conditionalOptionSelected,i)" />
+                                </ejs-tooltip>
+
+                              </span>
+                              <!-- <input type='text' class="question-textarea validationText" formControlName="conditionalQuestionId" /> -->
+                            </div>
+                          </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start" >
+                          <!-- <span>{{optionCount}} .</span> -->
+
+                          <button ejs-button class="header-actions-button addConditionalButton"
+                            fxLayoutAlign="center center" (click)="addNewConditionalAction(i,k)">Add
+                            new</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- code for match type-->
+                  <div *ngIf="singlequestion.value.questionType == questionType().match">
+
+                    <div *ngIf="singlequestion.value.questionType == questionType().match && !disabledValue" fxLayout="row"
+                      fxLayoutAlign="center center" fxLayoutGap="10px" class="gap">
+
+                      <label> Number of Columns</label>
+
+                      <div class="dropDown-Size">
+                        <ejs-dropdownlist cssClass='contact-user-popup' [allowFiltering]='false' class="dropdownInPopup columnSelect"
+                          formControlName="matchColumnList" [popupWidth]="60" #Contactsdropdown
+                          [dataSource]='ColumnItem' [fields]='ColumnItemFields'
+                          (change)="selectChangeHandler($event,i)">
+                        </ejs-dropdownlist>
+                      </div>
+
+                    </div>
+
+                    <!-- <div
+                      *ngIf="(singlequestion.value.matchColumnList>0) && singlequestion.value.questionType == questionType().match"
+                      fxLayout="row" fxLayoutAlign="space-evenly center">
+<div fxLayout="column">
+                  
+                      <div fxLayout="column" fxFlex="50"
+                      class="text borderLayout-Forheader">
+                      <ejs-textbox #matchHeaderName1
+                      class="matchTextBoxBorder matchQuestion-textareaForHeader" formControlName="headerText1" autofocus>
+                    </ejs-textbox>
+                    </div>
+                       
+                      </div>
+
+                      <div fxLayout="column"  class="text borderLayout-Forheader" fxFlex="25">
+                        <ejs-textbox #matchHeaderName2 class="matchTextBoxBorder matchQuestion-textareaForHeader"
+                          formControlName="headerText2" autofocus>
+                        </ejs-textbox>
+                      </div>
+
+                      <div *ngIf="singlequestion.value.matchColumnList ==3" fxFlex="25" fxLayout="column"
+                        class="text borderLayout-Forheader">
+                        <ejs-textbox #matchHeaderName3 class="matchQuestion-textareaForHeader"
+                          formControlName="headerText3" autofocus>
+                        </ejs-textbox>
+                      </div>
+
+                    </div> -->
+
+
+
+                    <div *ngIf="singlequestion.value.questionType ==questionType().match" fxLayout="row" fxLayout.sm="column"  fxLayoutGap.sm="10px"
+                      fxLayoutAlign="space-evenly start" class="match-outer-layout">
+                      <div fxLayout="column" fxLayoutGap="5px">
+                      <div  *ngIf="singlequestion.value.matchColumnList>0" class="text borderLayout-Forheader">
+                      <ejs-textbox #matchHeaderName1
+                      class="matchTextBoxBorder matchQuestion-textareaForHeader" formControlName="headerText1" autofocus>
+                    </ejs-textbox>
+                    </div>
+                      <div [ngClass]="singlequestion.value.column1.length > 0 ? 'borderLayout' : ''">
+                        <div cdkDropList [cdkDropListData]="singlequestion.get('column1').controls"
+                          (cdkDropListDropped)="columnDrop($event,i,'column1')" *ngIf="singlequestion.value.column1.length > 0">
+                          <div class="match-textboxGap" formArrayName="column1" fxLayoutAlign="start start"
+                            *ngFor="let option of singlequestion.get('column1').controls; let c1=index" cdkDrag
+                            #elem="cdkDrag" cdkDrag>
+                            <div fxLayout="column">
+                              <div [formGroupName]="c1" fxLayout="row" class="text" fxLayoutAlign="start start"
+                                style="width: 100%">
+                                <input type="text" formControlName="description"
+                                  class="matchTextBoxBorder matchQuestion-textarea">
+
+                                <img class="closeIconForMatch" *ngIf="!disabledValue" [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                  style="margin: 0px;" src="assets/images/close2.svg"
+                                  (click)="removeRowInMatch(singlequestion.controls.column1,singlequestion.controls.column2,singlequestion.controls.column3,c1)">
+
+                              </div>
+                              <div fxLayout="row"
+                                *ngIf="option.controls.description.errors && (submitted || option.controls.description.dirty || option.controls.description.touched)">
+                                <span class="errors" *ngIf="option.controls.description.errors?.required"> Description
+                                  is required</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                      *ngIf="singlequestion.value.questionType == questionType().match && (selectedvalue>0 || singlequestion.value.matchColumnList>0 )"
+                      fxLayout="row" fxLayoutGap="15px" style="padding:left 20px">
+
+                      <button *ngIf="!disabledValue" ejs-button class="header-actions-button matchAdd-Button" (click)="addNewMatchColumn(singlequestion.controls.column1,singlequestion.controls.column2,singlequestion.controls.column3,
+                       singlequestion.value.matchColumnList,i)">Add
+                        new</button>
+                    </div> 
+                      </div>
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <div  class="text borderLayout-Forheader" *ngIf="singlequestion.value.matchColumnList>0">
+                            <ejs-textbox #matchHeaderName2 class="matchTextBoxBorder matchQuestion-textareaForHeader"
+                              formControlName="headerText2" autofocus>
+                            </ejs-textbox>
+                          </div>
+                      <div *ngIf="singlequestion.value.column2.length > 0" class="borderLayout">
+                        <div cdkDropList [cdkDropListData]="singlequestion.get('column2').controls"
+                          (cdkDropListDropped)="columnDrop($event,i,'column2')" 
+                          [ngClass]="!disabledValue ? 'matrix-withoutButton-Layout' : ''" >
+                          <div formArrayName="column2" class="match-textboxGap"
+                            *ngFor="let option of singlequestion.get('column2').controls; let c1=index" cdkDrag
+                            #elem="cdkDrag" cdkDrag>
+                            <div fxLayout="column">
+                              <div [formGroupName]="c1" fxLayout="row" class="text" fxLayoutAlign="start start">
+                                <input type="text" formControlName="description"
+                                  class="matchTextBoxBorder matchQuestion-textarea">
+                              </div>
+                              <div fxLayout="row"
+                                *ngIf="option.controls.description.errors && (submitted || option.controls.description.dirty || option.controls.description.touched)">
+                                <span class="errors" *ngIf="option.controls.description.errors?.required"> Description
+                                  is required</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="5px">
+                        <div *ngIf="singlequestion.value.matchColumnList ==3" fxLayout="column"
+                        class="text borderLayout-Forheader">
+                        <ejs-textbox #matchHeaderName3 class="matchQuestion-textareaForHeader"
+                          formControlName="headerText3" autofocus>
+                        </ejs-textbox>
+                      </div>
+                      <div
+                        *ngIf="singlequestion.value.column3 && singlequestion.value.column3.length > 0"
+                        class="borderLayout">
+                        <div cdkDropList [cdkDropListData]="singlequestion.get('column3').controls"
+                          (cdkDropListDropped)="columnDrop($event,i,'column3')" 
+                          [ngClass]="!disabledValue ? 'matrix-withoutButton-Layout' : ''" >
+                          <div formArrayName="column3" class="match-textboxGap"
+                            *ngFor="let option of singlequestion.get('column3').controls; let c1=index" cdkDrag
+                            #elem="cdkDrag" cdkDrag>
+                            <div fxLayout="column">
+                              <div [formGroupName]="c1" fxLayout="row" class="text" fxLayoutAlign="start start">
+                                <input type="text" formControlName="description"
+                                  class="matchTextBoxBorder matchQuestion-textarea">
+                              </div>
+                              <div fxLayout="row"
+                                *ngIf="option.controls.description.errors && (submitted || option.controls.description.dirty || option.controls.description.touched)">
+                                <span class="errors" *ngIf="option.controls.description.errors?.required"> Description
+                                  is required</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <!-- <div
+                      *ngIf="singlequestion.value.questionType == questionType().match && (selectedvalue>0 || singlequestion.value.matchColumnList>0 )"
+                      fxLayout="row" fxLayoutGap="15px" style="padding:left 20px">
+
+                      <button *ngIf="!disabledValue" ejs-button class="header-actions-button addConditionalButton" (click)="addNewMatchColumn(singlequestion.controls.column1,singlequestion.controls.column2,singlequestion.controls.column3,
+                       singlequestion.value.matchColumnList,i)">Add
+                        new</button>
+                    </div> -->
+
+                    <!-- Required Check for Match start code-->
+                    <div *ngIf="singlequestion.value.questionType == questionType().match">
+                      <!-- <div class="layout-gap"></div> -->
+                      <div class="validationMessage-layout">
+
+                        <div fxLayoutGap="10px" class="dotted-layout" fxLayout="row" fxLayoutAlign="start center">
+                          <div fxFlex="22">
+                            <div fxLayout="column" fxLayoutGap="20">
+                              <label class="requiredQuestion">Required</label>
+                              <div style="font-style: italic;font-size: 12px;"><span
+                                  style="color: red !important;padding-right: 3px !important;">*</span>Mandatory
+                                question</div>
+                            </div>
+                          </div>
+                          <div fxFlex="55">
+                            <ejs-checkbox label="" [enableRtl]="true" formControlName="isMandatory"></ejs-checkbox>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Required Check for Match start code-->
+                  </div>
+                  <!-- code for match type-->
+
+
+
+
+
+                  <!-- code for Matrix type-->
+
+                  <div *ngIf="singlequestion.value.questionType ==9 || singlequestion.value.questionType ==10 ">
+                    <div *ngIf="singlequestion.value.questionType ==9 || singlequestion.value.questionType ==10 "
+                      fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="60px" style="margin-top: 5px;">
+                      <div fxLayout="column" fxLayoutAlign="space-around center">
+                      <label class="header-Label" style="margin-left: 23px;">Rows</label>
+                      <div [ngClass]="singlequestion.value.rows.length > 0 ? 'borderLayout' : ''">
+
+                        <div *ngIf="singlequestion.value.rows.length > 0"
+                          style="width: 260px; margin-right: 0px !important;">
+                          <div cdkDropList [cdkDropListData]="singlequestion.get('rows').controls"
+                            (cdkDropListDropped)="columnDrop($event,i,'rows')">
+                            <div class="match-textboxGap" formArrayName="rows" fxLayoutAlign="start start"
+                              *ngFor="let option of singlequestion.get('rows').controls; let c1=index" cdkDrag
+                              #elem="cdkDrag" cdkDrag>
+                              <div [formGroupName]="c1" fxLayout="row" class="text"
+                              [ngClass]="singlequestion.value.questionType == questionType().matrixcheckbox ? 'alignCheck' : 'alignRadio'"
+                                style="width: 100%;" fxLayoutGap="10px">
+                                <input type="text" formControlName="description"
+                                  class="matchTextBoxBorder matchQuestion-textarea">
+
+
+                                <ejs-radiobutton *ngIf="singlequestion.value.questionType ==9" label="" name="default">
+                                </ejs-radiobutton>
+                                <ejs-checkbox *ngIf="singlequestion.value.questionType ==10" label="" name="default">
+                                </ejs-checkbox>
+
+
+
+                                <img class="closeIconForMatrixRows" *ngIf="!disabledValue"
+                                  [ngClass]="disabledValue ? 'disabledIcon':'showIcon'"
+                                  style="margin: 0px 0px 0px 7px !important; " src="assets/images/close2.svg"
+                                  (click)="removeMatrixRows(singlequestion.controls.rows,c1)">
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="singlequestion.value.questionType ==9 || singlequestion.value.questionType ==10"
+                          fxLayout="row" fxLayoutGap="15px" style="padding:left 20px" fxLayoutAlign="start start">
+                          <button ejs-button *ngIf="!disabledValue" class="addNewButtonForMatrix "
+                            (click)="addNewMatrixRows(singlequestion.controls.rows,i)">Add
+                            new</button>
+                        </div>
+
+                      </div>
+                      <div *ngIf="!singlequestion.controls.rows.valid && rowsForMatchSubmitted">
+                      <span class="errors"> Option is required</span>
+                    </div>
+                    </div>
+<div fxLayout="column" fxLayoutAlign="space-around center" >
+
+
+                    <label class="header-Label">Columns</label>
+                      <div [ngClass]="singlequestion.value.columns.length > 0 ? 'borderLayout' : ''">
+
+                        <div  style="width: 220px;" *ngIf="singlequestion.value.columns.length > 0">
+                          <div cdkDropList [cdkDropListData]="singlequestion.get('columns').controls"
+                            (cdkDropListDropped)="columnDrop($event,i,'columns')">
+                            <div formArrayName="columns" class="match-textboxGap"
+                              *ngFor="let option of singlequestion.get('columns').controls; let c1=index" cdkDrag
+                              #elem="cdkDrag" cdkDrag>
+                              <div [formGroupName]="c1" fxLayout="row" class="text" fxLayoutAlign="start start">
+                                <input type="text" formControlName="description"
+                                  class="matchTextBoxBorder matchQuestion-textarea">
+                                <img class="closeIconForMatrixColumns" *ngIf="!disabledValue"
+                                  [ngClass]="disabledValue ? 'disabledIcon':'showIcon'" src="assets/images/close2.svg"
+                                  (click)="removeMatrixInColumns(singlequestion.controls.columns,c1)">
+                              </div>
+                              <div fxLayout="row">
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="singlequestion.value.questionType ==9 || singlequestion.value.questionType ==10"
+                          fxLayout="row" fxLayoutGap="15px" style="padding:left 20px" fxLayoutAlign="start center">
+
+                          <button ejs-button class="addNewButtonForMatrix" *ngIf="!disabledValue"
+                            (click)="addNewMatrixColumns(singlequestion.controls.columns,i)">Add
+                            new</button>
+                        </div>
+
+                      </div>
+                      <div *ngIf="!singlequestion.controls.columns.valid && columnsForMatchSubmitted">
+                        <span class="errors"> Option is required</span>
+                      </div>
+                    </div>
+
+                    </div>
+                    <div class="layout-gap"></div>
+                    <div class="layout-gap"></div>
+                    <div class="validationMessage-layout">
+
+                      <div fxLayoutGap="10px" class="dotted-layout" fxLayout="row" fxLayoutAlign="start center">
+                        <div fxFlex="22">
+                          <div fxLayout="column" fxLayoutGap="20">
+                            <label class="requiredQuestion">Required</label>
+                            <div style="font-style: italic;font-size: 12px;"><span
+                                style="color: red !important;padding-right: 3px !important;">*</span>Mandatory
+                              question</div>
+                          </div>
+                        </div>
+                        <div fxFlex="55">
+                          <ejs-checkbox label="" [enableRtl]="true" formControlName="isMandatory"></ejs-checkbox>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <!-- code for Matrix type-->
+
+                </div>
+                <!-- <div class="dashboard-icon" fxLayoutGap="20px"> -->
+                <!-- <div [ngClass]="selectedQueIndex === i && showActionButton === true ? 'tool-bar-focus':'tool-bar-unfocus'">
+                  <ejs-dropdownlist class="dropdownInPopup" #samples [dataSource]='moreOptions' [fields]='optionFields'
+                  (select)='optionSelected($event)'
+                   [popupHeight]="160">
+               </ejs-dropdownlist>
+                </div> -->
+                <!-- <div [ngClass]="selectedQueIndex === i && showActionButton === true ? 'tool-bar-focus':'tool-bar-unfocus'" fxLayout="column" fxLayoutGap="20px">
+                  <button type="button" class="header-actions-button toolBar-Buttons"><i class="fa fa-edit"></i><span>Edit</span></button>
+                  <button type="button" class="header-actions-button toolBar-Buttons" (click)="move()"><i class="fa fa-expand"></i><span>Move</span></button>
+                  <button type="button" class="header-actions-button toolBar-Buttons" (click)="duplicate(i)"><i class="fa fa-copy"></i><span>Duplicate</span></button>
+                  <button type="button" class="header-actions-button toolBar-Buttons" (click)="more()"><i class="fa fa-ellipsis-h"></i><span>More</span></button>
+                  <button type="button" class="header-actions-button toolBar-Buttons" (click)="delete(i)"><i class="fa fa-trash"></i><span>Delete</span></button>
+                </div> -->
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="20px" class="moreQuestion-layout"
+          *ngIf="isAllowToAddQuestion">
+          <div fxLayoutGap="18px" fxLayout="column" fxLayoutAlign="center center" class="newQuestion-bodylayout">
+            <i class="fa fa-plus-circle navigatebutton addMoreIcon"
+               (click)="addQuestion()"></i>
+            <span>
+              Click here to add a new question.</span>
+          </div>
+        </div>
+       
+        <div *ngIf="!this.formPage && isShortText != questionType().text" class="footerLayout"></div>
+      </div>
+    </fieldset>
+
+    <!-- Sample Question Popup -->
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <ejs-dialog #AddQuestionDialog id='dialog' header='Add a new question' [visible]='isOpen' showCloseIcon='true'
+        isModal='true'>
+        <ng-template #content>
+          <div class="popup-body-layout sampleQuestionLayout">
+            <div tabindex="1" class="tab-body-container" fxLayoutGap="10px" id="basic">
+              <ejs-tab class="tabs-layout" #element id="element" [animation]='animation'>
+
+                <e-tabitems (change)="tabChange($event)">
+                  <e-tabitem [header]='PopupheaderText[0]' id="users1" class="tabheader" (select)="tabChange($event)">
+                    <ng-template #content>
+                      <div class="scrollLayout">
+                      <div class="questionBodyLayout">
+                        <div class="questionContent" *ngFor="let items of sampleQuestionData;">
+                          <div class="dump-data">
+                            <div *ngFor="let questionList of items.question; let k = index">
+                              <div fxLayout="row" fxLayoutAlign="center center">
+                                <span class="yes formsName" fxLayoutAlign="start" *ngIf="k < 1"
+                                  fxFlex="60">{{items.formName}}</span>
+                                <button fxFlex="10" fxLayoutAlign="center" style="cursor: pointer;"
+                                  class="header-actions-button choose-questiontype" *ngIf="k < 1"
+                                  (click)="ShowSample(questionList.questionType,items.id)">Sample</button>
+
+                                <span fxFlex="20" fxLayoutAlign="center end" class="check" *ngIf="k < 1">
+                                  <i class="fa fa-check-circle navigatebutton" aria-hidden="true"
+                                    (click)="getQuestionType(questionList.questionType)"></i>
+                                </span>
+                              </div>
+
+                              <div class="sampleLayout" *ngIf="ShowSampleQuestionType && k < 1 && show">
+                                <div fxLayout="column" fxLayoutGap="40px"
+                                  *ngFor="let questionitems of samleQuestionListData; let i = index">
+                                  <div class="designLayout" style="cursor: pointer;"
+                                    *ngIf="questionitems.questionType == questionList.questionType && !isShow"
+                                    (click)="questionGetList(questionitems)">
+                                    <div fxLayout="row" fxLayoutGap="10px">
+                                      <span>{{i+1}}. </span>
+                                      <span >{{questionitems.description}}</span>
+                                    </div>  
+                                    
+
+                                    <div
+                                      *ngIf="questionitems.questionType != questionType().match || questionitems.questionType != questionType().matrixradiobox || questionitems.questionType != questionType().matrixcheckbox || questionitems.questionType != questionType().linear">
+                                      <div style="padding-left: 30px !important;"
+                                        *ngFor="let itemanswer of questionitems.saveQuestionResponseCommand let i = index">
+                                        <div cdkDropList class="example-list sample-list-layout"
+                                          *ngIf="questionitems.questionType == questionType().reorder && questionitems.questionType == questionList.questionType"
+                                          (cdkDropListDropped)="sampledrop($event)">
+                                          <div cdkDrag #elem="cdkDrag" fxLayout="row" fxLayoutGap="30px">
+                                            <span>{{i+1}}.{{itemanswer.description}}</span>
+                                            <span class="check">
+                                              <span class="handle">
+                                                <ejs-tooltip #tooltip content='Move' class="tooltip-list">
+                                                  <i class="fa fa-bars"
+                                                    [ngClass]="disabledValue ? 'showIcon':'disabledIcon'"></i>
+                                                </ejs-tooltip>
+                                              </span>
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div
+                                          *ngIf="questionitems.questionType == questionType().radio && questionitems.questionType == questionList.questionType"
+                                          class="question-radiobutton">
+                                          <ejs-radiobutton label="{{itemanswer.description}}" name="radioButtonSelected"
+                                            readonly>
+                                          </ejs-radiobutton>
+                                        </div>
+                                        <div
+                                          *ngIf="questionitems.questionType == questionType().checkbox && questionitems.questionType == questionList.questionType">
+                                          <ejs-checkbox label="{{itemanswer.description}}" readonly>
+                                          </ejs-checkbox>
+                                        </div>
+                                        <div
+                                          *ngIf="questionitems.questionType == questionType().rating && questionitems.questionType == questionList.questionType">
+
+                                          <div class="rating-div" fxLayout="row" fxFlex="70">
+                                            <span class="rating-answer" fxFlex="60">{{itemanswer.description}}</span>
+                                            <bar-rating class="rating-star" fxLayoutAlign="end" fxFlex="30"
+                                              name="rating" [max]="5">
+                                            </bar-rating>
+                                          </div>
+                                        </div>
+                                        <div
+                                          *ngIf="questionitems.questionType == questionType().text && questionitems.questionType == questionList.questionType">
+
+                                          <input type="text" class="form-input" value="{{itemanswer.description}}" />
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- Match Questiontype start code  -->
+
+
+                                    <div *ngIf="questionitems.questionType == questionType().match"
+                                      style="margin-top: 5px;">
+
+                                      <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+
+                                        <div fxFlex="50" fxLayout="column" fxLayoutAlign="space-between center" >
+                                            <label >{{headerTitle1}}</label>
+                                        </div>
+
+                                        <div fxFlex="50" fxLayout="column" fxLayoutAlign="space-between center" >
+                                          <label >{{headerTitle2}}</label>
+
+                                        </div>
+
+                                        <div *ngIf="questionitems.matchColumnList ==3" fxLayout="column" fxLayoutAlign="space-between center" >
+                                          <label >{{headerTitle3}}</label>
+                                        </div>
+
+                                        <!-- <div *ngIf="questionitems.matchColumnList ==3" fxLayout="column"
+                                          class="text borderLayout-Forheader">
+                                          <ejs-textbox #matchHeaderName3 class="matchQuestion-textareaForHeader"
+                                            value="{{headerTitle3}}" autofocus readonly>
+                                          </ejs-textbox>
+                                        </div> -->
+
+                                      </div>
+
+                                      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-around" style="margin-top: 15px;">
+
+
+                                        <div fxLayout="column" class="borderLayout">
+
+                                          <div class="match-textboxGap"
+                                            *ngFor="let option of questionitems.column1; let c1=index">
+                                            <div fxLayout="column" class="text" fxLayoutAlign="start start">
+                                              <input type="text" value="{{option.description}}"
+                                                class="matchTextBoxBorder matchQuestion-textarea" readonly>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div fxLayout="column" class="borderLayout">
+                                          <div class="match-textboxGap"
+                                            *ngFor="let option of questionitems.column2; let c2=index">
+                                            <div fxLayout="column" class="text" fxLayoutAlign="start start">
+                                              <input type="text" value="{{option.description}}"
+                                                class="matchTextBoxBorder matchQuestion-textarea" readonly>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div fxLayout="column"
+                                          *ngIf="questionitems.column3 && questionitems.column3.length > 0"
+                                          class="borderLayout">
+                                          <div class="match-textboxGap"
+                                            *ngFor="let option of questionitems.column3; let c3=index">
+                                            <div fxLayout="column" class="text" fxLayoutAlign="start start">
+                                              <input type="text" value="{{option.description}}"
+                                                class="matchTextBoxBorder matchQuestion-textarea" readonly>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    <!-- Match Questiontype end code  -->
+
+
+                                    <!-- matrix Questiontype  start code  -->
+
+
+                                    <div
+                                      *ngIf="questionitems.questionType == questionType().matrixcheckbox || questionitems.questionType == questionType().matrixradiobox">
+
+                                      <div fxLayout="row">
+                                        <div fxLayout="column" fxFlex="100" fxLayoutGap="20px"
+                                          style="margin-left: 20px !important">
+
+                                          <div  fxLayout="row"  style="margin-bottom: 20px;"
+                                          fxLayoutAlign="end center" >
+
+                                            <div  class="MatrixheaderLayout" 
+                                             *ngFor="let optionLabel of questionitems.saveQuestionResponseCommand;">
+                                              <label  style="font-size: 14px !important;">{{optionLabel.description}}
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div *ngFor="let childQuestion of questionitems.rows; let k=index">
+                                            <div> 
+                                              <span fxFlex="40" [ngClass]="k == 0 ? 'matrixLeftLayout':''"
+                                                style="font-size: 14px !important; height: 30px !important;">{{k+1}}.
+                                                {{childQuestion.description}}</span>
+
+                                              <div fxFlex="60" fxLayoutAlign="space-between center" fxLayout="column">
+
+                                                <div fxLayout="row"  fxLayoutAlign="space-around center">
+
+
+                                                  <div [ngClass]="questionitems.questionType == questionType().matrixcheckbox ? 'matrixCheckOptionposition':'matrixRadioOptionposition'"
+                                                    *ngFor="let matrixOption of questionitems.saveQuestionResponseCommand; let l=index"
+                                                    fxLayoutGap="30px" fxLayoutAlign="end start">
+                                                    <div>
+                                                      <ejs-checkbox
+                                                        *ngIf="questionitems.questionType == questionType().matrixcheckbox"
+                                                        value="false">
+                                                      </ejs-checkbox>
+                                                      
+                                                        
+                                                        <ejs-radiobutton 
+                                                        *ngIf="questionitems.questionType == questionType().matrixradiobox"
+                                                        value="false"></ejs-radiobutton>
+
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                    <!-- matrix Questiontype  end code  -->
+
+
+
+                                     <!-- Linear Questiontype  end code  -->
+
+                                    <div *ngIf="questionitems.questionType == questionType().linear"
+                                    style="margin: 10px 0px 0px 20px !important">
+                                  <div fxLayout="column">
+                                    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center"
+                                      class="sliderDesign-layout"
+                                      *ngIf="questionitems.saveQuestionResponseCommand.length > 0">
+                                      
+                                      <ng5-slider [(value)]="value" [options]="questionitems.sliderData[0].sliderValues" ></ng5-slider>
+                                    </div>
+                                      <div fxLayout="row"  fxLayoutAlign="space-between center">
+                                        <div fxLayout="column">
+                                            <label style="padding-left: 5px;">1</label>
+                                            <label >Min</label>
+                                        </div>
+                                        <div fxLayout="column">
+                                            <label style="text-align: center;">10</label>
+                                            <label >Number of steps</label>
+                                        </div>
+                                        <div fxLayout="column">
+                                            <label style="padding-left: 5px;">10</label>
+                                            <label >Max</label>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                    <div style="margin: 20px !important;">
+                                      <div style="margin: 20px !important;">
+                                        <label fxFlex="74">Caption</label>
+                                        <label fxFlex="26" fxLayoutAlign="end center">Step</label>
+                                      </div>
+
+                                      <div style="margin: 20px !important;"
+                                        *ngFor="let option of questionitems.saveQuestionResponseCommand; let m = index">
+                                        <div fxFlex="70">
+                                          <input type="text" value="{{option.description}}"
+                                            class="linear-textarea-layout"  readonly>
+                                        </div>
+                                        <div fxFlex="30" fxLayoutAlign="end center"> 
+                                          <input type="text" value="{{m+1}}" 
+                                            class="linear-textarea-layout step-order" readonly>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                  </div>
+
+                                  <!-- Linear Questiontype  end code  -->
+
+
+
+
+
+
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="popup-footer-layout" style="height:55px !important;"></div>
+                    </ng-template>
+                  </e-tabitem>
+                  <e-tabitem [header]='PopupheaderText[1]' id="users1" class="tabheader" (select)="tabChange($event)">
+                    <ng-template #content>
+                        <div class="templateScrollLayout">
+                      <div class="e-card-content questionBodyLayout">
+                        <div fxLayout="column">
+                          <div *ngFor="let singleItem of storedCopyData; let copyIndex=index" class="e-card-content" fxLayoutGap="20px">
+                            <div class="favoriteData-layout">
+                              <div fxLayout="row"  fxLayoutAlign="center center">
+                                <span class="yes" fxFlex="80">{{singleItem.description}}</span>
+                                <button fxFlex="10"
+                                  class="header-actions-button favQuestionButtons" (click)="questionGetList(singleItem)">Select</button>
+                                 <button fxFlex="10" class="header-actions-button favQuestionButtons" (click)="deleteFavorite(copyIndex,singleItem.id,singleItem)"
+                                >Delete</button>
+                              </div>
+                              <div class="sampleLayout" *ngIf="myquestions">
+                                <div fxLayout="column" fxLayoutGap="40px"
+                                  *ngFor="let questionitems of myquestions; let i = index">
+                                  <div class="designLayout" *ngIf="singleItem.id == questionitems.formId"
+                                    (click)="questionGetList(questionitems)">
+                                    <span>
+                                      {{i+1}}.{{questionitems.description}}</span>
+                                    <div
+                                      *ngFor="let itemanswer of questionitems.saveQuestionResponseCommand let i = index">
+                                      <!-- <div cdkDropList class="example-list sample-list-layout" *ngIf="questionitems.questionType == questionType().reorder && questionitems.questionType == questionList.questionType"
+                        (cdkDropListDropped)="sampledrop($event)">
+                        <div cdkDrag #elem="cdkDrag" fxLayout="row" fxLayoutGap="30px">
+                        <span>{{i+1}}.{{itemanswer.description}}</span>
+                        <span class="check">
+                        <span class="handle">
+                        <ejs-tooltip #tooltip content='Move' class="tooltip-list">
+                        <i class="fa fa-bars" [ngClass]="disabledValue ? 'showIcon':'disabledIcon'"></i>
+                        </ejs-tooltip>
+                        </span>
+                        </span>
+                        </div>
+                        </div> -->
+                                      <div *ngIf="questionitems.questionType == questionType().radio"
+                                        class="question-radiobutton">
+                                        <ejs-radiobutton label="{{itemanswer.description}}" name="radioButtonSelected"
+                                          readonly>
+                                        </ejs-radiobutton>
+                                      </div>
+                                      <div *ngIf="questionitems.questionType == questionType().checkbox">
+                                        <ejs-checkbox label="{{itemanswer.description}}" readonly>
+                                        </ejs-checkbox>
+                                      </div>
+                                      <div *ngIf="questionitems.questionType == questionType().text">
+                                        <input type="text" class="form-input" value="{{itemanswer.description}}" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                        </div>
+                        <div class="popup-footer-layout" style="height:55px !important;"></div>
+                    </ng-template>
+                  </e-tabitem>
+                
+                </e-tabitems>
+
+
+              </ejs-tab>
+            </div>
+          </div>
+        </ng-template>
+      </ejs-dialog>
+    </div>
+    <ejs-dialog #SelectGIFDialog id='Conditionaldialog' header='{{actionTitle}}' width='750px' [visible]='isOpen'
+      showCloseIcon='true' isModal='true' (close)="clearUrl()">
+      <ng-template #content>
+        <!-- <form name="form" [formGroup]="newuserForm" class="NewUserLayout" novalidate> -->
+        <div class="GifTitle" fxFlex fxLayout="column" fxLayoutAlign="start none">
+          <label class="label">{{actionLabel}}</label>
+
+          <ejs-textbox *ngIf="!isSelectedShowImage" #name placeholder="{{actionPlaceholder}}"
+            (keyup)="getYoutubeUrl($event,actionFrom)" class="question-textarea GIF-search rq-form-element" autofocus>
+          </ejs-textbox>
+
+          <!-- <input type="hidden"  required /> -->
+          <div *ngIf="isSelectedShowImage" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="20px">
+            <button ejs-button class="header-actions-button fileContainer fileUpload-button" fxLayoutAlign="center"
+              id="targetButton" fxLayoutGap="15px">Add Image
+              <input type="file" (change)="onFileChange($event,i,conditionalActionIndex,'ConditionalActionSelection')"
+                #fileInput />
+            </button>
+
+            <div class="imageContainer" *ngIf="isSelectedShowImage && conditionalUrlValue">
+            
+              <img class="showImage" *ngIf="particularQuestionId == 0" src="{{conditionalUrlValue}}" />
+              <img class="showImage" *ngIf="particularQuestionId !=0" src="{{environmentUrl}}{{conditionalUrlValue}}" />
+
+            </div>
+          </div>
+          <div fxLayoutAlign="center center" fxLayout="column">
+            <div class="imageContainer" *ngIf="showGifImage && GifUrl">
+               
+              <img class="showImage" src="{{GifUrl}}" />
+            </div>
+          </div>
+
+
+        </div>
+        <!-- <span>{{questionindex}} 1234</span> -->
+        <div class="gallery-OuterLayout" #panel *ngIf="isSelectedShowGIF" detect-scroll
+          (onScroll)="handleScroll($event)" [bottomOffset]="1" [topOffset]="1">
+
+
+          <div class="gridGalleryContainer">
+            <div fxLayout="row wrap" fxLayoutGap="10px" fxFlex="100" fxLayoutAlign="start stretch"
+              class="gridGalleryLayout">
+              <ng-container *ngFor="let item of gifImagesList; let index =index">
+                <div class="e-card gridLayoutCard" fxFlex="0 1 calc(20% - 10px)"
+                  [ngClass]="selectedGifImageIndex == index ? 'selectedGifImage':'unselectedGifImage'">
+                  <img src="{{item}}" (click)="selectedGIFimage(item,index)" />
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px" fxFlex="100" fxLayoutAlign="center center">
+          <div [innerHTML]="thumbnail" class="thumbnail-layout">
+          </div>
+        </div>
+
+
+        <div class="popup-footer-layout">
+          <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+
+            <button *ngIf="addVideoGifForOption" class="popup-footer-button" id="btn" ejs-button
+              (click)="addVideoGIFSubmit()">
+              {{actionButtonTitle}} </button>
+            <button *ngIf="!addVideoGifForOption" class="popup-footer-button" id="btn" ejs-button
+              (click)="conditionalActionSubmit(questionIndex,conditionalActionIndex)">
+              Submit</button>
+          </div>
+        </div>
+        <!-- </form> -->
+      </ng-template>
+    </ejs-dialog>
+    <ejs-dialog #SaveAsTemplate id='SaveAsTemplate' header='Save as template' width='750px' [visible]='isOpen' showCloseIcon='true'
+    isModal='true' (close)="clearTemplate($event)">
+    <ng-template #content>
+            <div class="popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+              <div class='form-group'>
+              <label class="label">Template Name</label>
+              <div>
+                  <input type="text" formControlName="templateName" class="textbox-layout">
+                  <!-- <ejs-textbox formControlName="templateName"></ejs-textbox> -->
+                </div> 
+              </div>
+            
+                <!-- <div *ngIf="newuserForm.controls.userConnectionId.errors && (newuserForm.controls.userConnectionId.dirty || newuserForm.controls.userConnectionId.touched)">
+                    <span class="errors" *ngIf="newuserForm.controls.userConnectionId.errors?.required">Connected Contact is required</span>
+                    
+                </div> -->
+                <div class='form-group'>
+                    <label class="label">Template Type</label>
+                    <div>
+                      <ejs-dropdownlist [dataSource]='templateTypes' formControlName="templateType" #samples class="customizeDropdownBorder" [fields]='templateTypeFields' ></ejs-dropdownlist>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class="label">Add Tags</label>
+                    <div class="customizeDropdownBorder">
+                      <ejs-multiselect id='custom-list' class="tags-layout" [dataSource]='tagTypes' formControlName="tags" [allowCustomValue]=true [mode]='box' [fields]='tagTypeFields' (close)="onCloseMultiselect($event)"></ejs-multiselect>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer-layout">
+                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                    <button class="popup-footer-button" id="btn" [disabled]="!questionform.valid"  ejs-button (click)="submit()">Save</button>
+                </div>
+            </div>
+     
+    </ng-template>
+</ejs-dialog>
+
+    <div class="footer-Layout"></div>
+  </form>
+</div>
+<div *ngIf="showSendFormToPopup">
+  <app-sendformto (emitClosePopupSendFormTo)="closedSendFormToPopup($event)" (click)="sendForm($event)">
+  </app-sendformto>
+</div>
+<div *ngIf="showQuestionDeletePopup">
+  <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClick()"></app-deletepopup>
+</div>
+
+  <app-unsavedform *ngIf="showGoBackPopup" (click)="getBackAction($event)"></app-unsavedform>

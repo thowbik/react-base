@@ -1,0 +1,83 @@
+<div class="forms-page">
+    <div class="header-actions-layout">
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <p>Labels</p>
+            </div>
+
+        </div>
+        <button ejs-button class="header-actions-button" routerLink="/forms">
+            <span>
+                <i class="left"></i>
+            </span>Questions</button>
+        <button ejs-button class="header-actions-button" (click)="addLabel($event)">New Label</button>
+        <button ejs-button class="header-actions-button" (click)="addLabel($event)">Manage</button>
+    </div>
+    <div class="labels-layout">
+        <div id='treeparent'>
+            <ejs-treegrid [dataSource]='labelData' gridLines="Horizontal"  rowHeight='60' [treeColumnIndex]='1' 
+            parentIdMapping='parentId' idMapping='id' (rowSelecting)="getQuestionLabelSelect($event)">
+                <e-columns>
+                    <e-column cssClass='id-local' field='id' headerText='ID' width='1'></e-column>
+                    <e-column field='labelName' headerText='Label Name' width='100'></e-column>
+                </e-columns>
+            </ejs-treegrid>
+           <!--  <ejs-treegrid [dataSource]='labelData' gridLines="Horizontal"  rowHeight='60' >
+                <e-columns>
+                    <e-column cssClass='id-local' field='id' headerText='ID' width='1'></e-column>
+                    <e-column field='labelName' headerText='Label Name' width='100'></e-column>
+                </e-columns>
+            </ejs-treegrid> -->
+
+        </div>
+    </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <ejs-dialog #AddLabelDialog id='dialog' header='{{cardTitle}}'  [visible]='isOpen' showCloseIcon='true' isModal='true'>
+        <ng-template #content>
+            <form name="form" [formGroup]="newlabelForm" class="NewlabelLayout" novalidate>
+                <div class="popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+                    <!-- <label class="label">Choose Account</label>
+                    <div class="user-input">
+                        <ejs-dropdownlist class='role-choose' [dataSource]="orginizationTypes" [fields]='datafields' #Contactsdropdown formControlName="organisationId"></ejs-dropdownlist>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label class="label">Label Name</label>
+                        <div class="message-input">
+                            <input type="text" class='form-control' placeholder="Label Name" formControlName="labelName" />
+                        </div>
+                    </div>
+
+                    <div class='form-group'>
+                        <ejs-checkbox class="role-view" label="Create as Sub - Label under" [checked]="formchecked" (change)='labelParent($event)'></ejs-checkbox>
+                        <div class="user-input">
+                            <!-- <ejs-dropdownlist class='role-choose' [readonly]="temppntLabel" [popupHeight]="100" [dataSource]="localDatalist" [fields]='fields'
+                                #Contactsdropdown formControlName="parentId"></ejs-dropdownlist> -->
+                                <ejs-dropdownlist id='games' cssClass='question-label-popup' [readonly]="temppntLabel" #sample1 (open)='onOpen()' >
+                                    <ng-template #noRecordsTemplate>
+                                 <div id='tree'></div>
+                             </ng-template>
+                                 </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer-layout">
+                    <div fxFlex fxLayout="column" fxLayoutAlign="left center">
+                        <button class="popup-footer-button" id="btn" ejs-button (click)="deleteLabel()">Delete</button>
+                    </div>
+                    <div fxFlex fxLayout="column" fxLayoutAlign="right center">
+                        <button class="popup-footer-button" id="btn" ejs-button (click)="Submit()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </ejs-dialog>
+</div>
+
+<!-- <ejs-treegrid [dataSource]='localData' [treeColumnIndex]='1'  idMapping='id' height='265' >
+    <e-columns>
+        <e-column field='id' headerText='id' width='90' textAlign='Right'></e-column>
+        <e-column field='labelName' headerText='labelName' width='170'></e-column>
+    </e-columns>
+</ejs-treegrid> -->

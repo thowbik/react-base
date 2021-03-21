@@ -1,0 +1,22 @@
+
+<div>
+  <ejs-dialog #DeleteDialog header='Confirmation' class="popup-footer-layout delpopup" (open)="dialogOpen()"  (close)="dialogClose()" [visible]='isOpen' showCloseIcon='true' 
+      width='400px' isModal='true'>
+      <ng-template #content>
+          <div fxFlex fxLayout="column" fxLayoutAlign="start none">
+
+              <div class="popup-body-layout delpopup">
+                  <p class="delete-popup-alertmsg">Are you sure you want to delete the selected {{pagefrom}}?</p>
+              </div>
+
+              <div class="popup-footer-layout">
+                  <div fxFlex fxLayout="row" fxLayoutAlign="end" class="delete-popup-footer">
+                      <button class="header-actions-button yesbtn" id="btn" ejs-button (click)="okClick()">Yes</button>
+                      <button class="header-actions-button nobtn" id="btn" ejs-button (click)="cancelClick()">No</button>
+                  </div>
+              </div>
+
+          </div>
+      </ng-template>
+  </ejs-dialog>
+</div>

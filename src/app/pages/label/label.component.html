@@ -1,0 +1,126 @@
+<div class="forms-page">
+    <div class="header-actions-layout">
+        <!-- <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxFlex="50%">
+                <span class="subTitle">Labels</span>
+            </div>
+
+        </div> -->
+        <div fxLayout="row" class="header-dashboard">
+            <div class="page-title" fxLayoutAlign="start center" fxLayoutGap="10" fxFlex="50%">
+              <span class="subTitle">Labels</span>
+            </div>
+
+        </div>
+        <div class="header-button-layout " fxLayout="row" fxLayout.sm="column">
+            <div class="header-button-left scrollmenu" fxFlex="60" fxLayoutAlign="start center">
+                <button ejs-button class="header-actions-button" routerLink="/{{pageBack}}/0">
+                    <span>
+                        <i class="left directionicon"></i>
+                    </span>{{backBtnTilte}}</button>
+                <button ejs-button class="header-actions-button" (click)="addLabel(pagefrom)">New Label</button>
+                <button ejs-button class="header-actions-button">Manage</button>
+            </div>
+            <!--  <div class="header-button-right" fxFlex="40" fxLayoutAlign="end center">
+                <button ejs-button class="header-actions-button e-control e-btn" data-ripple="true" (click)='Previous()' [disabled]="page==1">
+                    <span *ngIf="page > 1">
+                        <i class="left directionicon"></i>
+                    </span>
+                    <span *ngIf="page==1">
+                        <i class="left disabled-direction-icon"></i>
+                    </span>Previous</button>
+                <button ejs-button (click)='Next()' class="header-actions-button e-control e-btn" data-ripple="true" [disabled]="totalPages <= page">Next
+                    <span *ngIf="totalPages > page">
+                        <i class="right directionicon"></i>
+                    </span>
+                    <span *ngIf="totalPages <= page">
+                        <i class="right disabled-direction-icon"></i>
+                    </span>
+                </button>
+
+            </div> -->
+        </div>
+    </div>
+    <div class="labels-layout">
+        <div id='treeparent'>
+            <ejs-treegrid [dataSource]='labelData' gridLines="Horizontal" rowHeight='43' [treeColumnIndex]='1'
+                parentIdMapping='parentId' idMapping='id' [editSettings]='editSettings'
+                (actionBegin)="actionBegin($event)" (rowSelected)="formsQuestionPage($event)"
+                enableCollapseAll="{{collapseTrue}}" (queryCellInfo)="queryCellInfo($event)">
+                <e-columns>
+                    <e-column cssClass='id-local' field='id' headerText='ID' width='0'></e-column>
+
+                    <e-column field='labelName' [customAttributes]="{class: 'label-Name-css'}" headerText='Label Name'
+                        width='60'></e-column>
+                    <e-column textAlign='Left' headerText='Actions' width='50' [commands]='commands'></e-column>
+                </e-columns>
+
+            </ejs-treegrid>
+            <!--  <ejs-treegrid [dataSource]='labelData' gridLines="Horizontal"  rowHeight='60' >
+                <e-columns>
+                    <e-column cssClass='id-local' field='id' headerText='ID' width='1'></e-column>
+                    <e-column field='labelName' headerText='Label Name' width='100'></e-column>
+                </e-columns>
+            </ejs-treegrid> -->
+
+        </div>
+    </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <ejs-dialog #AddLabelDialog id='dialog' header='{{cardTitle}}' [visible]='showSharePopup' showCloseIcon='true'
+        isModal='true'>
+        <ng-template #content>
+            <form name="form" [formGroup]="newlabelForm" class="NewlabelLayout" novalidate>
+                <div class="popup-body-layout" fxFlex fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
+                    <!-- <label class="label">Choose Account</label>
+                    <div class="user-input">
+                        <ejs-dropdownlist class='role-choose' [dataSource]="orginizationTypes" [fields]='datafields' #Contactsdropdown formControlName="organisationId"></ejs-dropdownlist>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label class="label">Label Name</label>
+                        <div class="message-input">
+                            <input type="text" class='form-control' placeholder="Label Name"
+                                formControlName="labelName" />
+                        </div>
+                    </div>
+
+                    <div class='form-group' fxLayout="column" fxLayoutGap="20px">
+
+                        <ejs-checkbox  #checkbox class="role-view" label="Create as Sub - Label under"
+                            [checked]="formchecked" (change)='labelParent($event)'></ejs-checkbox>
+                        <div class="user-input">
+                            <ejs-dropdownlist id='games' cssClass='question-label-popup' #sample1
+                                formControlName="parentId" name="parentId" [readonly]="temppntLabel"
+                                (open)="onOpen($event)">
+                                <ng-template #noRecordsTemplate>
+                                    <div id='tree' class="labelList"></div>
+                                </ng-template>
+                            </ejs-dropdownlist>
+                        </div>
+                        <!-- <div *ngIf="newlabelForm.controls.parentId.errors && (newlabelForm.controls.parentId.dirty || newlabelForm.controls.parentId.touched)"
+                            class="validation-error">
+                            <span class="errors" *ngIf="newlabelForm.controls.parentId.errors?.required">Sub Label is required</span>
+                        </div> -->
+
+                    </div>
+                </div>
+
+                <div class="popup-footer-layout">
+                    <div fxFlex fxLayout="column" fxLayoutAlign="left center" *ngIf="deleteBtnlabel">
+                        <button class="popup-footer-button" id="btn" ejs-button
+                            (click)="onDeleteLabel()">Delete</button>
+                    </div>
+                    <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                        <button class="popup-footer-button" id="btn" ejs-button (click)="Submit()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </ejs-dialog>
+</div>
+
+<div *ngIf="showDeletePopup">
+    <app-deletepopup (emitClosePopupDelete)="closedFromDeletePopup($event)" (click)="okClick($event)"></app-deletepopup>
+</div>
